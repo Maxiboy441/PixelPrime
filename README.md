@@ -1,4 +1,4 @@
-# Project Name (Will be added later)
+# PixelPrime
 
 ## Maintainers
 
