@@ -7,7 +7,6 @@ Thsi project is supoosed to help you find good movies based on your, and others,
 - Search for movies
 - Rate movies
 - Top Rated Movies List
-- Friends Requests
 - Movie Recommendations
 - User Profile
 - Login/Register
