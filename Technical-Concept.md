@@ -32,6 +32,8 @@ The project is made in C# MVC
 ### Database
 - MySql container
 
+### ERM
+
 ### External Services/APIs
 - Movie API: 
 https://www.omdbapi.com/
