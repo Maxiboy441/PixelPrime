@@ -1,47 +1,49 @@
-# Technical Concept: [Application Name]
+# Technical Concept: PixelPrime
 
 ## Overview
-[Provide a brief overview of the application, its purpose, and the problem it aims to solve.]
+Thsi project is supoosed to help you find good movies based on your, and others, ratting of those.
 
 ## Features
-- [List the key features of the application]
-- [Feature 1]
-- [Feature 2]
-- [Feature 3]
-- ...
+- Search for movies
+- Rate movies
+- Top Rated Movies List
+- Friends Requests
+- Movie Recommendations
+- User Profile
+- Login/Register
+- Statisics
+- Watchlist
+- Movie info page (+ movie trailer)
+- Comments to movies
 
 ## Architecture
-[Describe the high-level architecture of the application, including the main components, layers, and technologies used.]
+The project is made in C# MVC
 
 ### Front-end
-- [Specify the front-end technology used (e.g., WPF, Windows Forms, ASP.NET)]
-- [Describe the user interface and any frameworks or libraries used]
+- HTML
+- CSS
+- JS
+- C#
+- Bootstrap
 
 ### Back-end
-- [Specify the back-end technology used (e.g., .NET Core, .NET Framework)]
-- [Describe the server-side logic and any frameworks or libraries used]
+- C# MVC
 
 ### Database
-- [Specify the database technology used (e.g., SQL Server, PostgreSQL, MongoDB)]
-- [Describe the data storage and retrieval mechanisms]
+- MySql container
 
 ### External Services/APIs
-- [List any external services or APIs that the application will integrate with]
-- [Service/API 1]
-- [Service/API 2]
-- ...
+- Movie API: 
+https://www.omdbapi.com/
+https://developer.themoviedb.org/reference/intro/getting-started
 
 ## Security Considerations
-[Outline the security measures and best practices that will be implemented in the application, such as authentication, authorization, data encryption, and input validation.]
+- user auth
+- server behind a firewall and revers proxs
 
 ## Deployment and Hosting
-[Describe the deployment strategy and hosting environment for the application (e.g., on-premises, cloud, containerization).]
+Hosted on [Maximilian Huber](https://github.com/maxiboy441)'s home server which is based on debian.
 
-## Testing and Quality Assurance
-[Explain the testing approach, including unit testing, integration testing, and any other testing methodologies that will be employed to ensure the quality of the application.]
 
 ## Future Enhancements
-[List potential future enhancements or additional features that could be added to the application.]
-
-## Conclusion
-[Provide a brief summary and highlight the key benefits and advantages of the proposed application.]
+- Use of AI features
