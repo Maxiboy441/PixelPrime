@@ -35,7 +35,6 @@ The project is made in C# MVC
 ### External Services/APIs
 - Movie API: 
 https://www.omdbapi.com/
-https://developer.themoviedb.org/reference/intro/getting-started
 
 ## Security Considerations
 - user auth
