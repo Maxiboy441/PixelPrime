@@ -46,4 +46,4 @@ Hosted on [Maximilian Huber](https://github.com/maxiboy441)'s home server which 
 
 
 ## Future Enhancements
-- Use of AI features (recommendations with diffrent weighting)
+- Use of AI features (recommendations with diffrent weighting) api: api.webai.maxih.de
