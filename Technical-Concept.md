@@ -32,7 +32,7 @@ The project is made in C# MVC
 ### Database
 - MySql container
 
-### ERM
+### Database Modell
 
 ### External Services/APIs
 - Movie API: 
