@@ -45,6 +45,8 @@ https://www.omdbapi.com/
 Hosted on [Maximilian Huber](https://github.com/maxiboy441)'s home server which is based on debian.
 
 ## Infrastructure diagramm 
+![Alt text](./diagramms/infrastructure_diagram.png)
+
 
 ## Future Enhancements
 - Use of AI features (recommendations with diffrent weighting) api: api.webai.maxih.de

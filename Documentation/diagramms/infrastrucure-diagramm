@@ -1,0 +1,48 @@
+from diagrams import Diagram, Cluster, Edge
+from diagrams.generic.os import Debian
+from diagrams.generic.network import Router
+from diagrams.onprem.container import Docker
+from diagrams.onprem.network import Nginx
+from diagrams.programming.language import Csharp
+from diagrams.onprem.client import User
+from diagrams.onprem.dns import Coredns as DNS
+
+port_router = "80"
+port_pixelprime = "6677"
+port_ai_api = "5544"
+
+with Diagram("Infrastructure Diagram", show=False):
+    user = User("User")
+    
+    with Cluster("NoIP"):
+        dns = DNS("DynDNS")
+
+    with Cluster("GoDaddy"):
+        dns2 = DNS("DNS")
+    
+    with Cluster("Max Home Network"):
+        router = Router(f"Router\n(port forward {port_router})")
+
+        with Cluster("Main Server (uwuntu)"):
+            debian = Debian("Debian OS")
+
+            pixelprime = Csharp(f"PixelPrime\n(:{port_pixelprime})")
+            debian - pixelprime
+            
+            with Cluster("Docker"):            
+                with Cluster("Containers"):
+                    ai_api = Docker(f"AI-API\n(:{port_ai_api})")
+                    nginx = Nginx("Nginx\nReverse Proxy")
+                    
+                    nginx >> Edge(label=f"api.webai.maxih.de \n as uwuntu-IP:{port_ai_api}") >> ai_api
+                    nginx >> Edge(label=f"pixelprime.maxih.de \n as uwuntu-IP:{port_pixelprime}") >> pixelprime
+                    debian - nginx
+
+
+
+        router >> Edge(label=f"uwuntu-IP:{port_router}") >> nginx
+    
+    dns2 >> Edge(label="maxrennt2.ddns.net") >> dns
+    user >> Edge(label="pixelprime.maxih.de") >> dns2
+
+    dns >> Edge(label="Public IP:80") >> router
