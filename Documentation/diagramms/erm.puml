@@ -1,0 +1,60 @@
+@startuml
+
+package "models" <<Node>> {
+    entity users {
+        * id: int <<generated>>
+        --
+        * name: varchar(18)
+        * email: varchar(255)
+        * password: varchar(255)
+        * description: text
+        avatar: varchar(255)
+        created_at: DateTime
+        updated_at: DateTime
+    }
+
+    entity comments {
+        * id: int <<generated>>
+        --
+        * user_id: <<FK>>
+        * move_id: int
+        * text: tex
+        created_at: DateTime
+        updated_at: DateTime
+    }
+
+    entity favorites {
+        * id: int <<generated>>
+        --
+        * user_id: <<FK>>
+        * move_id: int
+        created_at: DateTime
+        updated_at: DateTime
+    }
+
+    entity watchlists {
+        * id: int <<generated>>
+        --
+        * user_id: <<FK>>
+        * move_id: int
+        created_at: DateTime
+        updated_at: DateTime
+    }
+
+    entity ratings {
+        * id: int <<generated>>
+        --
+        * user_id: <<FK>>
+        * move_id: int
+        * rating: int
+        created_at: DateTime
+        updated_at: DateTime
+    }
+}
+
+users ||--o{ ratings
+users ||--o{ comments
+users ||--o{ favorites
+users ||--o{ watchlists
+
+@enduml
