@@ -25,14 +25,13 @@ with Diagram("Infrastructure Diagram", show=False):
 
         with Cluster("Main Server (uwuntu)"):
             debian = Debian("Debian OS")
-
-            pixelprime = Csharp(f"PixelPrime\n(:{port_pixelprime})")
-            debian - pixelprime
             
             with Cluster("Docker"):            
                 with Cluster("Containers"):
                     ai_api = Docker(f"AI-API\n(:{port_ai_api})")
                     nginx = Nginx("Nginx\nReverse Proxy")
+                    pixelprime = Csharp(f"PixelPrime\n(:{port_pixelprime})")
+
                     
                     nginx >> Edge(label=f"api.webai.maxih.de \n as uwuntu-IP:{port_ai_api}") >> ai_api
                     nginx >> Edge(label=f"pixelprime.maxih.de \n as uwuntu-IP:{port_pixelprime}") >> pixelprime
