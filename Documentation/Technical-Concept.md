@@ -32,6 +32,7 @@ The project is made in C# MVC
 - MySql container
 
 ### Database Modell
+![Alt text](./diagramms/erm.png)
 
 ### External Services/APIs
 - Movie API: 
