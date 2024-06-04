@@ -6,10 +6,13 @@ from diagrams.onprem.network import Nginx
 from diagrams.programming.language import Csharp
 from diagrams.onprem.client import User
 from diagrams.onprem.dns import Coredns as DNS
+from diagrams.generic.database import SQL
 
 port_router = "80"
 port_pixelprime = "6677"
 port_ai_api = "5544"
+port_mysql = "3307"
+serverIp = "192.168.1.143"
 
 with Diagram("Infrastructure Diagram", show=False):
     user = User("User")
@@ -31,15 +34,17 @@ with Diagram("Infrastructure Diagram", show=False):
                     ai_api = Docker(f"AI-API\n(:{port_ai_api})")
                     nginx = Nginx("Nginx\nReverse Proxy")
                     pixelprime = Csharp(f"PixelPrime\n(:{port_pixelprime})")
+                    mysql = SQL(f"MySQL\n(:{port_mysql})")
 
-                    
-                    nginx >> Edge(label=f"api.webai.maxih.de \n as uwuntu-IP:{port_ai_api}") >> ai_api
-                    nginx >> Edge(label=f"pixelprime.maxih.de \n as uwuntu-IP:{port_pixelprime}") >> pixelprime
+
+                    pixelprime >> Edge(label=f"{serverIp}:{port_mysql}") >> mysql
+                    nginx >> Edge(label=f"api.webai.maxih.de \n as {serverIp}:{port_ai_api}") >> ai_api
+                    nginx >> Edge(label=f"pixelprime.maxih.de \n as {serverIp}:{port_pixelprime}") >> pixelprime
                     debian - nginx
 
 
 
-        router >> Edge(label=f"uwuntu-IP:{port_router}") >> nginx
+        router >> Edge(label=f"{serverIp}:{port_router}") >> nginx
     
     dns2 >> Edge(label="maxrennt2.ddns.net") >> dns
     user >> Edge(label="pixelprime.maxih.de") >> dns2
