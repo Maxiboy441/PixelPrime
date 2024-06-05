@@ -56,3 +56,6 @@ On the release branch, any necessary release preparations can be made, such as u
 If a critical bug is discovered in a released version, a hotfix branch is created from the corresponding release tag on `main`. The naming convention for hotfix branches is `hotfix/your-hotfix-name`.
 
 Once the bug is fixed, the hotfix branch is merged into both `main` and `develop`, and a new tag is created on `main` for the patched release version.
+
+
+> ℹ️ **Info:** The ONLY things which are commited and pushed to main are changes in the documentation.
