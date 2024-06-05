@@ -41,3 +41,12 @@ docker compose restart
 `
 
 !!! To not rebuild, dont run "docker build -t my-aspnet-mvc-app ."
+
+### Execute mysql bash command
+In the ~/Project/Project directory
+`
+docker compose exec mysql bash
+`
+`
+mysql -u root -p
+`
