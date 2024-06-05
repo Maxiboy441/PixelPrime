@@ -1,7 +1,7 @@
 # Technical Concept: PixelPrime
 
 ## Overview
-Thsi project is supoosed to help you find good movies based on your, and others, ratting of those.
+The project uses an API to retrieve movies that users can rate and add to their favorites. Users can also add movies to a “watch list” and receive recommendations from our AI server.
 
 ## Features
 - Search for movies
