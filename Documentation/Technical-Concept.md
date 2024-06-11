@@ -63,12 +63,12 @@ Hosted on [Maximilian Huber](https://github.com/maxiboy441)'s home server which 
 | -------- |
 | ASP.NET Core Identity Installation   |
 | Entity Framework Core |
-| User model  |
+| User Model  (if not done by package)|
 | Reviews Model |
 | Favorites Model   |
 | Watchlist Model   |
 | Ratings Model   |
-| User controller  |
+| User controller (if not done by package) |
 | Reviews controller |
 | Favorites controller   |
 | Watchlist controller   |
