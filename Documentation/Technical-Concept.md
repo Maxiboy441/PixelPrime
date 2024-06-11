@@ -56,7 +56,8 @@ Hosted on [Maximilian Huber](https://github.com/maxiboy441)'s home server which 
 - ASP.NET Core Identity: For handling user authentication and authorization.
 - Entity Framework Core (EF Core): For database interactions and ORM capabilities.
 
-
+### Recommendations
+On the first login of the day, new Recommendations are requested and safed
 
 ## TODO's
 | Title  |
