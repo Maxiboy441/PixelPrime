@@ -61,6 +61,22 @@ Hosted on [Maximilian Huber](https://github.com/maxiboy441)'s home server which 
 ## TODO's
 | Description    |
 | -------- |
-| ...  |
-| ... |
-| ...    |
+| ASP.NET Core Identity Instalation   |
+| Entity Framework Core |
+| User model  |
+| Reviews Model |
+| Favorites Model   |
+| Watchlist Model   |
+| Ratings Model   |
+| User controller  |
+| Reviews controller |
+| Favorites controller   |
+| Watchlist controller   |
+| Ratings controller   |
+| Navbar Component |
+| Master layout |
+| Purple button |
+| Movies card component |
+| Movie see button component |
+| Login page |
+| Register page |
