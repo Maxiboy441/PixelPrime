@@ -81,3 +81,12 @@ Hosted on [Maximilian Huber](https://github.com/maxiboy441)'s home server which 
 | Movie see button component |
 | Login page |
 | Register page |
+| Home page |
+| Movies page |
+| Profile page |
+| ReviewPopUp |
+| MovieAPIService |
+| AIAPIService |
+
+
+
