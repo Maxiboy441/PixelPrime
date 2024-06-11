@@ -33,6 +33,15 @@ package "models" <<Node>> {
         updated_at: DateTime
     }
 
+    entity recommendations {
+        * id: int <<generated>>
+        --
+        * user_id: <<FK>>
+        * move_id: int
+        created_at: DateTime
+        updated_at: DateTime
+    }
+
     entity watchlists {
         * id: int <<generated>>
         --
@@ -57,5 +66,6 @@ users ||--o{ ratings
 users ||--o{ reviews
 users ||--o{ favorites
 users ||--o{ watchlists
+users ||--o{ recommendations
 
 @enduml
