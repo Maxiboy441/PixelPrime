@@ -61,7 +61,7 @@ Hosted on [Maximilian Huber](https://github.com/maxiboy441)'s home server which 
 ## TODO's
 | Description    |
 | -------- |
-| ASP.NET Core Identity Instalation   |
+| ASP.NET Core Identity Installation   |
 | Entity Framework Core |
 | User model  |
 | Reviews Model |
