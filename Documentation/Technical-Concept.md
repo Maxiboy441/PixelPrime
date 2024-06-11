@@ -52,6 +52,11 @@ Hosted on [Maximilian Huber](https://github.com/maxiboy441)'s home server which 
 ## Future Enhancements
 - Use of AI features (recommendations with diffrent weighting) api: api.webai.maxih.de
 
+### Used Packages
+- ASP.NET Core Identity: For handling user authentication and authorization.
+- Entity Framework Core (EF Core): For database interactions and ORM capabilities.
+
+
 
 ## TODO's
 | Description    |
