@@ -69,7 +69,6 @@ On the first login of the day, new Recommendations are requested and safed
 | Favorites Model   |
 | Watchlist Model   |
 | Ratings Model   |
-| Recommendations Model   |
 | Home controller (show favorites) |
 | User controller (if not done by package) |
 | Reviews controller (CUD)|
