@@ -68,6 +68,7 @@ Hosted on [Maximilian Huber](https://github.com/maxiboy441)'s home server which 
 | Favorites Model   |
 | Watchlist Model   |
 | Ratings Model   |
+| Recommendations Model   |
 | Home controller (show favorites) |
 | User controller (if not done by package) |
 | Reviews controller (CUD)|
@@ -83,7 +84,7 @@ Hosted on [Maximilian Huber](https://github.com/maxiboy441)'s home server which 
 | Register page |
 | Home page |
 | Movies page |
-| Profile page |
+| Profile page (Favorites, Watchlist, Recommendations)|
 | ReviewPopUp |
 | MovieAPIService |
 | AIAPIService |
