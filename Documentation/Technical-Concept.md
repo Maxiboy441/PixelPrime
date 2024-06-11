@@ -59,7 +59,7 @@ Hosted on [Maximilian Huber](https://github.com/maxiboy441)'s home server which 
 
 
 ## TODO's
-| Description    |
+| Title  |
 | -------- |
 | ASP.NET Core Identity Installation   |
 | Entity Framework Core |
