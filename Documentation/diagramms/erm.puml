@@ -13,12 +13,13 @@ package "models" <<Node>> {
         updated_at: DateTime
     }
 
-    entity comments {
+    entity reviews {
         * id: int <<generated>>
         --
         * user_id: <<FK>>
         * move_id: int
-        * text: tex
+        * title: varchar(255)
+        * text: text
         created_at: DateTime
         updated_at: DateTime
     }
@@ -53,7 +54,7 @@ package "models" <<Node>> {
 }
 
 users ||--o{ ratings
-users ||--o{ comments
+users ||--o{ reviews
 users ||--o{ favorites
 users ||--o{ watchlists
 
