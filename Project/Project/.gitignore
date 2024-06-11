@@ -1,0 +1,19 @@
+﻿# Ignore compiled binaries
+bin/
+obj/
+ 
+# Ignore Visual Studio files
+.vs/
+*.suo
+*.user
+*.sln.docstates
+ 
+# Ignore ReSharper files
+_ReSharper.*
+ 
+# Ignore NuGet package directories
+packages/
+ 
+# Ignore build output
+*.dll
+*.exe

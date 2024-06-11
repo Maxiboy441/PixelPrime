@@ -47,7 +47,7 @@ Hosted on [Maximilian Huber](https://github.com/maxiboy441)'s home server which 
 
 ## Infrastructure diagramm 
 ![Alt text](./diagramms/infrastructure_diagram.png)
-
+TODO: Decide if we want to deploy on bare metal or via docker like [this](https://github.com/users/Maxiboy441/projects/14?pane=issue&itemId=65759519) suggests.
 
 ## Future Enhancements
 - Use of AI features (recommendations with diffrent weighting) api: api.webai.maxih.de

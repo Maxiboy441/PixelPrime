@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  app:
+    image: my-aspnet-mvc-app
+    container_name: my-aspnet-mvc-container
+    ports:
+      - "6677:80"
+    networks:
+      - csharp
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-container
+    ports:
+      - "3307:3306"
+    volumes:
+       - mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: my_database
+      MYSQL_USER: my_user
+      MYSQL_PASSWORD: my_password
+    networks:
+        - csharp
+
+volumes:
+    mysql:
+
+networks:
+    csharp:
+        driver: bridge
