@@ -68,11 +68,12 @@ Hosted on [Maximilian Huber](https://github.com/maxiboy441)'s home server which 
 | Favorites Model   |
 | Watchlist Model   |
 | Ratings Model   |
+| Home controller (show favorites) |
 | User controller (if not done by package) |
-| Reviews controller |
-| Favorites controller   |
-| Watchlist controller   |
-| Ratings controller   |
+| Reviews controller (CUD)|
+| Movie controller (indexAllRatedMovies, show, addRating)|
+| Favorites controller (index, addMovie, delete)|
+| Watchlist controller  (index, addMovie, delete)|
 | Navbar Component |
 | Master layout |
 | Purple button |
