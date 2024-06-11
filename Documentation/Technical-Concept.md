@@ -57,7 +57,7 @@ Hosted on [Maximilian Huber](https://github.com/maxiboy441)'s home server which 
 - Entity Framework Core (EF Core): For database interactions and ORM capabilities.
 
 ### Recommendations
-On the first login of the day, new Recommendations are requested and safed
+On the first login of the day, new Recommendations are requested and updates existing
 
 ## TODO's
 | Title  |
@@ -68,6 +68,7 @@ On the first login of the day, new Recommendations are requested and safed
 | Reviews Model |
 | Favorites Model   |
 | Watchlist Model   |
+| Recommendations Model |
 | Ratings Model   |
 | Home controller (show favorites) |
 | User controller (if not done by package) |
@@ -88,6 +89,8 @@ On the first login of the day, new Recommendations are requested and safed
 | ReviewPopUp |
 | MovieAPIService |
 | AIAPIService |
+| RecommendationService (getAndUpdate)|
+
 
 
 
