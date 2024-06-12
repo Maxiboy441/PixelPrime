@@ -38,6 +38,9 @@ The project is made in C# MVC
 - Movie API: 
 https://www.omdbapi.com/
 
+> ℹ️ **Info:** Everytime a Rating is mentioned in the project, its NOT the one from the api, rather it is our internal rating. If you ever have to display the rating of movies, you unsure of they're rated, look it up in the db (if there is non, show "Not rated")
+
+
 ## Security Considerations
 - user auth
 - server behind a firewall and revers proxs
