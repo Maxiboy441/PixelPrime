@@ -88,12 +88,11 @@ On the first login of the day, new Recommendations are requested and updates exi
 | Register page |
 | Home page |
 | Movies page |
-| Profile page (Favorites, Watchlist, Recommendations)|
+| Profile page |
+| Profile page buttons (Favorites, Watchlist, Recommendations) component |
+| Profile page display movies list component |
+| Profile page display movie animation component |
 | ReviewPopUp |
 | MovieAPIService |
 | AIAPIService |
 | RecommendationService (getAndUpdate)|
-
-
-
-
