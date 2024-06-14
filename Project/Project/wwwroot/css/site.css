@@ -51,6 +51,15 @@ a:hover {
   box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+    background-color: #18191B;
+}
 @media (min-width: 768px) {
     html {
         font-size: 1rem;
