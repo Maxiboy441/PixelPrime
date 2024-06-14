@@ -62,6 +62,12 @@ TODO: Decide if we want to deploy on bare metal or via docker like [this](https:
 ### Recommendations
 On the first login of the day, new Recommendations are requested and updates existing
 
+### Color Palette
+    --primary-color: #18191b;
+    --secondary-color: #252626;
+    --purple-color: #7432F9;
+    --text-color: #fff;
+
 ## TODO's
 | Title  |
 | -------- |
