@@ -1,0 +1,47 @@
+﻿<div>
+    @model Tuple<string, string, string>
+
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">@Model.Item1</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">@Model.Item2</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">@Model.Item3</button>
+        </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">Head</div>
+        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">Shoulders</div>
+        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">Knees</div>
+    </div>
+</div>
+
+
+<style>
+    .nav-tabs {
+        border-bottom: none;
+    }
+
+        .nav-tabs .nav-item {
+            margin-bottom: -1px;
+        }
+
+        .nav-tabs .nav-link {
+            border: none;
+            border-radius: 0;
+            color: #007bff;
+        }
+
+            .nav-tabs .nav-link.active {
+                background-color: #252627;
+                color: white;
+            }
+
+    .tab-content {
+        border: none;
+        padding-top: 10px;
+    }
+</style>
