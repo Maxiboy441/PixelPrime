@@ -26,8 +26,12 @@ body {
     color: var(--text-color)
 }
 
-.bg-secondary-color {
+.navbar-brand a:hover{
     background: #252626;
+}
+
+.bg-purple {
+    background: #7432F9;
 }
 
 footer {
