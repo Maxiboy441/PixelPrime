@@ -1,11 +1,46 @@
-﻿html {
-  font-size: 14px;
+﻿/*Colors*/
+:root {
+    --primary-color: #18191b;
+    --secondary-color: #252626;
+    --purple-color: #7432F9;
+    --text-color: #fff;
 }
 
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+*,
+*::after,
+*::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+}
+
+html {
+    font-size: 62.5%;
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 6rem;
+    background-color: var(--primary-color);
+    color: var(--text-color)
+}
+
+.bg-secondary-color {
+    background: #252626;
+}
+
+footer {
+    color: var(--text-color)
+}
+
+a {
+    color: var(--purple-color);
+    transition: color 0.3s ease-in-out;
+}
+
+a:hover {
+    color: #fff
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
@@ -20,4 +55,9 @@ html {
 body {
     margin-bottom: 60px;
     background-color: #18191B;
+}
+@media (min-width: 768px) {
+    html {
+        font-size: 1rem;
+    }
 }
