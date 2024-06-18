@@ -26,8 +26,12 @@ body {
     color: var(--text-color)
 }
 
-.bg-secondary-color {
+.navbar-brand a:hover{
     background: #252626;
+}
+
+.bg-purple {
+    background: #7432F9;
 }
 
 footer {
@@ -43,8 +47,12 @@ a:hover {
     color: #fff
 }
 
+.nav-link:hover {
+    color: var(--purple-color) !important;
+}
+
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 html {

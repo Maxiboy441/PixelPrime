@@ -10,7 +10,7 @@
 </head>
 <body>
     <header>
-        @*Add nav bar component here*@
+        @await Html.PartialAsync("_NavBar")
     </header>
     <div>
         <main role="main" class="pb-3">
@@ -29,4 +29,3 @@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
-
