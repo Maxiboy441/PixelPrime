@@ -1,4 +1,14 @@
-﻿<div>
+﻿<!--
+Usage:
+ *at* await Html.PartialAsync("_ProfileTabButton",
+    Tuple.Create("Watchlist", "Profile", "Recommendations",
+        await Html.PartialAsync("_OtherPartial", Tuple.Create(...)),
+        await Html.PartialAsync("_OtherPartial", Tuple.Create(...)),
+        await Html.PartialAsync("_OtherPartial", Tuple.Create(...))
+    ))
+    -->
+
+<div>
     @model Tuple<string, string, string, Microsoft.AspNetCore.Html.IHtmlContent, Microsoft.AspNetCore.Html.IHtmlContent, Microsoft.AspNetCore.Html.IHtmlContent>
 
     <ul class="nav nav-tabs border-0 container" id="myTab" role="tablist">
@@ -32,9 +42,3 @@
             color: white;
         }
 </style>
-
-<!--     *at* await Html.PartialAsync("_ProfileTabButton",
-        Tuple.Create("Watchlist", "Profile", "Recommendations",
-            await Html.PartialAsync("_PrimaryButton", Tuple.Create("btn btn-primary-1", "style-1", "Button1Text")),
-            await Html.PartialAsync("_PrimaryButton", Tuple.Create("btn btn-primary-2", "style-1", "Button2Text")),
-            await Html.PartialAsync("_PrimaryButton", Tuple.Create("btn btn-primary-3", "style-1", "Button3Text"))))-->
