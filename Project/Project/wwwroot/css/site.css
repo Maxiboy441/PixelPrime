@@ -64,6 +64,19 @@ body {
     margin-bottom: 60px;
     background-color: #18191B;
 }
+
+.nav-tabs .nav-link {
+    border: none;
+    color: white;
+    padding: 0.7rem 1.5rem;
+    height: auto;
+}
+
+.nav-tabs .nav-link.active {
+    background-color: #252627;
+    color: white;
+}
+
 @media (min-width: 768px) {
     html {
         font-size: 1rem;
