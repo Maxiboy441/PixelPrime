@@ -1,6 +1,15 @@
-﻿<!-- Usage "at" await Html.PartialAsync("_PrimaryButton", Tuple.Create("Text", "Style", "additional, like size")) -->
+﻿<!--
+Usage:
+*at* await Html.PartialAsync("_PrimaryButton",
+    Tuple.Create(
+        "Text",
+        "style-1",
+        "",
+        "href=https://www.google.com",
+        "a"))
+-->
 
-@model Tuple<string, string, string>
+@model Tuple<string, string, string, string, string>
 
 @{
     string btnClass;
@@ -22,7 +31,7 @@
     }
 }
 
-<button type="button" class="@btnClass @Model.Item3">@Model.Item1</button>
+<@Model.Item5 @Model.Item4 class="@btnClass @Model.Item3">@Model.Item1</@Model.Item5>
 
 @if (Model.Item2 == "style-1")
 {
