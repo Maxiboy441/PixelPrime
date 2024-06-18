@@ -64,6 +64,11 @@ body {
     margin-bottom: 60px;
     background-color: #18191B;
 }
+
+.invalid-input {
+    border: 2px solid red;
+}
+
 @media (min-width: 768px) {
     html {
         font-size: 1rem;

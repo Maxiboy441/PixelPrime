@@ -1,0 +1,103 @@
+<!-- 
+Usage: *at* await Html.PartialAsync("_ReviewPopUpForm", Tuple.Create("Movie_Title", "Form_Action"))
+-->
+
+@model Tuple<string, string>
+
+<body>
+@await Html.PartialAsync("_PrimaryButton",
+Tuple.Create(
+"Add Review",
+"style-1",
+"",
+"type=button data-toggle=modal data-target=#myModal",
+"button"))
+
+<div class="modal" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h4 class="modal-title text-black">Review for @Model.Item1</h4>
+      </div>
+
+      <div class="modal-body">
+        <form id="reviewForm" action="@Model.Item2">
+          <div class="form-group">
+            <label class="text-black p-2" for="title">Title</label>
+            <input type="text" class="form-control" id="title" placeholder="Give it a Title" style="max-width: 95%" oninput="checkForm()">
+          </div>
+          <div class="form-group">
+            <label class="text-black p-2" for="review">Review</label>
+            <textarea class="form-control" id="review" placeholder="How did you like the Movie?" style="max-width: 95%; height: 150px;" oninput="checkForm()"></textarea>
+          </div>
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        @await Html.PartialAsync("_PrimaryButton",
+        Tuple.Create(
+        "Close",
+        "",
+        "btn btn-secondary",
+        "type=button data-dismiss=modal",
+        "button"))
+
+        @await Html.PartialAsync("_PrimaryButton",
+        Tuple.Create(
+        "Submit",
+        "style-1",
+        "",
+        "type=submit id=submitBtn disabled",
+        "button"))
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  function checkForm() {
+    var title = document.getElementById('title').value;
+    var review = document.getElementById('review').value;
+    var submitBtn = document.getElementById('submitBtn');
+
+    var isTitleValid = title.trim() !== "";
+    var isReviewValid = review.trim() !== "";
+
+    if (isTitleValid) {
+      document.getElementById('title').classList.remove('invalid-input');
+    } else {
+      document.getElementById('title').classList.add('invalid-input');
+    }
+
+    if (isReviewValid) {
+      document.getElementById('review').classList.remove('invalid-input');
+    } else {
+      document.getElementById('review').classList.add('invalid-input');
+    }
+
+    if (isTitleValid && isReviewValid) {
+      submitBtn.removeAttribute('disabled');
+    } else {
+      submitBtn.setAttribute('disabled', 'disabled');
+    }
+  }
+
+  function clearForm() {
+    document.getElementById('title').value = '';
+    document.getElementById('review').value = '';
+    document.getElementById('submitBtn').setAttribute('disabled', 'disabled');
+    document.getElementById('title').classList.remove('invalid-input');
+    document.getElementById('review').classList.remove('invalid-input');
+  }
+
+  document.querySelector('#myModal .close').addEventListener('click', clearForm);
+  document.getElementById('myModal').addEventListener('hidden.bs.modal', clearForm);
+  document.getElementById('submitBtn').addEventListener('click', function(event) {
+    event.preventDefault();
+    clearForm();
+    $('#myModal').modal('hide');
+  });
+</script>
+</body>
