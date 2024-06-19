@@ -34,6 +34,10 @@ body {
     background: #7432F9;
 }
 
+.bg-secondary-color {
+    background: var(--secondary-color);
+}
+
 footer {
     color: var(--text-color)
 }
@@ -76,7 +80,6 @@ body {
     background-color: #252627;
     color: white;
 }
-
 
 .invalid-input {
     border: 2px solid red;

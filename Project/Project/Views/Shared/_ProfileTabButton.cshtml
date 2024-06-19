@@ -22,9 +22,11 @@ Usage:
             <button class="nav-link fs-5" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">@Model.Item3</button>
         </li>
     </ul>
-    <div class="tab-content pt-3 bg-secondary-color" id="myTabContent">
-        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">@Model.Item4</div>
-        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">@Model.Item5</div>
-        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">@Model.Item6</div>
+    <div class="bg-secondary-color">
+        <div class="tab-content pt-3 container" id="myTabContent">
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">@Model.Item4</div>
+            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">@Model.Item5</div>
+            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">@Model.Item6</div>
+        </div>
     </div>
 </div>
