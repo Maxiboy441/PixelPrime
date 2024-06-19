@@ -36,20 +36,22 @@ Usage: *at* await Html.PartialAsync("_ReviewPopUpForm", Tuple.Create("Movie_Titl
 
       <div class="modal-footer">
         @await Html.PartialAsync("_PrimaryButton",
-        Tuple.Create(
-        "Close",
-        "",
-        "btn btn-secondary",
-        "type=button data-dismiss=modal",
-        "button"))
+            Tuple.Create(
+                "Close",
+                "",
+                "btn btn-secondary",
+                "type=button data-dismiss=modal",
+                "button")
+            )
 
         @await Html.PartialAsync("_PrimaryButton",
-        Tuple.Create(
-        "Submit",
-        "style-1",
-        "",
-        "type=submit id=submitBtn disabled",
-        "button"))
+            Tuple.Create(
+                "Submit",
+                "style-1",
+                "",
+                "type=submit id=submitBtn disabled",
+                "button")
+            )
       </div>
 
     </div>
