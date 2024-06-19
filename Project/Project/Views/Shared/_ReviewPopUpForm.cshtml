@@ -4,14 +4,14 @@ Usage: *at* await Html.PartialAsync("_ReviewPopUpForm", Tuple.Create("Movie_Titl
 
 @model Tuple<string, string>
 
-<body>
-@await Html.PartialAsync("_PrimaryButton",
-Tuple.Create(
-"Add Review",
-"style-1",
-"",
-"type=button data-toggle=modal data-target=#myModal",
-"button"))
+    @await Html.PartialAsync("_PrimaryButton",
+    Tuple.Create(
+        "Add Review",
+        "style-1",
+        "",
+        "type=button data-toggle=modal data-target=#myModal",
+        "button")
+    )
 
 <div class="modal" id="myModal">
   <div class="modal-dialog">
@@ -100,4 +100,3 @@ Tuple.Create(
     $('#myModal').modal('hide');
   });
 </script>
-</body>
