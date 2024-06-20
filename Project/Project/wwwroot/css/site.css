@@ -90,3 +90,17 @@ body {
         font-size: 1rem;
     }
 }
+
+.card {
+    border: none;
+    background-color: var(--primary-color);
+}
+
+.card-body {
+    background-color: #373b3e;
+    border-radius: 50px;
+}
+
+.form-floating>.form-control, .form-floating >.form-select {
+    height: 50%;
+}

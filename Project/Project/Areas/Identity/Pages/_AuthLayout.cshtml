@@ -1,0 +1,21 @@
+@{
+Layout = "/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row justify-content-center">
+    <div class="col-4 mt-5">
+        <div class="card login log-out-card">
+            <div class="card-body">
+                <div class="row justify-content-center">
+                    <div class="col-8 my-4 text-center">
+                        @RenderBody()
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await RenderSectionAsync("Scripts", required: false)
+}
