@@ -1,0 +1,53 @@
+﻿@page
+@model Microsoft.AspNetCore.Identity.UI.V4.Pages.Account.Internal.LoginModel
+
+@{
+Layout = "/Areas/Identity/Pages/_AuthLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <section>
+            <form id="account" method="post">
+                <h2 class="text-center fw-bold mb-5 text-white">Welcome Back!</h2>
+
+                <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.Email" class="form-control rounded-pill" autocomplete="username" aria-required="true" placeholder="Username" />
+                    <label asp-for="Input.Email" class="form-label text-black">Email</label>
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.Password" class="form-control rounded-pill" autocomplete="current-password" aria-required="true" placeholder="Password" />
+                    <label asp-for="Input.Password" class="form-label text-black">Password</label>
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+                @* <div class="checkbox mb-3"> *@
+                @*     <label asp-for="Input.RememberMe" class="form-label"> *@
+                @*         <input class="form-check-input" asp-for="Input.RememberMe" /> *@
+                @*         @Html.DisplayNameFor(m => m.Input.RememberMe) *@
+                @*     </label> *@
+                @* </div> *@
+                <div>
+                    <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary rounded-pill fw-bold">Login</button>
+                </div>
+                <div class="d-flex flex-column justify-content-center align-items-center pb-3 pt-3 gap-3">
+                    <hr class="text-white w-75">
+                    <p>
+                        <a class="fw-bold p-3 mb-2 bg-success text-white text-decoration-none rounded-pill w-75 text-center" asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Create new account</a>
+                    </p>
+                    @* <p> *@
+                    @*     <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a> *@
+                    @* </p> *@
+                    @* <p> *@
+                    @*     <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a> *@
+                    @* </p> *@
+                </div>
+            </form>
+        </section>
+    </div>
+</div>
+
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+}

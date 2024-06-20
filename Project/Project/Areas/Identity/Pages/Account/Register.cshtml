@@ -1,0 +1,50 @@
+﻿@page
+@model Project.Areas.Identity.Pages.Account.RegisterModel
+
+@{
+ViewData["Title"] = "Register";
+Layout = "~/Areas/Identity/Pages/_AuthLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+            <h2 class="text-center fw-bold mb-5 text-white">Create Account</h2>
+            
+            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+
+            <div class="form-floating mb-3">
+                <input asp-for="Input.FirstName" class="form-control rounded-pill" autocomplete="firstname" aria-required="true" placeholder="First Name" />
+                <label asp-for="Input.FirstName" class="text-black">First Name</label>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input asp-for="Input.LastName" class="form-control rounded-pill" autocomplete="lastname" aria-required="true" placeholder="Last Name" />
+                <label asp-for="Input.LastName" class="text-black">Last Name</label>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input asp-for="Input.Email" class="form-control rounded-pill" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                <label asp-for="Input.Email" class="text-black">Email</label>
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input asp-for="Input.Password" class="form-control rounded-pill" autocomplete="new-password" aria-required="true" placeholder="Password" />
+                <label asp-for="Input.Password" class="text-black">Password</label>
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input asp-for="Input.ConfirmPassword" class="form-control rounded-pill" autocomplete="new-password" aria-required="true" placeholder="Confirm Password" />
+                <label asp-for="Input.ConfirmPassword" class="text-black">Confirm Password</label>
+                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+            </div>
+            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary rounded-pill fw-bold">Sign Up</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+}
