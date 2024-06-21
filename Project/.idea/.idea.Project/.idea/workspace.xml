@@ -8,14 +8,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="66be636b-79ff-4496-b197-b744edd2149a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Project/Areas/Identity/Pages/_AuthLayout.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/Controllers/HomeController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Project/Controllers/HomeController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Project/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/Project.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Project/Project.csproj" afterDir="false" />
+    <list default="true" id="66be636b-79ff-4496-b197-b744edd2149a" name="Changes" comment="Added -Model &amp; UserController with Views">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Project/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Project/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/Views/Shared/_LoginPartial.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Project/Views/Shared/_LoginPartial.cshtml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Project/Views/Shared/_NavBar.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Project/Views/Shared/_NavBar.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/Project/appsettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/wwwroot/css/site.css" beforeDir="false" afterPath="$PROJECT_DIR$/Project/wwwroot/css/site.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,6 +28,7 @@
     <setting file="file://$PROJECT_DIR$/Project/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.min.js.map" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Project/wwwroot/lib/jquery/dist/jquery.min.map" root0="FORCE_HIGHLIGHTING" />
   </component>
+  <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="Toolset" />
   </component>
@@ -107,15 +104,27 @@
       <workItem from="1718922198414" duration="1426000" />
       <workItem from="1718923652350" duration="107000" />
       <workItem from="1718923766465" duration="1209000" />
-      <workItem from="1718925012077" duration="1219000" />
+      <workItem from="1718925012077" duration="4408000" />
     </task>
+    <task id="LOCAL-00001" summary="Added -Model &amp; UserController with Views">
+      <option name="closed" value="true" />
+      <created>1718926736915</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1718926736915</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
   <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+    <MESSAGE value="Added -Model &amp; UserController with Views" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added -Model &amp; UserController with Views" />
   </component>
 </project>
