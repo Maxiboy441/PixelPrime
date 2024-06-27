@@ -3,3 +3,29 @@
 
 // Write your JavaScript code.
 
+const swiperEl = document.querySelector('swiper-container')
+Object.assign(swiperEl, {
+    breakpoints: {
+        345: {
+            slidesPerView: 2,
+            spaceBetween: 15,
+            centeredSlides: true,
+        },
+        640: {
+            slidesPerView: 2,
+            spaceBetween: 10,
+            centeredSlides: false,
+        },
+        768: {
+            slidesPerView: 4,
+            spaceBetween: 20,
+            centeredSlides: false,
+        },
+        1024: {
+            slidesPerView: 4,
+            spaceBetween: 20,
+            centeredSlides: false
+        },
+    },
+});
+swiperEl.initialize();
