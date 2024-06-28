@@ -17,4 +17,20 @@
     </PackageReference>
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
   </ItemGroup>
+  <ItemGroup>
+    <None Remove="DummyData\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DummyData\" />
+    <Folder Include="wwwroot\lib\fontawesome\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="wwwroot\lib\fontawesome\" />
+    <Content Remove="wwwroot\js\swiper-element-bundle.min.js" />
+    <Content Remove="wwwroot\css\swiper-bundle.min.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="wwwroot\js\swiper-element-bundle.min.js" />
+    <None Include="wwwroot\css\swiper-bundle.min.css" />
+  </ItemGroup>
 </Project>
