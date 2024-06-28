@@ -8,7 +8,7 @@ namespace Project.Services
         private static readonly HttpClient HttpClient = new();
         private const string BaseApiUrl = $"http://www.omdbapi.com/";
         private static readonly IConfigurationRoot Myconfig = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
-        private static readonly string? ApiKey = Myconfig.GetValue<string>("ApiKeys:MovieApi");
+        private static readonly string? ApiKey = Myconfig.GetValue<string>("Api:MovieApi");
 
 
         public static async Task<Movie> GetMovieById(string id)
