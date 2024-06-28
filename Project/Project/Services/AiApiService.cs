@@ -8,6 +8,9 @@ public class AiApiService
 {
     private static readonly HttpClient client = new HttpClient();
     
+    private static readonly IConfigurationRoot Myconfig = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+    private static readonly string? ApiURL = Myconfig.GetValue<string>("Api:AiURL");
+    
     public static async Task<string> GenerateResponse(string prompt)
     {
         var requestBody = new
@@ -20,7 +23,7 @@ public class AiApiService
         var json = JsonSerializer.Serialize(requestBody);
         var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-        var response = await client.PostAsync("", content);
+        var response = await client.PostAsync(ApiURL, content);
 
         if (response.IsSuccessStatusCode)
         {
