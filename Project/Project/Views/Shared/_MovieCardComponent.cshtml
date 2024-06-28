@@ -1,4 +1,13 @@
-﻿@model Tuple<string, string, string>
+﻿@*
+    string argument 1: movie poster
+    string argument 2: movie rating
+    string argument 3: movie title
+
+    Usage:
+    @await Html.PartialAsync("_MovieCardComponent", Tuple.Create(movie.Poster, movie.Ratings, movie.Title))
+*@
+
+@model Tuple<string, string, string>
 
 <div class="card bg-secondary-color" style="width: 18rem;">
     <div class="card-img-container">
