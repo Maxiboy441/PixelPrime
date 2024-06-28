@@ -12,6 +12,8 @@ namespace Project.Models
         [ForeignKey("user_id")]
         public int UserId { get; set; } = 0;
 
+        public int MovieId { get; set; } = 0;
+
         public DateTime Created_at { get; set; }
         public DateTime Updated_at { get; set; }
     }
