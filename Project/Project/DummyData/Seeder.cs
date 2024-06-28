@@ -1,4 +1,13 @@
-﻿namespace Project.DummyData
+﻿/*Usage:
+
+Add in the page
+@{
+var movies = Project.DummyData.Seeder.getMovies();
+
+}
+*/
+
+namespace Project.DummyData
 {
    public class Seeder
     {
