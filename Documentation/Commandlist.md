@@ -47,13 +47,14 @@ In the ~/Project/Project directory
 `
 docker compose exec mysql bash
 `
+
 `
 mysql -u root -p
 `
 
 ### Creating migrations
 `
-dotnet ef migrations add InitialCreatedocker`
+dotnet ef migrations add InitialCreatedocker
 `
 
 ### Removing migration
