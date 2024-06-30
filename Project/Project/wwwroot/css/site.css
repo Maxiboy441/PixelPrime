@@ -26,8 +26,17 @@ body {
     color: var(--text-color)
 }
 
-.navbar-brand a:hover{
-    background: #252626;
+.navbar-brand img {
+    height: 2.5rem;
+    width: auto;
+}
+
+.navbar-brand span {
+    transition: all 0.3s ease-in-out;
+}
+
+.navbar-brand span:hover {
+    color: var(--purple-color);
 }
 
 .bg-purple {
