@@ -1,17 +1,20 @@
 using System.Text;
-
 using System.Text.Json;
 
 namespace Project.Services;
 
 public class AiApiService
 {
-    private static readonly HttpClient client = new HttpClient();
+    private readonly HttpClient _client;
+    private readonly string? _apiUrl;
+
+    public AiApiService(HttpClient client, IConfiguration config)
+    {
+        _client = client;
+        _apiUrl = config.GetValue<string>("Api:AiURL");
+    }
     
-    private static readonly IConfigurationRoot Myconfig = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
-    private static readonly string? ApiURL = Myconfig.GetValue<string>("Api:AiURL");
-    
-    public static async Task<string> GenerateResponse(string prompt)
+    public async Task<string> GenerateResponse(string prompt)
     {
         var requestBody = new
         {
@@ -23,7 +26,7 @@ public class AiApiService
         var json = JsonSerializer.Serialize(requestBody);
         var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-        var response = await client.PostAsync(ApiURL, content);
+        var response = await _client.PostAsync(_apiUrl, content);
 
         if (response.IsSuccessStatusCode)
         {
@@ -56,7 +59,7 @@ public class AiApiService
         }
     }
 
-    private static string ExtractJsonFromMarkdown(string markdown)
+    private string ExtractJsonFromMarkdown(string markdown)
     {
         var match = System.Text.RegularExpressions.Regex.Match(markdown, @"```json\s*([\s\S]*?)\s*```");
         return match.Success ? match.Groups[1].Value.Trim() : string.Empty;
