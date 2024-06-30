@@ -126,3 +126,18 @@ html .swiper-button-next, html .swiper-button-prev {
         font-size: 1rem;
     }
 }
+
+.scaffold {
+    color: #fff;
+    padding: 3rem;
+    display: flex;
+    border-radius: 5%;
+    align-items: center !important;
+    justify-content: center !important;
+    background-color: var(--secondary-color);
+}
+
+.btn {
+    color: var(--text-color);
+    border-radius: 9999px;
+}

@@ -1,0 +1,47 @@
+﻿@page
+@model RegisterModel
+@{
+ViewData["Title"] = "Create Account";
+}
+
+<div class="d-flex justify-content-center align-content-center">
+    <div class="scaffold">
+        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+            <h2 class="text-center fw-bold mb-4 display-6">Create Account</h2>
+
+            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+
+            <div class="mb-3">
+                <label asp-for="Input.Name" class="col-form-label">Name</label>
+                <input asp-for="Input.Name" class="form-control w-100 rounded-pill mb-2" autocomplete="Name" aria-required="true" placeholder="Name"/>
+                <span asp-validation-for="Input.Name" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Input.Email" class="col-form-label">Email</label>
+                <input asp-for="Input.Email" class="form-control w-100 rounded-pill mb-2" autocomplete="Email" aria-required="true" placeholder="Email"/>
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Input.Password" class="col-form-label">Password</label>
+                <input asp-for="Input.Password" class="form-control w-100 rounded-pill mb-2" autocomplete="password" aria-required="true" placeholder="Password"/>
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Input.ConfirmPassword" class="col-form-label">Confirm Password</label>
+                <input asp-for="Input.ConfirmPassword" class="form-control w-100 rounded-pill mb-2" autocomplete="password" aria-required="true" placeholder="Confirm Password"/>
+                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+            </div>
+
+            <div class="mb-4 mt-4">
+                <button id="registerSubmit" type="submit" class="w-100 btn fw-bold" style="background: #7432F9">Sign Up</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+}
