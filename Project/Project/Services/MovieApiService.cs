@@ -1,21 +1,27 @@
 using System.Text.Json;
 using Project.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace Project.Services
 {
-    public static class MovieApiService
+    public class MovieApiService
     {
-        private static readonly HttpClient HttpClient = new();
-        private const string BaseApiUrl = $"http://www.omdbapi.com/";
-        private static readonly IConfigurationRoot Myconfig = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
-        private static readonly string? ApiKey = Myconfig.GetValue<string>("Api:MovieApi");
+        private readonly HttpClient _httpClient;
+        private readonly string _baseApiUrl;
+        private readonly string? _apiKey;
 
-
-        public static async Task<Movie> GetMovieById(string id)
+        public MovieApiService(HttpClient httpClient, IConfiguration configuration)
         {
-            var url = $"{BaseApiUrl}?i={id}&apikey={ApiKey}";
+            _httpClient = httpClient;
+            _baseApiUrl = "http://www.omdbapi.com/";
+            _apiKey = configuration.GetValue<string>("Api:MovieApi");
+        }
 
-            HttpResponseMessage response = await HttpClient.GetAsync(url);
+        public async Task<Movie> GetMovieById(string id)
+        {
+            var url = $"{_baseApiUrl}?i={id}&apikey={_apiKey}";
+
+            HttpResponseMessage response = await _httpClient.GetAsync(url);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -33,11 +39,11 @@ namespace Project.Services
             return movie;
         }
 
-        public static async Task<Movie> GetMovieByName(string name)
+        public async Task<Movie> GetMovieByName(string name)
         {
-            var url = $"{BaseApiUrl}?t={name}&apikey={ApiKey}";
+            var url = $"{_baseApiUrl}?t={name}&apikey={_apiKey}";
 
-            HttpResponseMessage response = await HttpClient.GetAsync(url);
+            HttpResponseMessage response = await _httpClient.GetAsync(url);
 
             if (!response.IsSuccessStatusCode)
             {
