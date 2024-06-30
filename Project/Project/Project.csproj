@@ -22,11 +22,13 @@
   <ItemGroup>
     <Folder Include="DummyData\" />
     <Folder Include="wwwroot\lib\fontawesome\" />
+    <Folder Include="wwwroot\images\" />
   </ItemGroup>
   <ItemGroup>
     <Content Remove="wwwroot\lib\fontawesome\" />
     <Content Remove="wwwroot\js\swiper-element-bundle.min.js" />
     <Content Remove="wwwroot\css\swiper-bundle.min.css" />
+    <Content Remove="wwwroot\images\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="wwwroot\js\swiper-element-bundle.min.js" />
