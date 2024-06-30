@@ -8,6 +8,8 @@ services:
       - "6677:80"
     networks:
       - csharp
+    environment: 
+      - DBHOST=mysql
 
   mysql:
     image: mysql:8.0
@@ -18,7 +20,7 @@ services:
        - mysql:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: root_password
-      MYSQL_DATABASE: my_database
+      MYSQL_DATABASE: pixel_prime
       MYSQL_USER: my_user
       MYSQL_PASSWORD: my_password
     networks:
