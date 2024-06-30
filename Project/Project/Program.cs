@@ -1,7 +1,11 @@
 ﻿using Project.Data;
 using Microsoft.EntityFrameworkCore;
+using Project.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddHttpClient<AiApiService>();
+builder.Services.AddScoped<AiApiService>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
