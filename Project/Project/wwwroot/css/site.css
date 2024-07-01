@@ -121,6 +121,58 @@ html .swiper-button-next, html .swiper-button-prev {
     color: #fff !important;
 }
 
+/*Profile Page styles*/
+
+.card .btn-danger {
+    position: absolute;
+    z-index: 99;
+    right: 0;
+}
+
+.side-card .card .card-img-container {
+    height: 30rem;
+}
+
+.side-btn-container button {
+    border: 1px solid #fff;
+}
+
+.side-btn-container button i {
+    color: #fff;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOut {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+.side-card.show {
+    animation: slideIn 0.5s forwards;
+}
+
+.side-card.hide {
+    animation: slideOut 0.5s forwards;
+}
+
 @media (min-width: 768px) {
     html {
         font-size: 1rem;
