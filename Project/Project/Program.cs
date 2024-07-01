@@ -1,7 +1,11 @@
 ﻿using Project.Data;
 using Microsoft.EntityFrameworkCore;
+using Project.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddHttpClient<MovieApiService>();
+builder.Services.AddScoped<MovieApiService>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
