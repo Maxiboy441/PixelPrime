@@ -31,7 +31,8 @@ namespace Project.DummyData
                     Country = "United Kingdom",
                     Awards = "N/A",
                     Poster = "https://m.media-amazon.com/images/M/MV5BYmZkYWRlNWQtOGY0Zi00MWZkLWJiZTktNjRjMDY4MTU2YzAyXkEyXkFqcGdeQXVyMzYzNzc1NjY@._V1_SX300.jpg",
-                    Ratings = "6.0"
+                    Ratings = "6.0",
+                    imdbID = "tt2803854"
                 },
                 new Movie
                 {
@@ -49,7 +50,8 @@ namespace Project.DummyData
                     Country = "United States, Australia",
                     Awards = "N/A",
                     Poster = "https://m.media-amazon.com/images/M/MV5BY2QwOGE2NGQtMWQwNi00M2IzLThlNWItYWMzNGQ5YWNiZDA4XkEyXkFqcGdeQXVyNTE1NjY5Mg@@._V1_SX300.jpg",
-                    Ratings = "7.0"
+                    Ratings = "7.0",
+                    imdbID = "tt14539740"
                 },
                 new Project.DummyData.Movie
                 {
