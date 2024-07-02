@@ -4,6 +4,8 @@ using Project.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddHttpClient<AiApiService>();
+builder.Services.AddScoped<AiApiService>();
 builder.Services.AddHttpClient<MovieApiService>();
 builder.Services.AddScoped<MovieApiService>();
 
