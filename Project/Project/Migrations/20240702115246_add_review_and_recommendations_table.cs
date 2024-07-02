@@ -23,7 +23,9 @@ namespace Project.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     User_id = table.Column<int>(type: "int", nullable: false),
                     Movie_id = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4")
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Created_at = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    Updated_at = table.Column<DateTime>(type: "datetime(6)", nullable: false)
                 },
                 constraints: table =>
                 {

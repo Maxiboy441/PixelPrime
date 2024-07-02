@@ -11,7 +11,7 @@ using Project.Data;
 namespace Project.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240702114756_add_review_and_recommendations_table")]
+    [Migration("20240702115246_add_review_and_recommendations_table")]
     partial class add_review_and_recommendations_table
     {
         /// <inheritdoc />
@@ -28,9 +28,15 @@ namespace Project.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("Created_at")
+                        .HasColumnType("datetime(6)");
+
                     b.Property<string>("Movie_id")
                         .IsRequired()
                         .HasColumnType("longtext");
+
+                    b.Property<DateTime>("Updated_at")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<int>("User_id")
                         .HasColumnType("int");

@@ -25,9 +25,15 @@ namespace Project.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("Created_at")
+                        .HasColumnType("datetime(6)");
+
                     b.Property<string>("Movie_id")
                         .IsRequired()
                         .HasColumnType("longtext");
+
+                    b.Property<DateTime>("Updated_at")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<int>("User_id")
                         .HasColumnType("int");

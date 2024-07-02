@@ -11,6 +11,8 @@ namespace Project.Models
         public int Id { get; set; }
         public int User_id { get; set; }
         public string Movie_id { get; set; }
+        public DateTime Created_at { get; set; }
+        public DateTime Updated_at { get; set; }
     }
 }
 
