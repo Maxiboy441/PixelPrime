@@ -1,0 +1,23 @@
+﻿@*
+    string argument: Title to be displayed
+    string argument: movies list
+
+    Usage: @await Html.PartialAsync("_MovieSlider", Tuple.Create("Top Rated Movies", movies))
+*@
+
+@*TODO: change List type when we get the real data*@
+@model Tuple<string, List<Movie>>
+
+<div class="container">
+    <h3 class="my-5">@Model.Item1 </h3>
+    <swiper-container class="mySwiper" navigation="true">
+        @foreach (var movie in Model.Item2)
+        {
+            <swiper-slide>
+                @await Html.PartialAsync("_MovieCardComponent", Tuple.Create(movie.Poster, movie.PixelRating, movie.Title))
+            </swiper-slide>
+        }
+    </swiper-container>
+</div>
+
+<script src="~/js/swiper-element-bundle.min.js" asp-append-version="true"></script>
