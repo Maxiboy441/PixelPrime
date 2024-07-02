@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Project.Models
 {
@@ -9,10 +7,12 @@ namespace Project.Models
     {
         [Key]
         public int WatchlistId { get; set; }
-        [ForeignKey("UserId")]
+
+        [ForeignKey("User")]
         public int UserId { get; set; }
 
-        public int MovieId { get; set; }
+        [ForeignKey("Movie")]
+        public string MovieId { get; set; }
 
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }

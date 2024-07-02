@@ -7,12 +7,12 @@ namespace Project.Models
 {
     public class Favorites
     {
-        [Key]
+      //  [Key]
         public int Id { get; set; }
-        [ForeignKey("user_id")]
+      //  [ForeignKey("user_id")]
         public int UserId { get; set; } = 0;
 
-        public int MovieId { get; set; } = 0;
+        public string MovieId { get; set; }
 
         public DateTime Created_at { get; set; }
         public DateTime Updated_at { get; set; }
