@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace Project.Services;
 
@@ -14,7 +16,7 @@ public class AiApiService
         _apiUrl = config.GetValue<string>("Api:AiURL");
     }
     
-    public async Task<string> GenerateResponse(string prompt)
+    public async Task<List<string>> GenerateResponse(string prompt)
     {
         var requestBody = new
         {
@@ -41,7 +43,7 @@ public class AiApiService
                 if (!string.IsNullOrEmpty(jsonContent))
                 {
                     var movieList = JsonSerializer.Deserialize<List<string>>(jsonContent);
-                    return JsonSerializer.Serialize(movieList, new JsonSerializerOptions { WriteIndented = true });
+                    return movieList;
                 }
                 else
                 {
