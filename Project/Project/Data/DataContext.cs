@@ -11,6 +11,15 @@ namespace Project.Data
         
         public DataContext(DbContextOptions<DataContext> options)
             : base(options) { }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Rating>()
+                .HasKey(p => p.Id);
+        
+            modelBuilder.Entity<Rating>()
+                .Property(p => p.Id)
+                .ValueGeneratedOnAdd();
+        }
     }
 }
 
