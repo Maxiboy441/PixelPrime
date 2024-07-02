@@ -1,0 +1,73 @@
+﻿@*
+    list argument 1: movies list
+
+    Usage:
+    @await Html.PartialAsync("_ProfileMovieListComponent", Tuple.Create(moviesList))
+*@
+
+@model Tuple<List<Project.DummyData.Movie>>
+
+<div class="d-flex">
+    @await Html.PartialAsync("_ProfileMovieCardComponent", Tuple.Create(Model.Item1))
+
+    <div id="side-card-container">
+        @foreach (var movie in Model.Item1)
+        {
+            <div class="d-flex d-none side-card gap-3" data-movie-id="@movie.imdbID">
+                <div class="side-btn-container align-self-center">
+                    <button class="btn btn-lg close-btn">
+                        <i class="fa-solid fa-angle-left fa-2xl"></i>
+                    </button>
+                </div>
+                <div class="card bg-secondary-color" style="width: 18rem;">
+                    <div class="card-img-container">
+                        <a href="#"><img class="card-img-top" src="@movie.Poster" alt="Card image cap"></a>
+                    </div>
+                    <div class="card-body-movie d-flex flex-column">
+                        <p class="card-title mt-3"><a href="#">@movie.Genre</a></p>
+                        <hr />
+                        <p class="card-title"><a href="#">@movie.Plot</a></p>
+                        <p class="card-text"><i class="fa-solid fa-star" style="color: #FFD43B;"></i>@movie.Ratings</p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const movieCards = document.querySelectorAll('.movie-card');
+        const sideCards = document.querySelectorAll('.side-card');
+        const sideCardContainer = document.getElementById('side-card-container');
+
+        movieCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const movieId = card.getAttribute('data-movie-id');
+                const sideCard = document.querySelector(`.side-card[data-movie-id="${movieId}"]`);
+
+                sideCards.forEach(sc => {
+                    if (!sc.classList.contains('d-none')) {
+                        sc.classList.add('hide');
+                        sc.addEventListener('animationend', () => sc.classList.add('d-none'), { once: true });
+                    }
+                });
+
+                if (sideCard) {
+                    sideCard.classList.remove('d-none', 'hide');
+                    sideCard.classList.add('show');
+                }
+            });
+        });
+
+        sideCards.forEach(card => {
+            const closeButton = card.querySelector('.close-btn');
+            closeButton.addEventListener('click', (e) => {
+                e.stopPropagation();
+                card.classList.add('hide');
+                card.addEventListener('animationend', () => card.classList.add('d-none'), { once: true });
+            });
+        });
+});
+</script>
+
