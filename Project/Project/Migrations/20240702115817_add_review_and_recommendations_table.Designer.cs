@@ -11,7 +11,7 @@ using Project.Data;
 namespace Project.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240702115246_add_review_and_recommendations_table")]
+    [Migration("20240702115817_add_review_and_recommendations_table")]
     partial class add_review_and_recommendations_table
     {
         /// <inheritdoc />

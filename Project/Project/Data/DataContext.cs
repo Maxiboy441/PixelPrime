@@ -29,6 +29,28 @@ namespace Project.Data
                 .Property(p => p.Id)
                 .ValueGeneratedOnAdd();
         }
+        
+        public override int SaveChanges()
+        {
+            var entries = ChangeTracker.Entries();
+            foreach (var entry in entries)
+            {
+                if (entry.Entity is Review || entry.Entity is Recommendation)
+                {
+                    var now = DateTime.UtcNow;
+                    if (entry.State == EntityState.Added)
+                    {
+                        entry.Property("CreatedAt").CurrentValue = now;
+                        entry.Property("UpdatedAt").CurrentValue = now;
+                    }
+                    if (entry.State == EntityState.Modified)
+                    {
+                        entry.Property("UpdatedAt").CurrentValue = now;
+                    }
+                }
+            }
+            return base.SaveChanges();
+        }
     }
 }
 
