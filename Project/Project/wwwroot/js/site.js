@@ -3,6 +3,48 @@
 
 // Write your JavaScript code.
 
+// Profile side card
+document.addEventListener('DOMContentLoaded', (event) => {
+    const movieCards = document.querySelectorAll('.movie-card');
+    const sideCards = document.querySelectorAll('.side-card');
+    const sideCardContainer = document.getElementById('side-card-container');
+
+    movieCards.forEach(card => {
+        card.addEventListener('click', (event) => {
+            if (event.target.classList.contains('close-btn')) {
+                // Prevent the side container from opening if the close button is clicked
+                event.stopPropagation();
+                return;
+            }
+
+            const movieId = card.getAttribute('data-movie-id');
+            const sideCard = document.querySelector(`.side-card[data-movie-id="${movieId}"]`);
+
+            sideCards.forEach(sc => {
+                if (!sc.classList.contains('d-none')) {
+                    sc.classList.add('hide');
+                    sc.addEventListener('animationend', () => sc.classList.add('d-none'), { once: true });
+                }
+            });
+
+            if (sideCard) {
+                sideCard.classList.remove('d-none', 'hide');
+                sideCard.classList.add('show');
+            }
+        });
+    });
+
+    sideCards.forEach(card => {
+        const closeButton = card.querySelector('.close-side-container');
+        closeButton.addEventListener('click', (e) => {
+            e.stopPropagation();
+            card.classList.add('hide');
+            card.addEventListener('animationend', () => card.classList.add('d-none'), { once: true });
+        });
+    });
+});
+
+// Movies Slider
 const swiperEl = document.querySelector('swiper-container')
 Object.assign(swiperEl, {
     breakpoints: {
