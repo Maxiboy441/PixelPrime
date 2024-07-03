@@ -6,7 +6,7 @@
 *@
 
 @*TODO: change List type when we get the real data*@
-@model Tuple<string, List<Project.DummyData.Movie>>
+@model Tuple<string, List<Movie>>
 
 <div class="container">
     <h3 class="my-5">@Model.Item1 </h3>
@@ -14,7 +14,7 @@
         @foreach (var movie in Model.Item2)
         {
             <swiper-slide>
-                @await Html.PartialAsync("_MovieCardComponent", Tuple.Create(movie.Poster, movie.Ratings, movie.Title))
+                @await Html.PartialAsync("_MovieCardComponent", Tuple.Create(movie.Poster, movie.PixelRating, movie.Title))
             </swiper-slide>
         }
     </swiper-container>
