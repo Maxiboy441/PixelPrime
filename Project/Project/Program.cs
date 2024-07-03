@@ -1,8 +1,17 @@
 ﻿using Project.Data;
 using Microsoft.EntityFrameworkCore;
+<<<<<<< HEAD
 using Project.Areas.Identity.Data;
+=======
+using Project.Services;
+>>>>>>> 0a6538c2fd5de322330415447b82272cd91983cf
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddHttpClient<AiApiService>();
+builder.Services.AddScoped<AiApiService>();
+builder.Services.AddHttpClient<MovieApiService>();
+builder.Services.AddScoped<MovieApiService>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
