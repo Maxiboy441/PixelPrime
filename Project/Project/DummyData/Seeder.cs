@@ -31,6 +31,8 @@ namespace Project.DummyData
                     Country = "United Kingdom",
                     Awards = "N/A",
                     Poster = "https://m.media-amazon.com/images/M/MV5BYmZkYWRlNWQtOGY0Zi00MWZkLWJiZTktNjRjMDY4MTU2YzAyXkEyXkFqcGdeQXVyMzYzNzc1NjY@._V1_SX300.jpg",
+                    PixelRating = "6.0",
+                    Id = "tt2803854"
                 },
                 new Movie
                 {
@@ -46,6 +48,8 @@ namespace Project.DummyData
                     Country = "United States, Australia",
                     Awards = "N/A",
                     Poster = "https://m.media-amazon.com/images/M/MV5BY2QwOGE2NGQtMWQwNi00M2IzLThlNWItYWMzNGQ5YWNiZDA4XkEyXkFqcGdeQXVyNTE1NjY5Mg@@._V1_SX300.jpg",
+                    PixelRating = "7.0",
+                    Id = "tt14539740"
                 },
                 new Movie
                 {
@@ -61,6 +65,8 @@ namespace Project.DummyData
                     Country = "United Kingdom, United States",
                     Awards = "Nominated for 3 Oscars. 48 wins & 95 nominations total",
                     Poster = "https://m.media-amazon.com/images/M/MV5BMGVmMWNiMDktYjQ0Mi00MWIxLTk0N2UtN2ZlYTdkN2IzNDNlXkEyXkFqcGdeQXVyODE5NzE3OTE@._V1_SX300.jpg",
+                    PixelRating = "7,0",
+                    Id = "tt1201607"
                 },
                 new Movie
                 {
@@ -76,6 +82,7 @@ namespace Project.DummyData
                     Country = "United States",
                     Awards = "Won 1 BAFTA Award, 34 wins & 49 nominations total",
                     Poster = "https://m.media-amazon.com/images/M/MV5BMjA4NDg3NzYxMF5BMl5BanBnXkFtZTcwNTgyNzkyNw@@._V1_SX300.jpg",
+                    Id = "tt1392170"
                 },
                 new Movie
                 {
@@ -91,6 +98,8 @@ namespace Project.DummyData
                     Country = "United States",
                     Awards = "Nominated for 1 Oscar. 39 wins & 81 nominations total",
                     Poster = "https://m.media-amazon.com/images/M/MV5BNDYxNjQyMjAtNTdiOS00NGYwLWFmNTAtNThmYjU5ZGI2YTI1XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg",
+                    PixelRating = "6,0",
+                    Id = "tt0848228"
                 },
                 new Movie
                 {
@@ -106,7 +115,8 @@ namespace Project.DummyData
                     Country = "United Kingdom, United States",
                     Awards = "Won 1 Oscar. 15 wins & 54 nominations total",
                     Poster = "https://m.media-amazon.com/images/M/MV5BMjMxOTM1OTI4MV5BMl5BanBnXkFtZTgwODE5OTYxMDI@._V1_SX300.jpg",
-                    PixelRating = "4"
+                    PixelRating = "4,0",
+                    Id = "tt3183660"
                 }
 
             };

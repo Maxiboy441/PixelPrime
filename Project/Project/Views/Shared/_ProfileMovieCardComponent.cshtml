@@ -1,0 +1,27 @@
+﻿@*
+    argument 1: movies list
+    argument 2: true or false (if true, it adds a close button on the card)
+
+    Usage:
+    @await Html.PartialAsync("_ProfileMovieCardComponent", Tuple.Create(movies, true))
+*@
+
+@model Tuple<List<Project.Models.Movie>, Boolean>
+
+<div class="d-flex flex-column flex-md-row gap-3 flex-wrap">
+    @foreach (var movie in Model.Item1)
+    {
+        <div class="card bg-secondary-color movie-card" style="width: 18rem;" data-movie-id="@movie.Id">
+            @if (Model.Item2)
+            {
+                <button class="btn btn-danger close-btn" aria-label="Close">X</button>
+            }
+            <div class="card-img-container">
+                <a href="#"><img class="card-img-top" src="@movie.Poster" alt="Card image cap"></a>
+            </div>
+            <div class="card-body-movie d-flex flex-column">
+                <h6 class="card-title my-2"><a href="#">@movie.Title</a></h6>
+            </div>
+        </div>
+    }
+</div>
