@@ -41,11 +41,11 @@ namespace Project.Migrations
                     b.Property<int>("User_id")
                         .HasColumnType("int");
 
-                    b.Property<string>("movie_poster")
+                    b.Property<string>("Movie_poster")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("movie_title")
+                    b.Property<string>("Movie_title")
                         .IsRequired()
                         .HasColumnType("longtext");
 
@@ -76,11 +76,11 @@ namespace Project.Migrations
                     b.Property<int>("User_id")
                         .HasColumnType("int");
 
-                    b.Property<string>("movie_poster")
+                    b.Property<string>("Movie_poster")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("movie_title")
+                    b.Property<string>("Movie_title")
                         .IsRequired()
                         .HasColumnType("longtext");
 
@@ -108,11 +108,11 @@ namespace Project.Migrations
                     b.Property<int>("User_id")
                         .HasColumnType("int");
 
-                    b.Property<string>("movie_poster")
+                    b.Property<string>("Movie_poster")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("movie_title")
+                    b.Property<string>("Movie_title")
                         .IsRequired()
                         .HasColumnType("longtext");
 
@@ -148,11 +148,11 @@ namespace Project.Migrations
                     b.Property<int>("User_id")
                         .HasColumnType("int");
 
-                    b.Property<string>("movie_poster")
+                    b.Property<string>("Movie_poster")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("movie_title")
+                    b.Property<string>("Movie_title")
                         .IsRequired()
                         .HasColumnType("longtext");
 
@@ -180,11 +180,11 @@ namespace Project.Migrations
                     b.Property<int>("User_id")
                         .HasColumnType("int");
 
-                    b.Property<string>("movie_poster")
+                    b.Property<string>("Movie_poster")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("movie_title")
+                    b.Property<string>("Movie_title")
                         .IsRequired()
                         .HasColumnType("longtext");
 

@@ -11,70 +11,70 @@ namespace Project.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<string>(
-                name: "movie_poster",
+                name: "Movie_poster",
                 table: "Watchlists",
                 type: "longtext",
                 nullable: false)
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.AddColumn<string>(
-                name: "movie_title",
+                name: "Movie_title",
                 table: "Watchlists",
                 type: "longtext",
                 nullable: false)
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.AddColumn<string>(
-                name: "movie_poster",
+                name: "Movie_poster",
                 table: "Reviews",
                 type: "longtext",
                 nullable: false)
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.AddColumn<string>(
-                name: "movie_title",
+                name: "Movie_title",
                 table: "Reviews",
                 type: "longtext",
                 nullable: false)
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.AddColumn<string>(
-                name: "movie_poster",
+                name: "Movie_poster",
                 table: "Recommendations",
                 type: "longtext",
                 nullable: false)
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.AddColumn<string>(
-                name: "movie_title",
+                name: "Movie_title",
                 table: "Recommendations",
                 type: "longtext",
                 nullable: false)
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.AddColumn<string>(
-                name: "movie_poster",
+                name: "Movie_poster",
                 table: "Ratings",
                 type: "longtext",
                 nullable: false)
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.AddColumn<string>(
-                name: "movie_title",
+                name: "Movie_title",
                 table: "Ratings",
                 type: "longtext",
                 nullable: false)
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.AddColumn<string>(
-                name: "movie_poster",
+                name: "Movie_poster",
                 table: "Favorites",
                 type: "longtext",
                 nullable: false)
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.AddColumn<string>(
-                name: "movie_title",
+                name: "Movie_title",
                 table: "Favorites",
                 type: "longtext",
                 nullable: false)
@@ -85,43 +85,43 @@ namespace Project.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "movie_poster",
+                name: "Movie_poster",
                 table: "Watchlists");
 
             migrationBuilder.DropColumn(
-                name: "movie_title",
+                name: "Movie_title",
                 table: "Watchlists");
 
             migrationBuilder.DropColumn(
-                name: "movie_poster",
+                name: "Movie_poster",
                 table: "Reviews");
 
             migrationBuilder.DropColumn(
-                name: "movie_title",
+                name: "Movie_title",
                 table: "Reviews");
 
             migrationBuilder.DropColumn(
-                name: "movie_poster",
+                name: "Movie_poster",
                 table: "Recommendations");
 
             migrationBuilder.DropColumn(
-                name: "movie_title",
+                name: "Movie_title",
                 table: "Recommendations");
 
             migrationBuilder.DropColumn(
-                name: "movie_poster",
+                name: "Movie_poster",
                 table: "Ratings");
 
             migrationBuilder.DropColumn(
-                name: "movie_title",
+                name: "Movie_title",
                 table: "Ratings");
 
             migrationBuilder.DropColumn(
-                name: "movie_poster",
+                name: "Movie_poster",
                 table: "Favorites");
 
             migrationBuilder.DropColumn(
-                name: "movie_title",
+                name: "Movie_title",
                 table: "Favorites");
         }
     }
