@@ -12,6 +12,8 @@ public class Rating
     public int User_id { get; set; }
     public string Movie_id { get; set; }
     public double Rating_value { get; set; }
+    public string Movie_title { get; set; }
+    public string Movie_poster { get; set; }
     public DateTime Created_at { get; set; }
     public DateTime Updated_at { get; set; }
 }

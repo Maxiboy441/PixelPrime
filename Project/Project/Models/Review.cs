@@ -14,6 +14,8 @@ public class Review
     public string Movie_id { get; set; }
     public string Title { get; set; }
     public string Text { get; set; }
+    public string Movie_title { get; set; }
+    public string Movie_poster { get; set; }
     public DateTime Created_at { get; set; }
     public DateTime Updated_at { get; set; }
 

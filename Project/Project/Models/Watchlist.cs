@@ -11,6 +11,8 @@ public class Watchlist
     // TODO: Add User_id as foreign key
     public int User_id { get; set; }
     public string Movie_id { get; set; }
+    public string Movie_title { get; set; }
+    public string Movie_poster { get; set; }
     public DateTime Created_at { get; set; }
     public DateTime Updated_at { get; set; }
 }
