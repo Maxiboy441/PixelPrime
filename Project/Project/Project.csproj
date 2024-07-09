@@ -15,15 +15,19 @@
     </PackageReference>
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="7.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.20" />
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="DummyData\" />
+    <None Remove="Views\Auth\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DummyData\" />
     <Folder Include="Migrations\" />
     <Folder Include="wwwroot\lib\fontawesome\" />
     <Folder Include="wwwroot\images\" />
+    <Folder Include="Views\Auth\" />
   </ItemGroup>
   <ItemGroup>
     <Content Remove="wwwroot\lib\fontawesome\" />
