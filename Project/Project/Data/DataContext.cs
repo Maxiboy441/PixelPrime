@@ -11,12 +11,20 @@ namespace Project.Data
         public DbSet<Review> Reviews { get; set; }
         public DbSet<Favorite> Favorites { get; set; }
         public DbSet<Watchlist> Watchlists { get; set; }
+        public DbSet<User> Users { get; set; }
 
         public DataContext(DbContextOptions<DataContext> options)
             : base(options) { }
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<User>()
+                .HasKey(p => p.Id);
+
+            modelBuilder.Entity<User>()
+                .Property(p => p.Id)
+                .ValueGeneratedOnAdd();
+
             modelBuilder.Entity<Recommendation>()
                 .HasKey(p => p.Id);
         
@@ -58,7 +66,7 @@ namespace Project.Data
             var entries = ChangeTracker.Entries();
             foreach (var entry in entries)
             {
-                if (entry.Entity is Review || entry.Entity is Recommendation || entry.Entity is Rating || entry.Entity is Favorite || entry.Entity is Watchlist)
+                if (entry.Entity is User || entry.Entity is Review || entry.Entity is Recommendation || entry.Entity is Rating || entry.Entity is Favorite || entry.Entity is Watchlist)
                 {
                     var now = DateTime.UtcNow;
                     if (entry.State == EntityState.Added)
