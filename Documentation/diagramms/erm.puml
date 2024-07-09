@@ -20,6 +20,8 @@ package "models" <<Node>> {
         * move_id: varchar(255)
         * title: varchar(255)
         * text: text
+        * movie_title
+        * movie_poster
         created_at: DateTime
         updated_at: DateTime
     }
@@ -28,7 +30,9 @@ package "models" <<Node>> {
         * id: int <<generated>>
         --
         * user_id: <<FK>>
-        * move_id: varchar(255)
+        * move_id: int
+        * movie_title
+        * movie_poster
         created_at: DateTime
         updated_at: DateTime
     }
@@ -37,7 +41,9 @@ package "models" <<Node>> {
         * id: int <<generated>>
         --
         * user_id: <<FK>>
-        * move_id: varchar(255)
+        * move_id: int
+        * movie_title
+        * movie_poster
         created_at: DateTime
         updated_at: DateTime
     }
@@ -46,7 +52,9 @@ package "models" <<Node>> {
         * id: int <<generated>>
         --
         * user_id: <<FK>>
-        * move_id: varchar(255)
+        * move_id: int
+        * movie_title
+        * movie_poster
         created_at: DateTime
         updated_at: DateTime
     }
@@ -55,8 +63,10 @@ package "models" <<Node>> {
         * id: int <<generated>>
         --
         * user_id: <<FK>>
-        * move_id: varchar(255)
-        * rating: double
+        * move_id: int
+        * rating: int
+        * movie_title
+        * movie_poster
         created_at: DateTime
         updated_at: DateTime
     }
