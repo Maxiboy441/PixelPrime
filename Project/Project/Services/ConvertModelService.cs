@@ -10,7 +10,7 @@ namespace Project.Services;
 
 public class ConvertModelService
 {
-    public List<Movie> ConvertToMovies<T>(List<T> items) where T : class
+    public List<Movie> ConvertToMovies<T>(List<T>? items) where T : class
     {
         return items.Select(ConvertToMovie).ToList();
     }
