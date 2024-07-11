@@ -37,14 +37,14 @@ namespace Project.Controllers
 
             if (Verify(password, user.Password))
             {
-                //var userWithoutPassword = new User
-                //{
-                //    Id = user.Id,
-                //    Name = user.Name,
-                //    Email = user.Email,
-                //};
-                //string userJson = JsonConvert.SerializeObject(userWithoutPassword);
-                //HttpContext.Session.SetString("CurrentUser", userJson);
+                var userWithoutPassword = new User
+                {
+                    Id = user.Id,
+                    Name = user.Name,
+                    Email = user.Email,
+                };
+                string userJson = JsonConvert.SerializeObject(userWithoutPassword);
+                HttpContext.Session.SetString("CurrentUser", userJson);
 
                 return RedirectToAction("index", "Home");
             }
@@ -80,17 +80,16 @@ namespace Project.Controllers
                 _context.Users.Add(user);
                 await _context.SaveChangesAsync();
 
-                //var userWithoutPassword = new User
-                //{
-                //    Id = user.Id,
-                //    Name = user.Name,
-                //    Email = user.Email,
-                //};
+                var userWithoutPassword = new User
+                {
+                    Id = user.Id,
+                    Name = user.Name,
+                    Email = user.Email,
+                };
 
-                //string userJson = JsonConvert.SerializeObject(userWithoutPassword);
-                //HttpContext.Session.SetString("CurrentUser", userJson);
+                string userJson = JsonConvert.SerializeObject(userWithoutPassword);
+                HttpContext.Session.SetString("CurrentUser", userJson);
 
-                //return Ok("User registered successfully");
                 return RedirectToAction("index", "Home");
             }
 
