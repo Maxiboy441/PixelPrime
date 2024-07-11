@@ -4,35 +4,40 @@
     ViewData["Title"] = "Login";
 }
 
-<div class="d-flex justify-content-center align-items-center">
-    <div class="overflow-x-hidden">
-        <form asp-action="login" method="post" class="bg-secondary-color p-5">
-            <h2 class="text-center fw-bold mb-4 display-6">Welcome Back!</h2>
+<section class="">
+    <div class="row d-flex justify-content-center align-items-center p-5">
+        <div class="col-6 col-md-3">
+            <form asp-action="login" method="post" class="rounded p-5 bg-secondary-color ">
+                <div class="d-flex flex-column justify-content-center align-items-center">
+                    <h2 class="text-center fw-bold mb-4 display-6">Sign In</h2>
 
-            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
-            <label asp-for="Email" class="col-md-4 col-form-label">Email</label>
+                    <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                    <label asp-for="Email" class="col-md-4 col-form-label align-self-start">Email</label>
 
-            <div class="form-group mb-3 align-items-left">
-                <input asp-for="Email" class="form-control w-100 rounded-pill mb-2" type="email" name="email" id="email" autocomplete="email" aria-required="true" placeholder="Username" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
+                    @*<div class="form-group mb-3 align-items-left">*@
+                    <input asp-for="Email" class="form-control w-100 rounded-pill mb-2" type="email" name="email" id="email" autocomplete="email" aria-required="true" placeholder="Username" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                    @*</div>*@
 
-            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
-            <label asp-for="Password" class="col-md-4 col-form-label">Password</label>
+                    <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
 
-            <div class="form-group mb-3 align-items-left">
-                <input asp-for="Password" class="form-control w-100 rounded-pill mb-2" type="password" name="password" id="password" aria-required="true" placeholder="Password" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
+                    @*<div class="form-group mb-3 align-items-left">*@
+                    <label asp-for="Password" class="col-md-4 col-form-label align-self-start">Password</label>
+                    <input asp-for="Password" class="form-control w-100 rounded-pill mb-2" type="password" name="password" id="password" aria-required="true" placeholder="Password" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                    @*</div>*@
 
-            <div class="mb-4 mt-4">
-                <button id="login-submit" type="submit" class="w-100 btn fw-bold" style="background: #7432F9">Login</button>
-            </div>
+                    @*<div class="mb-4 mt-4">*@
+                    <button id="login-submit" type="submit" class="w-100 btn fw-bold rounded-pill text-white mb-3 mt-3" style="background: #7432F9">Login</button>
+                    @*</div>*@
+                </div>
+                    
 
-            <div class="d-flex flex-column justify-content-center align-items-center" style="margin-left: 30px">
-                <hr class="w-75 text-light" />
-                <a class="w-75 btn btn-primary btn-success fw-bold" asp-action="SignUp">Create new account</a>
-            </div>
-        </form>
+                <div class="d-flex flex-column justify-content-center align-items-center">
+                    <hr class="w-75 text-light" />
+                    <a class="w-75 btn rounded-pill fw-bold text-white" style="background: #00BF63" asp-action="SignUp">Create a new account</a>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
+</section>

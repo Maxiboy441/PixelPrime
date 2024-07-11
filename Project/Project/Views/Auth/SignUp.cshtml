@@ -3,10 +3,10 @@
     ViewData["Title"] = "Sign Up";
 }
 
-<div class="d-flex justify-content-center align-content-center">
+@*<div class="d-flex justify-content-center align-content-center">
     <div class="scaffold">
         <form id="registerForm" asp-action="SignUp" method="post">
-            <h2 class="text-center fw-bold mb-4 display-6">Create Account</h2>
+            <h2 class="text-center fw-bold mb-4 display-6"></h2>
 
             <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
 
@@ -39,4 +39,36 @@
             </div>
         </form>
     </div>
-</div>
+</div>*@
+
+<section>
+    <div class="row d-flex justify-content-center align-items-center p-5">
+        <div class="col-6 col-md-3">
+            <form asp-action="SignUp" method="post" class="rounded p-5 bg-secondary-color ">
+                <div class="d-flex flex-column justify-content-center align-items-center">
+                    <h2 class="text-center fw-bold mb-4 display-6">Create Account</h2>
+
+                    <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+
+                    <label asp-for="Name" class="col-md-4 col-form-label align-self-start">Name</label>
+                    <input asp-for="Name" class="form-control w-100 rounded-pill mb-2" type="text" name="name" id="name" autocomplete="name" aria-required="true" placeholder="Name" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+
+                    <label asp-for="Email" class="col-md-4 col-form-label align-self-start">Email</label>
+                    <input asp-for="Email" class="form-control w-100 rounded-pill mb-2" type="email" name="email" id="email" autocomplete="email" aria-required="true" placeholder="Email" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+
+                    <label asp-for="Password" class="col-md-4 col-form-label align-self-start">Password</label>
+                    <input asp-for="Password" class="form-control w-100 rounded-pill mb-2" type="password" name="password" id="password" aria-required="true" placeholder="Password" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+
+                    <label class="col-md-4 col-form-label align-self-start">Confirm Password</label>
+                    <input class="form-control w-100 rounded-pill mb-2" type="password" name="passwordConfirmation" id="passwordConfirmation" aria-required="true" placeholder="Confirm Password" />
+                    <span class="text-danger"></span>
+
+                    <button type="submit" class="w-100 btn fw-bold rounded-pill text-white mb-3 mt-3" style="background: #7432F9">Sign Up</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
