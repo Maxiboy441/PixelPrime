@@ -3,16 +3,19 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Project.Data;
 using Project.Models;
+using Project.Services;
 
 namespace Project.Controllers
 {
     public class MoviesController : Controller
     {
         private readonly DataContext _context;
-
-        public MoviesController(DataContext context)
+        private readonly MovieApiService _movieApiService;
+        
+        public MoviesController(DataContext context, MovieApiService movieApiService)
         {
             _context = context;
+            _movieApiService = movieApiService;
         }
 
         [HttpPost]
@@ -68,6 +71,13 @@ namespace Project.Controllers
         public IActionResult Index()
         {
             return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Show(string? name)
+        {
+            var movie = await _movieApiService.GetMovieByName(name);
+            return View(movie);
         }
     }
 }

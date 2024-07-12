@@ -9,7 +9,7 @@ namespace Project.Services
         private readonly HttpClient _httpClient;
         private readonly string _baseApiUrl;
         private readonly string? _apiKey;
-
+        
         public MovieApiService(HttpClient httpClient, IConfiguration configuration)
         {
             _httpClient = httpClient;
