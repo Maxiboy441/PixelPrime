@@ -18,39 +18,22 @@ public class HomeController : Controller
     
     public List<Rating> TopRated()
     {
-        var movieIds = _context.Ratings.Select(r => r.Movie_id).Distinct().ToList();
-
-        var aggregatedRatings = new List<Rating>();
-
-        foreach (var movieId in movieIds)
-        {
-            var movieRatings = _context.Ratings.Where(r => r.Movie_id == movieId).ToList();
-
-            if (movieRatings.Count == 1)
+        var topRatedMovies = _context.Ratings
+            .GroupBy(r => new { r.Movie_id, r.Movie_title, r.Movie_poster })
+            .Select(g => new Rating
             {
-                aggregatedRatings.Add(movieRatings[0]);
-            }
-            else if (movieRatings.Count > 1)
-            {
-                var averageRating = new Rating
-                {
-                    Movie_id = movieId,
-                    Rating_value = Math.Round(movieRatings.Average(r => r.Rating_value),1),
-                    Movie_title = movieRatings[0].Movie_title,
-                    Movie_poster = movieRatings[0].Movie_poster,
-                    Created_at = DateTime.Now,
-                    Updated_at = DateTime.Now
-                };
-                aggregatedRatings.Add(averageRating);
-            }
-        }
-
-        var topRated = aggregatedRatings
+                Movie_id = g.Key.Movie_id,
+                Movie_title = g.Key.Movie_title,
+                Movie_poster = g.Key.Movie_poster,
+                Rating_value = Math.Round(g.Average(r => r.Rating_value), 1),
+                Created_at = DateTime.Now,
+                Updated_at = DateTime.Now
+            })
             .OrderByDescending(r => r.Rating_value)
             .Take(10)
             .ToList();
 
-        return topRated;
+        return topRatedMovies;
     }
 
     public IActionResult Index()
