@@ -55,6 +55,11 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.MapControllerRoute(
+    name: "movies",
+    pattern: "movies/{action}/{id?}",
+    defaults: new { controller = "MovieController", action = "Index" });
+
+app.MapControllerRoute(
     name: "auth",
     pattern: "{controller=Auth}/{action=Login}");
 
