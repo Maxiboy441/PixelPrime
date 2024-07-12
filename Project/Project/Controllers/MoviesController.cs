@@ -19,55 +19,117 @@ namespace Project.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> StoreWatchlist(string movieId, string title, string poster)
+        public async Task<IActionResult> StoreFavorite(Favorite favorite, string movieId, string title, string poster)
         {
             var userJson = HttpContext.Session.GetString("CurrentUser");
 
             if (userJson != null)
             {
                 var currentUser = JsonConvert.DeserializeObject<User>(userJson);
-                var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == currentUser.Id);
 
-                var favorite = new Favorite
-                {
-                    Movie_id = movieId,
-                    Movie_title = title,
-                    Movie_poster = poster,
-                    User_id = user.Id
-                };
+                favorite.User_id = currentUser.Id;
+                favorite.Movie_id = movieId;
+                favorite.Movie_title = title;
+                favorite.Movie_poster = poster;
+                favorite.Created_at = DateTime.Now;
+                favorite.Updated_at = DateTime.Now;
+
 
                 _context.Favorites.Add(favorite);
                 await _context.SaveChangesAsync();
 
-                return Ok(new { message = "Favorite added successfully." });
+                return Redirect(Request.Headers["Referer"].ToString());
             }
             else
             {
-                return Unauthorized();
+                return RedirectToAction("Login", "Auth");
 
             }
         }
 
-        //[HttpDelete]
-        //public async Task<IActionResult> DestroyWatchlist(int favoriteId)
-        //{
-        //    var user = await _userManager.GetUserAsync(User);
-        //    if (user == null)
-        //    {
-        //        return Unauthorized();
-        //    }
+        [HttpPost]
+        public async Task<IActionResult> DestroyFavorite(int favoriteId)
+        {
+            var userJson = HttpContext.Session.GetString("CurrentUser");
+            
+            if (userJson != null)
+            {
+                var currentUser = JsonConvert.DeserializeObject<User>(userJson);
 
-        //    var favorite = _context.Favorites.FirstOrDefault(f => f.FavoriteId == favoriteId && f.UserId == user.Id);
-        //    if (favorite == null)
-        //    {
-        //        return NotFound();
-        //    }
+                var favorite = await _context.Favorites.FirstOrDefaultAsync(f => f.Id == favoriteId);
 
-        //    _context.Favorites.Remove(favorite);
-        //    await _context.SaveChangesAsync();
+                if (favorite == null)
+                {
+                    return View("NotFound");
+                }
 
-        //    return Ok(new { message = "Favorite removed successfully." });
-        //}
+                _context.Favorites.Remove(favorite);
+                await _context.SaveChangesAsync();
+
+                return Redirect(Request.Headers["Referer"].ToString());
+            }
+            else
+            {
+                return RedirectToAction("Login", "Auth");
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> StoreWatchlist(Watchlist watchlist, string movieId, string title, string poster)
+        {
+            var userJson = HttpContext.Session.GetString("CurrentUser");
+
+            if (userJson != null)
+            {
+                var currentUser = JsonConvert.DeserializeObject<User>(userJson);
+
+                watchlist.User_id = currentUser.Id;
+                watchlist.Movie_id = movieId;
+                watchlist.Movie_title = title;
+                watchlist.Movie_poster = poster;
+                watchlist.Created_at = DateTime.Now;
+                watchlist.Updated_at = DateTime.Now;
+
+
+                _context.Watchlists.Add(watchlist);
+                await _context.SaveChangesAsync();
+
+                return Redirect(Request.Headers["Referer"].ToString());
+            }
+            else
+            {
+                return RedirectToAction("Login", "Auth");
+
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DestroyWatchlist(int id)
+        {
+            var userJson = HttpContext.Session.GetString("CurrentUser");
+
+            if (userJson != null)
+            {
+                var currentUser = JsonConvert.DeserializeObject<User>(userJson);
+
+                var movie = await _context.Watchlists.FirstOrDefaultAsync(f => f.Id == id);
+
+                if (movie == null)
+                {
+                    return View("NotFound");
+                }
+
+                _context.Watchlists.Remove(movie);
+                await _context.SaveChangesAsync();
+
+                return Redirect(Request.Headers["Referer"].ToString());
+            }
+            else
+            {
+                return RedirectToAction("Login", "Auth");
+            }
+        }
+
         public IActionResult Index()
         {
             return View();
