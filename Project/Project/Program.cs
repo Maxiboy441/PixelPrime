@@ -75,6 +75,11 @@ app.MapControllerRoute(
     defaults: new { controller = "Movies", action = "DestroyWatchlist" });
 
 app.MapControllerRoute(
+    name: "movies",
+    pattern: "Movies/{name?}",
+    defaults: new { controller = "Movies", action = "Show" });
+
+app.MapControllerRoute(
     name: "auth",
     pattern: "{controller=Auth}/{action=Login}");
 

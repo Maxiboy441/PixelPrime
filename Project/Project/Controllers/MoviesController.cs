@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using Project.Data;
 using Project.Models;
 using Project.Services;
+using Project.DummyData;
 
 namespace Project.Controllers
 {
@@ -139,7 +140,17 @@ namespace Project.Controllers
         public async Task<IActionResult> Show(string? name)
         {
             var movie = await _movieApiService.GetMovieByName(name);
-            return View(movie);
+            
+            // var movies = Seeder.getMovies();
+
+            // var movie = movies.FirstOrDefault(m => m.Title.Equals(name, StringComparison.OrdinalIgnoreCase));
+
+            if (movie.Title.Equals(name) )
+            {
+                return View(movie);
+            }
+
+            return NotFound(); // Handle movie not found
         }
     }
 }
