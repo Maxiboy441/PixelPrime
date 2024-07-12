@@ -17,10 +17,10 @@
             </form>
             <ul class="navbar-nav justify-content-around w-50 mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link text-light" aria-current="page" href="#">Home</a>
+                    <a class="nav-link text-light" aria-current="page" asp-controller="Home" asp-action="Index">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-light" href="#">About</a>
+                    <a class="nav-link text-light" href="#">My Space</a>
                 </li>
                 <li class="nav-item">
                     @if (string.IsNullOrEmpty(Context.Session.GetString("CurrentUser")))
@@ -29,7 +29,7 @@
                     }
                     else
                     {
-                        <a class="nav-link text-light" asp-controller="Auth" asp-action="Logout" tabindex="-1">Logout</a>
+                        @await Html.PartialAsync("_PrimaryButton", Tuple.Create("Logout", "style-1", "", "href=/Auth/Logout", "a"))
                     }
                 </li>
             </ul>

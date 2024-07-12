@@ -24,35 +24,31 @@ namespace Project.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(string email, string password)
+        public async Task<IActionResult> Login(LoginViewModel model)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
-
-            if (user == null)
+            if (!ModelState.IsValid)
             {
-                //ModelState.AddModelError("InvalidCredentials", "Invalid username or password.");
-
-                return RedirectToAction("Login", "Auth");
+                return View(model);
             }
 
-            if (Verify(password, user.Password))
-            {
-                var userWithoutPassword = new User
-                {
-                    Id = user.Id,
-                    Name = user.Name,
-                    Email = user.Email,
-                };
-                string userJson = JsonConvert.SerializeObject(userWithoutPassword);
-                HttpContext.Session.SetString("CurrentUser", userJson);
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
 
-                return RedirectToAction("index", "Home");
+            if (user == null || !Verify(model.Password, user.Password))
+            {
+                ModelState.AddModelError(string.Empty, "Email or password is wrong.");
+                return View(model);
             }
 
-            //ModelState.AddModelError("InvalidCredentials", "Invalid username or password.");
+            var userWithoutPassword = new User
+            {
+                Id = user.Id,
+                Name = user.Name,
+                Email = user.Email,
+            };
+            string userJson = JsonConvert.SerializeObject(userWithoutPassword);
+            HttpContext.Session.SetString("CurrentUser", userJson);
 
-            return RedirectToAction("login", "Auth");
-
+            return RedirectToAction("index", "Home");
         }
 
         [HttpGet]
@@ -68,35 +64,39 @@ namespace Project.Controllers
 
             if (userExists)
             {
-                return RedirectToAction("SignUp", "Auth");
+                ModelState.AddModelError("Email", "A user with this email already exists.");
             }
 
-            if (ModelState.IsValid && user.Password == passwordConfirmation)
+            if (user.Password != passwordConfirmation)
             {
-                user.Password = HashPassword(user.Password);
-                user.Created_at = DateTime.Now;
-                user.Updated_at = DateTime.Now;
-
-                _context.Users.Add(user);
-                await _context.SaveChangesAsync();
-
-                var userWithoutPassword = new User
-                {
-                    Id = user.Id,
-                    Name = user.Name,
-                    Email = user.Email,
-                };
-
-                string userJson = JsonConvert.SerializeObject(userWithoutPassword);
-                HttpContext.Session.SetString("CurrentUser", userJson);
-
-                return RedirectToAction("index", "Home");
+                ModelState.AddModelError("PasswordConfirmation", "The password and confirmation password do not match.");
             }
 
-            //    TempData["ErrorMessage"] = "User with this username already exists.";
+            if (!ModelState.IsValid)
+            {
+                return View(user);
+            }
 
-            return RedirectToAction("SignUp", "Auth");
+            user.Password = HashPassword(user.Password);
+            user.Created_at = DateTime.Now;
+            user.Updated_at = DateTime.Now;
+
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
+
+            var userWithoutPassword = new User
+            {
+                Id = user.Id,
+                Name = user.Name,
+                Email = user.Email,
+            };
+
+            string userJson = JsonConvert.SerializeObject(userWithoutPassword);
+            HttpContext.Session.SetString("CurrentUser", userJson);
+
+            return RedirectToAction("Index", "Home");
         }
+
 
         public IActionResult Logout()
         {

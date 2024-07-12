@@ -24,9 +24,9 @@
                     <input asp-for="Password" class="form-control w-100 rounded-pill mb-2" type="password" name="password" id="password" aria-required="true" placeholder="Password" />
                     <span asp-validation-for="Password" class="text-danger"></span>
 
-                    <label class="col-md-4 col-form-label align-self-start">Confirm Password</label>
-                    <input class="form-control w-100 rounded-pill mb-2" type="password" name="passwordConfirmation" id="passwordConfirmation" aria-required="true" placeholder="Confirm Password" />
-                    <span class="text-danger"></span>
+                    <label asp-for="PasswordConfirmation" class="col-md-4 col-form-label align-self-start">Confirm Password</label>
+                    <input asp-for="PasswordConfirmation" class="form-control w-100 rounded-pill mb-2" type="password" name="passwordConfirmation" id="passwordConfirmation" aria-required="true" placeholder="Confirm Password" />
+                    <span asp-validation-for="PasswordConfirmation" class="text-danger"></span>
 
                     <button type="submit" class="w-100 btn fw-bold rounded-pill text-white mb-3 mt-3" style="background: #7432F9">Sign Up</button>
                 </div>
