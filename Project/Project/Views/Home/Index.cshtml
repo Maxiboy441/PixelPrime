@@ -59,4 +59,10 @@ List<Movie> moviesFromReviews = convertService.ConvertToMovies(ratings);
         </div>
     </div>
     @await Html.PartialAsync("_MovieSlider", Tuple.Create("Top Rated Movies", moviesFromReviews))
+    <form asp-action="StoreWatchlist" asp-controller="Movie" method="post" class="rounded p-5 bg-secondary-color ">
+        <input type="hidden" name="movieID" value="tt0848228"/>
+
+            <button type="submit" class="w-100 btn fw-bold rounded-pill text-white mb-3 mt-3" style="background: #7432F9">Login</button>
+        
+    </form>
 </div>

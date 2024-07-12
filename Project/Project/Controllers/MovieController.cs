@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Project.Controllers
 {
-    public class MoviesController : Controller
+    public class MovieController : Controller
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
-        public MoviesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public MovieController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _userManager = userManager;

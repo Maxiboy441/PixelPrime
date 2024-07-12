@@ -58,4 +58,8 @@ app.MapControllerRoute(
     name: "auth",
     pattern: "{controller=Auth}/{action=Login}");
 
+app.MapControllerRoute(
+    name: "movies",
+    pattern: "{controller=Movies}/{action=Index}/{id?}");
+
 app.Run();
