@@ -173,12 +173,6 @@ html .swiper-button-next, html .swiper-button-prev {
     animation: slideOut 0.5s forwards;
 }
 
-@media (min-width: 768px) {
-    html {
-        font-size: 1rem;
-    }
-}
-
 #carousel-wrapper {
     display: flex;
     justify-content: center;
@@ -213,4 +207,10 @@ html .swiper-button-next, html .swiper-button-prev {
     background: rgba(0, 0, 0, 0.7);
     padding: 20px;
     border-radius: 10px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 1rem;
+    }
 }
