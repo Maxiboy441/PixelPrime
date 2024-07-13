@@ -50,7 +50,14 @@ namespace Project.Controllers
             string userJson = JsonConvert.SerializeObject(userWithoutPassword);
             HttpContext.Session.SetString("CurrentUser", userJson);
             
-            if (await RecommendationService.GetNewestRecommendationDate(userWithoutPassword.Id) < DateTime.Now.AddDays(-7) || await RecommendationService.GetNewestRecommendationDate(userWithoutPassword.Id) == null)
+            
+            var userId = userWithoutPassword.Id;
+            var newestRecommendationDate = await RecommendationService.GetNewestRecommendationDate(userId);
+            var favorites = await RecommendationService.GetFavorites(userId);
+            var ratings = await RecommendationService.GetLikedMovies(userId);
+
+            if ((favorites.Any() || ratings.Any()) && 
+                (newestRecommendationDate == null || newestRecommendationDate < DateTime.Now.AddDays(-7)))
             {
                 _ = Task.Run(() => RecommendationService.GetRecommendations(userWithoutPassword.Id));
             }
