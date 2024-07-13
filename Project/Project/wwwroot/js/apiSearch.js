@@ -58,7 +58,6 @@ const createAutoComplete = ({
                 onOptionSelect(item)
             })
 
-
             resultsWrapper.appendChild(option)
         }
     };
@@ -86,9 +85,8 @@ const autoCompleteConfig = {
         return movie.Title;
     },
     async fetchData(searchTerm) {
-        const response = await axios.get("https://www.omdbapi.com/", {
+        const response = await axios.get(`/Search?s=${searchTerm}`, {
             params: {
-                apikey: '', // ADD KEY
                 s: searchTerm,
             }
         });
@@ -105,6 +103,4 @@ const autoCompleteConfig = {
 createAutoComplete({
     ...autoCompleteConfig,
     root: document.querySelector(".search"),
-    //onOptionSelect(movie) {
-    //},
 })
