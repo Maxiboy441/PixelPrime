@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Mvc;
 using Project.Models;
 using Newtonsoft.Json;
 using static BCrypt.Net.BCrypt;
 using Microsoft.EntityFrameworkCore;
 using Project.Data;
+using Project.Services;
 
 namespace Project.Controllers
 {
@@ -47,7 +49,12 @@ namespace Project.Controllers
             };
             string userJson = JsonConvert.SerializeObject(userWithoutPassword);
             HttpContext.Session.SetString("CurrentUser", userJson);
-
+            
+            if (await RecommendationService.GetNewestRecommendationDate(userWithoutPassword.Id) < DateTime.Now.AddDays(-7) || await RecommendationService.GetNewestRecommendationDate(userWithoutPassword.Id) == null)
+            {
+                _ = Task.Run(() => RecommendationService.GetRecommendations(userWithoutPassword.Id));
+            }
+            
             return RedirectToAction("index", "Home");
         }
 
