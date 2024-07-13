@@ -214,3 +214,24 @@ html .swiper-button-next, html .swiper-button-prev {
     padding: 20px;
     border-radius: 10px;
 }
+
+.results {
+    max-height: 500px;
+    overflow-y: scroll;
+}
+
+.dropdown-menu {
+    visibility: hidden;
+}
+
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    height: 60px;
+}
+
+
+.dropdown-item img {
+    height: 50px;
+    margin-right: 10px;
+}

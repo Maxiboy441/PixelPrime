@@ -11,10 +11,10 @@
         </button>
 
         <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-            <form class="d-flex w-75">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                @await Html.PartialAsync("_PrimaryButton", Tuple.Create("Search", "style-2", "", "type=submit", "button"))
-            </form>
+            <div class="d-flex w-75 search">
+                @*<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">*@
+                @*@await Html.PartialAsync("_PrimaryButton", Tuple.Create("Search", "style-2", "", "type=submit", "button"))*@
+            </div>
             <ul class="navbar-nav justify-content-around w-50 mb-2 mb-lg-0">
                 <li class="nav-item">
                     <a class="nav-link text-light" aria-current="page" asp-controller="Home" asp-action="Index">Home</a>
