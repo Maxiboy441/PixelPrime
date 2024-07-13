@@ -48,6 +48,8 @@ const createAutoComplete = ({
         for (let item of items) {
             const option = document.createElement("a")
 
+            option.href = `/movies/${item.imdbID}`;
+
             option.classList.add("dropdown-item")
             option.innerHTML = renderOption(item);
             option.addEventListener("click", () => {
@@ -86,7 +88,7 @@ const autoCompleteConfig = {
     async fetchData(searchTerm) {
         const response = await axios.get("https://www.omdbapi.com/", {
             params: {
-                apikey: '29f872c7',
+                apikey: '', // ADD KEY
                 s: searchTerm,
             }
         });
@@ -104,7 +106,5 @@ createAutoComplete({
     ...autoCompleteConfig,
     root: document.querySelector(".search"),
     //onOptionSelect(movie) {
-    //    document.querySelector(".tutorial").classList.add("is-hidden")
-    //    onMovieSelect(movie, document.querySelector("#left-summary"), "left");
     //},
 })
