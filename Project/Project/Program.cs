@@ -58,4 +58,9 @@ app.MapControllerRoute(
     name: "auth",
     pattern: "{controller=Auth}/{action=Login}");
 
+app.MapControllerRoute(
+    name: "search",
+    pattern: "Search",
+    defaults: new { controller = "Api", action = "Search" });
+
 app.Run();
