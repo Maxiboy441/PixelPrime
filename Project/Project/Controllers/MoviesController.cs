@@ -153,15 +153,7 @@ namespace Project.Controllers
         {
             var movie = await _movieApiService.GetMovieById(id);
             
-            // var movies = Seeder.getMovies();
-
-            // var movie = movies.FirstOrDefault(m => m.Title.Equals(name, StringComparison.OrdinalIgnoreCase));
-
-            //if (movie.Title.Equals(name) )
-            //{
-            //    return View(movie);
-            //}
-
+            // TODO pass the variable movie to the frontend
             return View();
         }
     }
