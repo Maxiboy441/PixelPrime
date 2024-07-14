@@ -1,5 +1,48 @@
 ﻿@{
     ViewData["Title"] = "Movie";
+    var image = "https://m.media-amazon.com/images/M/MV5BNDYxNjQyMjAtNTdiOS00NGYwLWFmNTAtNThmYjU5ZGI2YTI1XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg";
 }
 
-<h1>Movie Page</h1>
+<div class="container">
+    <h1>Movie Page</h1>
+    <h1>Example on how to use the post and delete favorites/watchlist</h1>
+
+    <form asp-action="StoreFavorite" asp-controller="Movies" method="post" class="rounded p-5 bg-secondary-color">
+        @Html.AntiForgeryToken()
+        <div class="d-flex flex-column justify-content-center align-items-center">
+            <input type="hidden" name="movieId" value="tt0848228" />
+            <input type="hidden" name="title" value="Avengers" />
+            <input type="hidden" name="poster" value="@image" />
+
+            <button type="submit" class="w-100 btn fw-bold rounded-pill text-white mb-3 mt-3" style="background: #7432F9">Add to favorites</button>
+        </div>
+    </form>
+
+    <form id="deleteForm" asp-action="DestroyFavorite" asp-controller="Movies" method="post" class="rounded p-5 bg-secondary-color">
+        @Html.AntiForgeryToken()
+        <div class="d-flex flex-column justify-content-center align-items-center">
+            @Html.Hidden("favoriteId", 9)
+            <button type="submit" class="w-100 btn fw-bold rounded-pill text-white mb-3 mt-3" style="background: #7432F9">Delete from favorites</button>
+        </div>
+    </form>
+
+
+    <form asp-action="StoreWatchlist" asp-controller="Movies" method="post" class="rounded p-5 bg-secondary-color">
+        @Html.AntiForgeryToken()
+        <div class="d-flex flex-column justify-content-center align-items-center">
+            <input type="hidden" name="movieId" value="tt0848228" />
+            <input type="hidden" name="title" value="Avengers" />
+            <input type="hidden" name="poster" value="@image" />
+
+            <button type="submit" class="w-100 btn fw-bold rounded-pill text-white mb-3 mt-3" style="background: #7432F9">Add to watchlist</button>
+        </div>
+    </form>
+
+    <form id="deleteForm" asp-action="DestroyWatchlist" asp-controller="Movies" method="post" class="rounded p-5 bg-secondary-color">
+        @Html.AntiForgeryToken()
+        <div class="d-flex flex-column justify-content-center align-items-center">
+            @Html.Hidden("id", 5)
+            <button type="submit" class="w-100 btn fw-bold rounded-pill text-white mb-3 mt-3" style="background: #7432F9">Delete from watchlist</button>
+        </div>
+    </form>
+</div>

@@ -22,12 +22,14 @@
   <ItemGroup>
     <None Remove="DummyData\" />
     <None Remove="Views\Auth\" />
+    <None Remove="Views\Movies\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Migrations\" />
     <Folder Include="wwwroot\lib\fontawesome\" />
     <Folder Include="wwwroot\images\" />
     <Folder Include="Views\Auth\" />
+    <Folder Include="Views\Movies\" />
   </ItemGroup>
   <ItemGroup>
     <Content Remove="wwwroot\lib\fontawesome\" />
