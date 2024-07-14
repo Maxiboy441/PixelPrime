@@ -86,7 +86,7 @@ app.MapControllerRoute(
 
 app.MapControllerRoute(
     name: "movies",
-    pattern: "Movies/{name?}",
+    pattern: "Movies/{id?}",
     defaults: new { controller = "Movies", action = "Show" });
 
 app.MapControllerRoute(
