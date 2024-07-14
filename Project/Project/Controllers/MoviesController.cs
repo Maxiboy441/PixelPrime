@@ -152,8 +152,11 @@ namespace Project.Controllers
         public async Task<IActionResult> Show(string? id)
         {
             var movie = await _movieApiService.GetMovieById(id);
-            
+
             // TODO pass the variable movie to the frontend
+            // TODO get the average rating of the movie (delete from MovieApisService the  PixelRating = root.GetProperty("imdbRating").GetString())
+
+
             return View();
         }
     }
