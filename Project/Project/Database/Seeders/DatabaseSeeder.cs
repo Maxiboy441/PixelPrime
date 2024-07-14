@@ -29,32 +29,32 @@ namespace Project.Database.Seeders
         
         private void SeedRatings()
         {
-            var userSeeder = new RatingSeeder(_context);
-            userSeeder.Seed();
+            var ratingSeeder = new RatingSeeder(_context);
+            ratingSeeder.Seed();
         }
         
         private void SeedReviews()
         {
-            var userSeeder = new ReviewSeeder(_context);
-            userSeeder.Seed();
+            var reviewSeeder = new ReviewSeeder(_context);
+            reviewSeeder.Seed();
         }
         
         private void SeedWatchlists()
         {
-            var userSeeder = new WatchlistSeeder(_context);
-            userSeeder.Seed();
+            var watchlistSeeder = new WatchlistSeeder(_context);
+            watchlistSeeder.Seed();
         }
         
         private void SeedFavorites()
         {
-            var userSeeder = new FavoriteSeeder(_context);
-            userSeeder.Seed();
+            var favoriteSeeder = new FavoriteSeeder(_context);
+            favoriteSeeder.Seed();
         }
         
         private void SeedRecommendations()
         {
-            var userSeeder = new RecommendationSeeder(_context);
-            userSeeder.Seed();
+            var recommendationSeeder = new RecommendationSeeder(_context);
+            recommendationSeeder.Seed();
         }
     }
 }
