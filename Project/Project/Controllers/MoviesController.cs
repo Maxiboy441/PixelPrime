@@ -44,7 +44,8 @@ namespace Project.Controllers
             }
             else
             {
-                return RedirectToAction("Login", "Auth");
+                var originalUrl = Request.Headers["Referer"].ToString();
+                return RedirectToAction("Login", "Auth", new { returnUrl = originalUrl });
 
             }
         }
@@ -77,7 +78,8 @@ namespace Project.Controllers
             }
             else
             {
-                return RedirectToAction("Login", "Auth");
+                var originalUrl = Request.Headers["Referer"].ToString();
+                return RedirectToAction("Login", "Auth", new { returnUrl = originalUrl });
             }
         }
 
@@ -107,8 +109,8 @@ namespace Project.Controllers
             }
             else
             {
-                return RedirectToAction("Login", "Auth");
-
+                var originalUrl = Request.Headers["Referer"].ToString();
+                return RedirectToAction("Login", "Auth", new { returnUrl = originalUrl });
             }
         }
 
@@ -139,7 +141,8 @@ namespace Project.Controllers
             }
             else
             {
-                return RedirectToAction("Login", "Auth");
+                var originalUrl = Request.Headers["Referer"].ToString();
+                return RedirectToAction("Login", "Auth", new { returnUrl = originalUrl });
             }
         }
 
