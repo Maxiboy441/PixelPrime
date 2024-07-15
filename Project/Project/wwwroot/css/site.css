@@ -121,6 +121,32 @@ html .swiper-button-next, html .swiper-button-prev {
     color: #fff !important;
 }
 
+/*Movie Page styles*/
+
+.star {
+    font-size: 20px;
+    color: lightgray;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.star.selected {
+    color: gold;
+}
+
+.star.hovered {
+    color: gold;
+}
+
+.btn-without {
+    margin: 0;
+    padding: 0;
+    border: none;
+    font-size: 18px;
+    line-height: 1.2;
+    background: none;
+    font-weight: 500;
+}
 /*Profile Page styles*/
 
 .card .btn-danger {

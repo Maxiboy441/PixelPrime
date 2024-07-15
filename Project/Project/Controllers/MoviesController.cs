@@ -142,7 +142,7 @@ namespace Project.Controllers
 
             if (movie == null)
             {
-                return NotFound();
+                return View("NotFound");
             }
 
             var userJson = HttpContext.Session.GetString("CurrentUser");
