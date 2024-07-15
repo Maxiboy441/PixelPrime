@@ -29,9 +29,9 @@ namespace Project.Services
 
             string prompt1 = GenerateRatingsString(liked);
             string prompt2 = GenerateFavoritesString(favorites);
-    
+
             string finalPrompt = $"{prompt1}\n{prompt2}";
-    
+
             List<string> response = await _aiApiService.GenerateResponse(finalPrompt);
 
             DateTime fourDaysAgo = DateTime.Now.AddDays(-8);
@@ -51,7 +51,9 @@ namespace Project.Services
                         User_id = userId,
                         Movie_title = movie.Title,
                         Movie_poster = movie.Poster,
-                    };
+                        Created_at = DateTime.Now,
+                        Updated_at = DateTime.Now
+                };
                     _context.Recommendations.Add(recommendation);
                     await _context.SaveChangesAsync();
                 }

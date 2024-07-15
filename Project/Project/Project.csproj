@@ -21,6 +21,7 @@
   <ItemGroup>
     <None Remove="DummyData\" />
     <None Remove="Views\Auth\" />
+    <None Remove="HostedServices\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DummyData\" />
@@ -28,6 +29,7 @@
     <Folder Include="wwwroot\lib\fontawesome\" />
     <Folder Include="wwwroot\images\" />
     <Folder Include="Views\Auth\" />
+    <Folder Include="HostedServices\" />
   </ItemGroup>
   <ItemGroup>
     <Content Remove="wwwroot\lib\fontawesome\" />

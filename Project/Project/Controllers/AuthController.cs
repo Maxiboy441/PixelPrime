@@ -7,6 +7,7 @@ using static BCrypt.Net.BCrypt;
 using Microsoft.EntityFrameworkCore;
 using Project.Data;
 using Project.Services;
+using Project.HostedServices;
 
 namespace Project.Controllers
 {
@@ -58,12 +59,26 @@ namespace Project.Controllers
             var favorites = await _recommendationService.GetFavorites(userId);
             var ratings = await _recommendationService.GetLikedMovies(userId);
 
-            if ((favorites.Any() || ratings.Any()) && 
-                (newestRecommendationDate == null || newestRecommendationDate < DateTime.Now.AddDays(-7)))
-            {
-                _ = Task.Run(() => _recommendationService.GetRecommendations(userId));
-            }
+
+            //if ((favorites.Any() || ratings.Any()) && 
+            //    (newestRecommendationDate == null || newestRecommendationDate < DateTime.Now.AddDays(-7)))
+            //{
+            //    _ = Task.Run(() => _recommendationService.GetRecommendations(userId));
+            //}
             
+
+            //await _recommendationService.GetRecommendations(userWithoutPassword.Id);
+            var backgroundService = HttpContext.RequestServices.GetRequiredService<BackgroundRecommendationService>();
+            _ = backgroundService.RunRecommendationTask(userId);
+            //_ = Task.Run(() => _recommendationService.GetRecommendations(userId));
+
+            //if ((favorites.Any() || ratings.Any()) && 
+            //    (newestRecommendationDate == null || newestRecommendationDate < DateTime.Now.AddDays(-7)))
+            //{
+            //    _ = Task.Run(() => _recommendationService.GetRecommendations(userWithoutPassword.Id));
+            //}
+
+
             return RedirectToAction("index", "Home");
         }
 
