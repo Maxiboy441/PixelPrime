@@ -61,7 +61,7 @@ namespace Project.Controllers
             if ((favorites.Any() || ratings.Any()) && 
                 (newestRecommendationDate == null || newestRecommendationDate < DateTime.Now.AddDays(-7)))
             {
-                _ = Task.Run(() => _recommendationService.GetRecommendations(userWithoutPassword.Id));
+                _ = Task.Run(() => _recommendationService.GetRecommendations(userId));
             }
             
             return RedirectToAction("index", "Home");
