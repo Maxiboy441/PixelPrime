@@ -44,7 +44,7 @@ namespace Project.Services
             return movie;
         }
 
-        public static async Task<Movie> GetMovieByName(string name)
+        public async Task<Movie> GetMovieByName(string name)
         {
             var url = $"{_baseApiUrl}?t={name}&apikey={_apiKey}";
 

@@ -8,6 +8,8 @@ builder.Services.AddHttpClient<AiApiService>();
 builder.Services.AddScoped<AiApiService>();
 builder.Services.AddHttpClient<MovieApiService>();
 builder.Services.AddScoped<MovieApiService>();
+builder.Services.AddScoped<RecommendationService>();
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

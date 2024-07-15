@@ -13,10 +13,12 @@ namespace Project.Controllers
     public class AuthController : Controller
     {
         private readonly DataContext _context;
+        private readonly RecommendationService _recommendationService;
 
-        public AuthController(DataContext context)
+        public AuthController(DataContext context, RecommendationService recommendationService)
         {
             _context = context;
+            _recommendationService = recommendationService;
         }
 
         [HttpGet]
@@ -52,15 +54,13 @@ namespace Project.Controllers
             
             
             var userId = userWithoutPassword.Id;
-            var newestRecommendationDate = await RecommendationService.GetNewestRecommendationDate(userId);
-            var favorites = await RecommendationService.GetFavorites(userId);
-            var ratings = await RecommendationService.GetLikedMovies(userId);
+            var newestRecommendationDate = await _recommendationService.GetNewestRecommendationDate(userId);
+            var favorites = await _recommendationService.GetFavorites(userId);
+            var ratings = await _recommendationService.GetLikedMovies(userId);
 
-            if ((favorites.Any() || ratings.Any()) && 
-                (newestRecommendationDate == null || newestRecommendationDate < DateTime.Now.AddDays(-7)))
-            {
-                _ = Task.Run(() => RecommendationService.GetRecommendations(userWithoutPassword.Id));
-            }
+           
+            _ = Task.Run(() => _recommendationService.GetRecommendations(userWithoutPassword.Id));
+            
             
             return RedirectToAction("index", "Home");
         }

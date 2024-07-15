@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -9,19 +11,24 @@ namespace Project.Services
 {
     public class RecommendationService
     {
-        private static DataContext _context;
-        private static AiApiService _aiApiService;
+        private readonly DataContext _context;
+        private readonly AiApiService _aiApiService;
+        private readonly MovieApiService _movieApiService;
 
-        public RecommendationService(DataContext context, AiApiService aiApiService)
+        public RecommendationService(DataContext context, AiApiService aiApiService, MovieApiService movieApiService)
         {
             _context = context;
             _aiApiService = aiApiService;
+            _movieApiService = movieApiService;
         }
 
-        public static async Task GetRecommendations(int User_id)
+        public async Task GetRecommendations(int userId)
         {
-            List<Rating> liked = await GetLikedMovies(User_id);
-            List<Favorite> favorites = await GetFavorites(User_id);
+            
+            throw new HttpRequestException($"Test");
+
+            List<Rating> liked = await GetLikedMovies(userId);
+            List<Favorite> favorites = await GetFavorites(userId);
 
             string prompt1 = GenerateRatingsString(liked);
             string prompt2 = GenerateFavoritesString(favorites);
@@ -32,19 +39,19 @@ namespace Project.Services
 
             DateTime fourDaysAgo = DateTime.Now.AddDays(-8);
             await _context.Recommendations
-                .Where(r => r.User_id == User_id && r.Created_at < fourDaysAgo)
+                .Where(r => r.User_id == userId && r.Created_at < fourDaysAgo)
                 .ExecuteDeleteAsync();
 
             foreach (var title in response)
             {
-                Movie movie = await MovieApiService.GetMovieByName(title);
+                Movie movie = await _movieApiService.GetMovieByName(title);
 
                 if (movie.Title != "error")
                 {
                     Recommendation recommendation = new Recommendation
                     {
                         Movie_id = movie.Id,
-                        User_id = User_id,
+                        User_id = userId,
                         Movie_title = movie.Title,
                         Movie_poster = movie.Poster,
                     };
@@ -55,23 +62,23 @@ namespace Project.Services
             await _context.SaveChangesAsync();
         }
 
-        public static async Task<List<Rating>> GetLikedMovies(int User_id)
+        public async Task<List<Rating>> GetLikedMovies(int userId)
         {
             return await _context.Ratings
-                .Where(r => r.User_id == User_id && r.Rating_value > 7.5)
+                .Where(r => r.User_id == userId && r.Rating_value > 7.5)
                 .OrderByDescending(r => r.Created_at)
                 .Take(10)
                 .ToListAsync();
         }
  
-        public static async Task<List<Favorite>> GetFavorites(int User_id)
+        public async Task<List<Favorite>> GetFavorites(int userId)
         {
             return await _context.Favorites
-                .Where(r => r.User_id == User_id)
+                .Where(r => r.User_id == userId)
                 .ToListAsync();
         }
  
-        private static string GenerateRatingsString(List<Rating> ratings)
+        private string GenerateRatingsString(List<Rating> ratings)
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("I rated following movies as such:");
@@ -84,7 +91,7 @@ namespace Project.Services
             return sb.ToString();
         }
  
-        private static string GenerateFavoritesString(List<Favorite> ratings)
+        private string GenerateFavoritesString(List<Favorite> ratings)
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("My favorite movies of all times are");
@@ -97,7 +104,7 @@ namespace Project.Services
             return sb.ToString();
         }
 
-        public static async Task<DateTime?> GetNewestRecommendationDate(int userId)
+        public async Task<DateTime?> GetNewestRecommendationDate(int userId)
         {
             return await _context.Recommendations
                 .Where(r => r.User_id == userId)
