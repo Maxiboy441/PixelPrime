@@ -146,6 +146,10 @@ html .swiper-button-next, html .swiper-button-prev {
     line-height: 1.2;
     background: none;
     font-weight: 500;
+    
+    &:hover {
+        color: var(--purple-color) !important;
+    }
 }
 /*Profile Page styles*/
 
