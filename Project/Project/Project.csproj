@@ -9,6 +9,7 @@
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'https' " />
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'http' " />
   <ItemGroup>
+    <PackageReference Include="Bogus" Version="35.5.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.20">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
@@ -21,13 +22,14 @@
   <ItemGroup>
     <None Remove="DummyData\" />
     <None Remove="Views\Auth\" />
+    <None Remove="Views\Movies\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="DummyData\" />
     <Folder Include="Migrations\" />
     <Folder Include="wwwroot\lib\fontawesome\" />
     <Folder Include="wwwroot\images\" />
     <Folder Include="Views\Auth\" />
+    <Folder Include="Views\Movies\" />
   </ItemGroup>
   <ItemGroup>
     <Content Remove="wwwroot\lib\fontawesome\" />

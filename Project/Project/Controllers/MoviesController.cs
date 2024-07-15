@@ -4,7 +4,6 @@ using Newtonsoft.Json;
 using Project.Data;
 using Project.Models;
 using Project.Services;
-using Project.DummyData;
 
 namespace Project.Controllers
 {
@@ -130,29 +129,87 @@ namespace Project.Controllers
                 return RedirectToAction("Login", "Auth");
             }
         }
-
+        
         public IActionResult Index()
         {
             return View();
         }
-
+        
         [HttpGet]
-        public async Task<IActionResult> Show(string? id)
+        public async Task<IActionResult> Show(string id)
         {
-            // var movie = await _movieApiService.GetMovieByName(name);
-            
-            var movies = Seeder.getMovies();
+            var movie = await _movieApiService.GetMovieById(id);
 
-            var movie = movies.FirstOrDefault(m => m.Id.Equals(id, StringComparison.OrdinalIgnoreCase));
-            
             if (movie == null)
             {
-                return NotFound(); // Return 404 if the movie is not found
+                return NotFound();
             }
-            
-            // var rated = await _context.Ratings.FirstOrDefaultAsync(f => f.Id == movie.id);
-            
+
+            var userJson = HttpContext.Session.GetString("CurrentUser");
+            bool isFavorite = false;
+            bool isWatchlist = false;
+    
+            if (userJson != null)
+            {
+                var currentUser = JsonConvert.DeserializeObject<User>(userJson);
+
+                isFavorite = await _context.Favorites.AnyAsync(f => f.Movie_id == id && f.User_id == currentUser.Id);
+                isWatchlist = await _context.Watchlists.AnyAsync(w => w.Movie_id == id && w.User_id == currentUser.Id);
+            }
+
+            var averageRating = await _context.Ratings
+                .Where(r => r.Movie_id == id)
+                .AverageAsync(r => (double?)r.Rating_value) ?? 0;
+
+            var hasRating = await _context.Ratings.AnyAsync(r => r.Movie_id == id);
+
+            ViewData["Movie"] = movie;
+            ViewData["AverageRating"] = hasRating ? averageRating.ToString("0.0") : "This movie has not yet been rated";
+            ViewData["IsFavorite"] = isFavorite;
+            ViewData["IsWatchlist"] = isWatchlist;
+
             return View(movie);
+        }
+
+    
+        [HttpPost]
+        public async Task<IActionResult> AddRating(string movieId, int ratingValue)
+        {
+            var userJson = HttpContext.Session.GetString("CurrentUser");
+
+            if (userJson != null)
+            {
+                var currentUser = JsonConvert.DeserializeObject<User>(userJson);
+
+                var existingRating = await _context.Ratings
+                    .FirstOrDefaultAsync(r => r.Movie_id == movieId && r.User_id == currentUser.Id);
+
+                if (existingRating != null)
+                {
+                    existingRating.Rating_value = ratingValue;
+                    existingRating.Updated_at = DateTime.Now;
+                }
+                else
+                {
+                    var rating = new Rating
+                    {
+                        Movie_id = movieId,
+                        User_id = currentUser.Id,
+                        Rating_value = ratingValue,
+                        Created_at = DateTime.Now,
+                        Updated_at = DateTime.Now
+                    };
+
+                    _context.Ratings.Add(rating);
+                }
+
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Show", new { id = movieId });
+            }
+            else
+            {
+                return RedirectToAction("Login", "Auth");
+            }
         }
     }
 }
