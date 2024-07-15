@@ -73,4 +73,9 @@ app.MapControllerRoute(
     pattern: "Search",
     defaults: new { controller = "Api", action = "Search" });
 
+app.MapControllerRoute(
+    name: "profile",
+    pattern: "profile/",
+    defaults: new { controller = "Profile", action = "Index" });
+
 app.Run();
