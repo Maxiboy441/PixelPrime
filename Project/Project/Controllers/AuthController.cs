@@ -53,7 +53,6 @@ namespace Project.Controllers
             string userJson = JsonConvert.SerializeObject(userWithoutPassword);
             HttpContext.Session.SetString("CurrentUser", userJson);
             
-            
             var userId = userWithoutPassword.Id;
             var newestRecommendationDate = await _recommendationService.GetNewestRecommendationDate(userId);
             var favorites = await _recommendationService.GetFavorites(userId);
@@ -65,7 +64,6 @@ namespace Project.Controllers
                 var backgroundService = HttpContext.RequestServices.GetRequiredService<BackgroundRecommendationService>();
                 _ = backgroundService.RunRecommendationTask(userId);
             }
-
 
             return RedirectToAction("index", "Home");
         }
