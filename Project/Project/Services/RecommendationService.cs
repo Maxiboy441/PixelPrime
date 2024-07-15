@@ -53,10 +53,9 @@ namespace Project.Services
                         Movie_poster = movie.Poster,
                     };
                     _context.Recommendations.Add(recommendation);
+                    await _context.SaveChangesAsync();
                 }
             }
-
-            await _context.SaveChangesAsync();
         }
 
         public async Task<List<Rating>> GetLikedMovies(int userId)
