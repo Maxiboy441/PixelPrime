@@ -58,9 +58,11 @@ namespace Project.Controllers
             var favorites = await _recommendationService.GetFavorites(userId);
             var ratings = await _recommendationService.GetLikedMovies(userId);
 
-           
-            _ = Task.Run(() => _recommendationService.GetRecommendations(userWithoutPassword.Id));
-            
+            if ((favorites.Any() || ratings.Any()) && 
+                (newestRecommendationDate == null || newestRecommendationDate < DateTime.Now.AddDays(-7)))
+            {
+                _ = Task.Run(() => _recommendationService.GetRecommendations(userWithoutPassword.Id));
+            }
             
             return RedirectToAction("index", "Home");
         }

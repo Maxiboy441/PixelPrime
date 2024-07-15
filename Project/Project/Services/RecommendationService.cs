@@ -24,9 +24,6 @@ namespace Project.Services
 
         public async Task GetRecommendations(int userId)
         {
-            
-            throw new HttpRequestException($"Test");
-
             List<Rating> liked = await GetLikedMovies(userId);
             List<Favorite> favorites = await GetFavorites(userId);
 
