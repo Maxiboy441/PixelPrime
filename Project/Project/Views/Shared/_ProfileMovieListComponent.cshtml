@@ -6,75 +6,75 @@
     @await Html.PartialAsync("_ProfileMovieListComponent", Tuple.Create(moviesList))
 *@
 
-@model Tuple<List<Project.Models.Movie>, Boolean>
+@model Tuple<List<Project.Models.IMovieItem>, Boolean>
 
 <div class="d-flex">
     @await Html.PartialAsync("_ProfileMovieCardComponent", Tuple.Create(Model.Item1, Model.Item2))
 
-    <div id="side-card-container">
-        @foreach (var movie in Model.Item1)
-        {
-            <div class="d-flex d-none side-card gap-3" data-movie-id="@movie.Id">
-                <div class="side-btn-container align-self-center">
-                    <button class="btn btn-lg close-side-container">
-                        <i class="fa-solid fa-angle-right fa-2xl"></i>
-                    </button>
-                </div>
-                <div class="card bg-secondary-color" style="width: 18rem;">
-                    <div class="card-img-container">
-                        <a href="#"><img class="card-img-top" src="@movie.Poster" alt="Card image cap"></a>
+
+    @*SIDE CARD*@
+
+    @*@if (Model.Item1 != null && Model.Item1.Any())
+    {
+        <div id="side-card-container">
+            @foreach (var movie in Model.Item1)
+            {
+                <div class="d-flex d-none side-card gap-3" data-movie-id="@movie.Id">
+                    <div class="side-btn-container align-self-center">
+                        <button class="btn btn-lg close-side-container">
+                            <i class="fa-solid fa-angle-right fa-2xl"></i>
+                        </button>
                     </div>
-                    <div class="card-body-movie d-flex flex-column">
-                        <p class="card-title mt-3"><a href="#">@movie.Genre</a></p>
-                        <hr />
-                        <p class="card-title"><a href="#">@movie.Plot</a></p>
-                        <p class="card-text"><i class="fa-solid fa-star" style="color: #FFD43B;"></i>@movie.PixelRating</p>
+                    <div class="card bg-secondary-color" style="width: 18rem;">
+                        <div class="card-img-container">
+                            <a href="#"><img class="card-img-top" src="@movie.Movie_poster" alt="Card image cap"></a>
+                        </div>
+                        <div class="card-body-movie d-flex flex-column">
+                                <p class="card-title mt-3"><a href="#">@movie.Genre</a></p>
+                                <hr />
+                                <p class="card-title"><a href="#">@movie.Plot</a></p>
+                                <p class="card-text"><i class="fa-solid fa-star" style="color: #FFD43B;"></i>@movie.PixelRating</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-        }
-    </div>
+            }
+        </div>
+    }*@
 </div>
 
-<script>
-    //document.addEventListener('DOMContentLoaded', (event) => {
-    //    const movieCards = document.querySelectorAll('.movie-card');
-    //    const sideCards = document.querySelectorAll('.side-card');
-    //    const sideCardContainer = document.getElementById('side-card-container');
+@*<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const movieCards = document.querySelectorAll('.movie-card');
+        const sideCards = document.querySelectorAll('.side-card');
+        const sideCardContainer = document.getElementById('side-card-container');
 
-    //    movieCards.forEach(card => {
-    //        card.addEventListener('click', (event) => {
-    //            if (event.target.classList.contains('close-btn')) {
-    //                // Prevent the side container from opening if the close button is clicked
-    //                event.stopPropagation();
-    //                return;
-    //            }
+        movieCards.forEach(card => {
+            card.addEventListener('click', (event) => {
+                const movieId = card.getAttribute('data-movie-id');
+                const sideCard = document.querySelector(`.side-card[data-movie-id="${movieId}"]`);
 
-    //            const movieId = card.getAttribute('data-movie-id');
-    //            const sideCard = document.querySelector(`.side-card[data-movie-id="${movieId}"]`);
+                sideCards.forEach(sc => {
+                    if (sc !== sideCard) {
+                        sc.classList.add('hide');
+                        sc.addEventListener('animationend', () => sc.classList.add('d-none'), { once: true });
+                    }
+                });
 
-    //            sideCards.forEach(sc => {
-    //                if (!sc.classList.contains('d-none')) {
-    //                    sc.classList.add('hide');
-    //                    sc.addEventListener('animationend', () => sc.classList.add('d-none'), { once: true });
-    //                }
-    //            });
+                if (sideCard) {
+                    sideCard.classList.remove('d-none', 'hide');
+                    sideCard.classList.add('show');
+                }
+            });
+        });
 
-    //            if (sideCard) {
-    //                sideCard.classList.remove('d-none', 'hide');
-    //                sideCard.classList.add('show');
-    //            }
-    //        });
-    //    });
-
-    //    sideCards.forEach(card => {
-    //        const closeButton = card.querySelector('.close-side-container');
-    //        closeButton.addEventListener('click', (e) => {
-    //            e.stopPropagation();
-    //            card.classList.add('hide');
-    //            card.addEventListener('animationend', () => card.classList.add('d-none'), { once: true });
-    //        });
-    //    });
-    //});
-</script>
+        sideCards.forEach(card => {
+            const closeButton = card.querySelector('.close-side-container');
+            closeButton.addEventListener('click', (e) => {
+                e.stopPropagation();
+                card.classList.add('hide');
+                card.addEventListener('animationend', () => card.classList.add('d-none'), { once: true });
+            });
+        });
+    });
+</script>*@
 
