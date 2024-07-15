@@ -137,20 +137,22 @@ namespace Project.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Show(string? name)
+        public async Task<IActionResult> Show(string? id)
         {
-            var movie = await _movieApiService.GetMovieByName(name);
+            // var movie = await _movieApiService.GetMovieByName(name);
             
-            // var movies = Seeder.getMovies();
+            var movies = Seeder.getMovies();
 
-            // var movie = movies.FirstOrDefault(m => m.Title.Equals(name, StringComparison.OrdinalIgnoreCase));
-
-            if (movie.Title.Equals(name) )
+            var movie = movies.FirstOrDefault(m => m.Id.Equals(id, StringComparison.OrdinalIgnoreCase));
+            
+            if (movie == null)
             {
-                return View(movie);
+                return NotFound(); // Return 404 if the movie is not found
             }
-
-            return NotFound(); // Handle movie not found
+            
+            // var rated = await _context.Ratings.FirstOrDefaultAsync(f => f.Id == movie.id);
+            
+            return View(movie);
         }
     }
 }
