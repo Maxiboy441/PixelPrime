@@ -1,0 +1,59 @@
+﻿@model Project.Models.ProfileViewModel
+
+@{
+    ViewData["Title"] = "My Space";
+}
+
+<section>
+    <div class="container">
+        <h1>My space</h1>
+
+        <h1>@Model.User.Name's Profile</h1>
+        <p>Email: @Model.User.Name</p>
+        <a asp-action="Edit">Edit Profile</a>
+    </div>
+
+    @*<h2>Favorites</h2>
+    <ul>
+        @foreach (var favorite in Model.Favorites)
+        {
+            <li>@favorite.Movie_title</li>
+            <div class="card-img-container">
+                <a href="#"><img class="card-img-top" src="@favorite.Movie_poster" alt="Card image cap"></a>
+            </div>
+            <div class="card-body-movie d-flex flex-column">
+                <h6 class="card-title my-2"><a href="#">@favorite.Movie_title</a></h6>
+            </div>
+        }
+    </ul>
+
+    <h2>Watchlist</h2>
+    <ul>
+        @foreach (var watchlistItem in Model.Watchlist)
+        {
+            <li>@watchlistItem.Movie_title</li>
+            <div class="card-img-container">
+                <a href="#"><img class="card-img-top" src="@watchlistItem.Movie_poster" alt="Card image cap"></a>
+            </div>
+        }
+    </ul>
+
+
+
+    <h2>Watchlist</h2>
+    <ul>
+        @foreach (var rec in Model.Recommendations)
+        {
+            <li>@rec.Movie_title</li>
+            <div class="card-img-container">
+                <a href="#"><img class="card-img-top" src="@rec.Movie_poster" alt="Card image cap"></a>
+            </div>
+        }
+    </ul>*@
+    @await Html.PartialAsync("_ProfileTabButton",
+        Tuple.Create("Watchlist", "Favorites", "Recommendations",
+        await Html.PartialAsync("_ProfileMovieListComponent", Tuple.Create(Model.Watchlist, true)),
+        await Html.PartialAsync("_ProfileMovieListComponent", Tuple.Create(Model.Favorites, true)),
+        await Html.PartialAsync("_ProfileMovieListComponent", Tuple.Create(Model.Recommendations, false))
+        ))
+</section>
