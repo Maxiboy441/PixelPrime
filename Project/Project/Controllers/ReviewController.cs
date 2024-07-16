@@ -4,9 +4,10 @@ using Project.Models;
 using System.Collections.Generic;
 using System.Linq;
 using Project.Data; 
-using Project.Models; 
+using Xunit;
 
-namespace YourNamespace.Controllers
+
+namespace Reviews.Controllers
 {
     public class ReviewsController : Controller
     {
@@ -123,5 +124,45 @@ namespace YourNamespace.Controllers
             return _context.Reviews.Any(e => e.Id == id);
         }
     }
+    /// <summary>
+    /// TEST
+    /// </summary>
+    public class ReviewsControllerTests
+    {
+        private DbContextOptions<DataContext> GetInMemoryDbContextOptions()
+        {
+            return new DbContextOptionsBuilder<DataContext>()
+                .UseInMemoryDatabase(Guid.NewGuid().ToString())
+                .Options;
+        }
+
+        [Fact]
+        public void Create_Post_ValidModel_AddsReview()
+        {
+            var options = GetInMemoryDbContextOptions();
+            using (var context = new DataContext(options))
+            {
+                var controller = new ReviewsController(context);
+                var review = new Review
+                {
+
+                    Text = "Film ist ass",
+                    Movie_id = "1"
+                };
+
+                var result = controller.Create(review) as RedirectToActionResult;
+
+                Assert.Equal("Index", result.ActionName);
+                Assert.Single(context.Reviews);
+            }
+        }
+
+        // Additional tests for Edit, Delete, etc.
+    }
 }
+
+
+
+
+
 
