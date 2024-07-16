@@ -12,7 +12,7 @@
 <div class="card bg-secondary-color" style="width: 18rem;">
     <div class="card-img-container">
         <a href="/movies/@Model.Item4">
-            @if (!string.IsNullOrEmpty(movie.Movie_poster) && movie.Movie_poster != "N/A")
+            @if (!string.IsNullOrEmpty(Model.Item1) && Model.Item1 != "N/A")
             {
                 <img class="card-img-top" src="@Model.Item1" alt="Card image cap">
             }

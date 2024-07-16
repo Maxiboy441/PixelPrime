@@ -12,8 +12,10 @@
     @if (Model.Item1 != null && Model.Item1.Any())
     {
         @foreach (var movie in Model.Item1)
-        {
-            <div class="card bg-secondary-color movie-card" style="width: 18rem;" data-movie-id="@movie.Id">
+            {
+            string movieDataId = $"{movie.Movie_id}_{movie.Created_at:yyyyMMddHHmmss}";
+
+            <div class="card bg-secondary-color movie-card" id="@movie.Id" style="width: 18rem;" data-movie-id="@movieDataId" data-imdb-id="@movie.Movie_id">
                 @if (Model.Item2)
                 {
                     <button class="btn btn-danger close-btn" aria-label="Close">X</button>
@@ -21,11 +23,11 @@
                 <div class="card-img-container">
                         @if (!string.IsNullOrEmpty(movie.Movie_poster) && movie.Movie_poster != "N/A")
                         {
-                            <img class="card-img-top" src="@movie.Movie_poster" alt="Card image cap">
+                            <img class="card-img-top" src="@movie.Movie_poster" alt="@movie.Movie_title">
                         }
                         else
                         {
-                            <img class="card-img-top" src="@Url.Content("~/images/poster_not_found.png")" alt="Card image cap">
+                            <img class="card-img-top" src="@Url.Content("~/images/poster_not_found.png")" alt="Movie poster not found">
                         }
                 </div>
                 <div class="card-body-movie d-flex flex-column">

@@ -16,10 +16,12 @@
 
     @if (Model.Item1 != null && Model.Item1.Any())
     {
-        <div id="side-card-container">
+        <div id="side-card-container">  
             @foreach (var movie in Model.Item1)
-            {
-                <div class="d-flex d-none side-card gap-3" data-movie-id="@movie.Id">
+                {
+                string movieDataId = $"{movie.Movie_id}_{movie.Created_at:yyyyMMddHHmmss}";
+
+                <div class="d-flex d-none side-card gap-3" data-movie-id="@movieDataId" data-imdb-id="@movie.Movie_id">
                     <div class="side-btn-container align-self-center">
                         <button class="btn btn-lg close-side-container">
                             <i class="fa-solid fa-angle-right fa-2xl"></i>
@@ -29,25 +31,29 @@
                         <div class="card-img-container">
                             @if (!string.IsNullOrEmpty(movie.Movie_poster) && movie.Movie_poster != "N/A")
                             {
-                                <img class="card-img-top" src="@movie.Movie_poster" alt="@movie.Movie_title">
+                                <img class="card-img-top movie-poster" src="@movie.Movie_poster" alt="@movie.Movie_title" id="@movie.Id">
                             }
                             else
                             {
                                 <img class="card-img-top" src="@Url.Content("~/images/poster_not_found.png")" alt="@movie.Movie_title">
                             }
                         </div>
-                        @*<div class="card-body-movie d-flex flex-column">
-                                <p class="card-title mt-3"><a href="#">@movie.Genre</a></p>
+                        <div class="card-body-movie d-flex flex-column" id="movie-details-@movie.Id">
+                                @*<p class="card-title mt-3"><a href="#">@movie.Genre</a></p>
                                 <hr />
                                 <p class="card-title"><a href="#">@movie.Plot</a></p>
-                                <p class="card-text"><i class="fa-solid fa-star" style="color: #FFD43B;"></i>@movie.PixelRating</p>
-                        </div>*@
+                                <p class="card-text"><i class="fa-solid fa-star" style="color: #FFD43B;"></i>@movie.PixelRating</p>*@
+                        </div>
                     </div>
                 </div>
             }
         </div>
     }
 </div>
+
+<script>
+
+</script>
 
 @*<script>
     document.addEventListener('DOMContentLoaded', (event) => {
