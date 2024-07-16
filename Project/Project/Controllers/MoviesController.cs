@@ -201,8 +201,10 @@ namespace Project.Controllers
                 }
                 else
                 {
+                    
                     var rating = new Rating
                     {
+                        
                         Movie_id = movieId,
                         User_id = currentUser.Id,
                         Rating_value = ratingValue,
