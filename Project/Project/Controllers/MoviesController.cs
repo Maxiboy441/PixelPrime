@@ -57,7 +57,8 @@ namespace Project.Controllers
                 var currentUser = JsonConvert.DeserializeObject<User>(userJson);
 
                 var favorite = await _context.Favorites.FirstOrDefaultAsync(f => f.Id == favoriteId);
-
+                
+                
                 if (favorite == null)
                 {
                     return View("NotFound");
