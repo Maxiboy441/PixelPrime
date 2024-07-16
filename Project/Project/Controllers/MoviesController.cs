@@ -44,13 +44,14 @@ namespace Project.Controllers
             }
             else
             {
-                return RedirectToAction("Login", "Auth");
+                var originalUrl = Request.Headers["Referer"].ToString();
+                return RedirectToAction("Login", "Auth", new { returnUrl = originalUrl });
 
             }
         }
 
         [HttpPost]
-        public async Task<IActionResult> DestroyFavorite(int favoriteId)
+        public async Task<IActionResult> DestroyFavorite(string favoriteId)
         {
             var userJson = HttpContext.Session.GetString("CurrentUser");
             
@@ -58,7 +59,7 @@ namespace Project.Controllers
             {
                 var currentUser = JsonConvert.DeserializeObject<User>(userJson);
 
-                var favorite = await _context.Favorites.FirstOrDefaultAsync(f => f.Id == favoriteId);
+                var favorite = await _context.Favorites.FirstOrDefaultAsync(movie => movie.Movie_id == favoriteId && movie.User_id == currentUser.Id);
                 
                 
                 if (favorite == null)
@@ -75,7 +76,8 @@ namespace Project.Controllers
             }
             else
             {
-                return RedirectToAction("Login", "Auth");
+                var originalUrl = Request.Headers["Referer"].ToString();
+                return RedirectToAction("Login", "Auth", new { returnUrl = originalUrl });
             }
         }
 
@@ -105,13 +107,14 @@ namespace Project.Controllers
             }
             else
             {
-                return RedirectToAction("Login", "Auth");
+                var originalUrl = Request.Headers["Referer"].ToString();
+                return RedirectToAction("Login", "Auth", new { returnUrl = originalUrl });
 
             }
         }
 
         [HttpPost]
-        public async Task<IActionResult> DestroyWatchlist(int id)
+        public async Task<IActionResult> DestroyWatchlist(string id)
         {
             var userJson = HttpContext.Session.GetString("CurrentUser");
 
@@ -119,7 +122,7 @@ namespace Project.Controllers
             {
                 var currentUser = JsonConvert.DeserializeObject<User>(userJson);
 
-                var movie = await _context.Watchlists.FirstOrDefaultAsync(f => f.Id == id);
+                var movie = await _context.Watchlists.FirstOrDefaultAsync(movie => movie.Movie_id == id && movie.User_id == currentUser.Id);
 
                 if (movie == null)
                 {
@@ -136,7 +139,8 @@ namespace Project.Controllers
             }
             else
             {
-                return RedirectToAction("Login", "Auth");
+                var originalUrl = Request.Headers["Referer"].ToString();
+                return RedirectToAction("Login", "Auth", new { returnUrl = originalUrl });
             }
         }
         
