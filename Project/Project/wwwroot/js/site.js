@@ -71,3 +71,37 @@ Object.assign(swiperEl, {
     },
 });
 swiperEl.initialize();
+
+
+// Movie Rating Star
+const stars = document.querySelectorAll('.star');
+const form = document.getElementById('ratingForm');
+
+function setRating(value) {
+    document.getElementById('ratingValue').value = value;
+
+    stars.forEach(s => s.classList.remove('selected'));
+    for (let i = 0; i < value; i++) {
+        stars[i].classList.add('selected');
+    }
+
+    form.submit();
+}
+
+stars.forEach(star => {
+    star.addEventListener('mouseover', () => {
+        const value = star.getAttribute('data-value');
+        stars.forEach((s, index) => {
+            s.classList.toggle('hovered', index < value);
+        });
+    });
+
+    star.addEventListener('mouseout', () => {
+        stars.forEach(s => s.classList.remove('hovered'));
+        const selectedValue = document.getElementById('ratingValue').value;
+        stars.forEach((s, index) => {
+            s.classList.toggle('selected', index < selectedValue);
+        });
+    });
+});
+
