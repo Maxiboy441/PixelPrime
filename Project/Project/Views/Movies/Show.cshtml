@@ -22,7 +22,14 @@
 
         <div class="row justify-content-between h-75 mt-3 mb-3">
             <div class="col-3">
-                <img src="@movie.Poster" alt="@movie.Title" class="img-fluid" />
+                @if (!string.IsNullOrEmpty(@movie.Poster) && @movie.Poster != "N/A")
+                {
+                    <img src="@movie.Poster" alt="@movie.Title" class="img-fluid" />
+                }
+                else
+                {
+                    <img class="card-img-top" src="@Url.Content("~/images/poster_not_found.png")" alt="Movie poster not found">
+                }
             </div>
         </div>
 
