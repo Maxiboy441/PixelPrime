@@ -135,6 +135,10 @@ html .swiper-button-next, html .swiper-button-prev {
     right: 0;
 }
 
+.card-img-top {
+    cursor: pointer;
+}
+
 .side-card .card .card-img-container {
     height: 30rem;
 }

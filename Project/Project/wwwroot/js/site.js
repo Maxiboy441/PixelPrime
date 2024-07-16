@@ -5,6 +5,30 @@
 
 // Profile side card
 document.addEventListener('DOMContentLoaded', (event) => {
+    const mySpaceMovies = document.querySelectorAll(".movie-card");
+
+    mySpaceMovies.forEach(movie => {
+        movie.addEventListener("click", async (e) => {
+            const movieId = movie.getAttribute("data-imdb-id");
+
+            console.log(movieId)
+            try {
+                const response = await axios.get(`/SearchById?id=${movieId}`);
+                console.log(response.data);
+                const detailsContainer = document.getElementById(`movie-details-${movieId}`);
+                const { Genre, Plot, imdbID } = response.data;
+
+                detailsContainer.innerHTML = `
+                        <p class="card-title mt-3"><a href="#">${Genre}</a></p>
+                        <hr />
+                        <p class="card-title"><a href="#">${Plot}</a></p>
+                    `;
+            } catch (error) {
+                console.error(error);
+            }
+        })
+    });
+
     const movieCards = document.querySelectorAll('.movie-card');
     const sideCards = document.querySelectorAll('.side-card');
     const sideCardContainer = document.getElementById('side-card-container');
