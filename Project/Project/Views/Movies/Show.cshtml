@@ -1,98 +1,47 @@
-@{
-    var movie = ViewData["Movie"] as Movie;
-    var averageRating = ViewData["AverageRating"];
+﻿@{
+    ViewData["Title"] = "Movie";
     var image = "https://m.media-amazon.com/images/M/MV5BNDYxNjQyMjAtNTdiOS00NGYwLWFmNTAtNThmYjU5ZGI2YTI1XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg";
-    var isFavorite = (bool)ViewData["IsFavorite"];
-    var isWatchlist = (bool)ViewData["IsWatchlist"];
 }
 <div class="container">
-    <div class="d-flex flex-column">
-        <div class="d-flex justify-content-between align-items-center">
-            <div>
-                <h1>@movie.Title</h1>
-            </div>
+    <h1>Movie Page</h1>
+    <h1>Example on how to use the post and delete favorites/watchlist</h1>
 
-            <div class="d-flex justify-content-between align-items-center gap-3">
-                <h5>@movie.Year</h5>
-                <h5>@movie.Genre</h5>
-                <h5>@movie.Runtime</h5>
-            </div>
+    <form asp-action="StoreFavorite" asp-controller="Movies" method="post" class="rounded p-5 bg-secondary-color">
+        @Html.AntiForgeryToken()
+        <div class="d-flex flex-column justify-content-center align-items-center">
+            <input type="hidden" name="movieId" value="tt0848228" />
+            <input type="hidden" name="title" value="Avengers" />
+            <input type="hidden" name="poster" value="@image" />
+
+            <button type="submit" class="w-100 btn fw-bold rounded-pill text-white mb-3 mt-3" style="background: #7432F9">Add to favorites</button>
         </div>
+    </form>
 
-        <div class="row justify-content-between h-75 mt-3 mb-3">
-            <div class="col-3">
-                <img src="@movie.Poster" alt="@movie.Title" class="img-fluid" />
-            </div>
+    <form id="deleteForm" asp-action="DestroyFavorite" asp-controller="Movies" method="post" class="rounded p-5 bg-secondary-color">
+        @Html.AntiForgeryToken()
+        <div class="d-flex flex-column justify-content-center align-items-center">
+            @Html.Hidden("favoriteId", 9)
+            <button type="submit" class="w-100 btn fw-bold rounded-pill text-white mb-3 mt-3" style="background: #7432F9">Delete from favorites</button>
         </div>
+    </form>
 
-        <div class="w-100 d-flex justify-content-between">
-            <div class="d-flex flex-row gap-4">
-                <div class="d-flex gap-4">
-                    <div class="d-flex flex-column">
-                        <h5>Rating</h5>
-                        <h6 class="mt-2">@averageRating</h6>
-                    </div>
 
-                    <div class="d-flex flex-column">
-                        <h5>Your Rating</h5>
-                        <div class="rating" id="ratingContainer">
-                            <form asp-action="AddRating" method="post" class="d-flex align-items-center" id="ratingForm">
-                                @Html.AntiForgeryToken()
-                                <input type="hidden" name="movieId" value="@movie.Id"/>
-                                <input type="hidden" name="ratingValue" id="ratingValue" value="0"/>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="d-flex gap-4">
-                    @if (isFavorite)
-                    {
-                    <form asp-action="DestroyFavorite" asp-controller="Movies" method="post" class="mb-2">
-                        @Html.AntiForgeryToken()
-                        @Html.Hidden("favoriteId", @movie.Id)
-                        <button type="submit" class="btn-without text-light">
-                            Delete from Favorites <i class="fas fa-minus"></i>
-                        </button>
-                    </form>
-                    }
-                    else
-                    {
-                    <form asp-action="StoreFavorite" asp-controller="Movies" method="post" class="mb-2">
-                        @Html.AntiForgeryToken()
-                        <input type="hidden" name="movieId" value="@movie.Id" />
-                        <input type="hidden" name="title" value="@movie.Title" />
-                        <input type="hidden" name="poster" value="@movie.Poster" />
-                        <button type="submit" class="btn-without text-light">
-                            Add to Favorites <i class="fas fa-plus"></i>
-                        </button>
-                    </form>
-                    }
+    <form asp-action="StoreWatchlist" asp-controller="Movies" method="post" class="rounded p-5 bg-secondary-color">
+        @Html.AntiForgeryToken()
+        <div class="d-flex flex-column justify-content-center align-items-center">
+            <input type="hidden" name="movieId" value="tt0848228" />
+            <input type="hidden" name="title" value="Avengers" />
+            <input type="hidden" name="poster" value="@image" />
 
-                    @if (isWatchlist)
-                    {
-                    <form asp-action="DestroyWatchlist" asp-controller="Movies" method="post" class="mb-2">
-                        @Html.AntiForgeryToken()
-                        @Html.Hidden("id", @movie.Id)
-                        <button type="submit" class="btn-without text-light">
-                            Delete from Watchlist <i class="fas fa-minus"></i>
-                        </button>
-                    </form>
-                    }
-                    else
-                    {
-                    <form asp-action="StoreWatchlist" asp-controller="Movies" method="post" class="mb-2">
-                        @Html.AntiForgeryToken()
-                        <input type="hidden" name="movieId" value="@movie.Id" />
-                        <input type="hidden" name="title" value="@movie.Title" />
-                        <input type="hidden" name="poster" value="@movie.Poster" />
-                        <button type="submit" class="btn-without text-light">
-                            Add to Watchlist  <i class="fas fa-plus"></i>
-                        </button>
-                    </form>
-                    }
-                </div>
-            </div>
+            <button type="submit" class="w-100 btn fw-bold rounded-pill text-white mb-3 mt-3" style="background: #7432F9">Add to watchlist</button>
         </div>
-    </div>
+    </form>
+
+    <form id="deleteForm" asp-action="DestroyWatchlist" asp-controller="Movies" method="post" class="rounded p-5 bg-secondary-color">
+        @Html.AntiForgeryToken()
+        <div class="d-flex flex-column justify-content-center align-items-center">
+            @Html.Hidden("id", 5)
+            <button type="submit" class="w-100 btn fw-bold rounded-pill text-white mb-3 mt-3" style="background: #7432F9">Delete from watchlist</button>
+        </div>
+    </form>
 </div>
