@@ -7,11 +7,20 @@
     @await Html.PartialAsync("_MovieCardComponent", Tuple.Create(movie.Poster, movie.Ratings, movie.Title))
 *@
 
-@model Tuple<string, string, string>
+@model Tuple<string, string, string, string>
 
 <div class="card bg-secondary-color" style="width: 18rem;">
     <div class="card-img-container">
-        <a href="#"><img class="card-img-top" src="@Model.Item1" alt="Card image cap"></a>
+        <a href="/movies/@Model.Item4">
+            @if (@Model.Item1 != "N/A")
+            {
+                <img class="card-img-top" src="@Model.Item1" alt="Card image cap">
+            }
+            else
+            {
+                <img class="card-img-top" src="@Url.Content("~/images/poster_not_found.png")" alt="Card image cap">
+            }
+        </a>
     </div>
     <div class="card-body d-flex flex-column">
         <p class="card-text"><i class="fa-solid fa-star" style="color: #FFD43B;"></i>@Model.Item2</p>

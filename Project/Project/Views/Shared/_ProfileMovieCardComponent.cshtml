@@ -19,7 +19,14 @@
                     <button class="btn btn-danger close-btn" aria-label="Close">X</button>
                 }
                 <div class="card-img-container">
-                    <a href="/movies/@movie.Movie_id"><img class="card-img-top" src="@movie.Movie_poster" alt="Card image cap"></a>
+                        @if (!string.IsNullOrEmpty(movie.Movie_poster) && movie.Movie_poster != "N/A")
+                        {
+                            <a href="/movies/@movie.Movie_id"><img class="card-img-top" src="@movie.Movie_poster" alt="Card image cap"></a>
+                        }
+                        else
+                        {
+                            <a href="/movies/@movie.Movie_id"><img class="card-img-top" src="@Url.Content("~/images/poster_not_found.png")" alt="Card image cap"></a>
+                        }
                 </div>
                 <div class="card-body-movie d-flex flex-column">
                     <h6 class="card-title my-2"><a href="#">@movie.Movie_title</a></h6>
