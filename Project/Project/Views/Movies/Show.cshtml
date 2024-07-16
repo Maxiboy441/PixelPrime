@@ -28,7 +28,7 @@
                 }
                 else
                 {
-                    <img class="card-img-top" src="@Url.Content("~/images/poster_not_found.png")" alt="Movie poster not found">
+                    <img class="card-img-top border border-white" src="@Url.Content("~/images/poster_not_found.png")" alt="Movie poster not found">
                 }
             </div>
         </div>
@@ -43,12 +43,35 @@
 
                     <div class="d-flex flex-column">
                         <h5>Your Rating</h5>
-                        <div class="rating" id="ratingContainer">
-                            <form asp-action="AddRating" method="post" class="d-flex align-items-center" id="ratingForm">
-                                @Html.AntiForgeryToken()
-                                <input type="hidden" name="movieId" value="@movie.Id"/>
-                                <input type="hidden" name="ratingValue" id="ratingValue" value="0"/>
-                            </form>
+
+                        @await Html.PartialAsync("_PrimaryButton", Tuple.Create("Rate Movie", "style-2", "", "type=type data-toggle=modal data-target=#exampleModalCenter", "button"))
+
+                        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="d-flex justify-content-center flex-column align-items-center">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title text-dark" id="exampleModalLongTitle">@movie.Title</h5>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="rating text-center" id="ratingContainer">
+                                                <form asp-action="AddRating" method="post" class="d-flex align-items-center" id="ratingForm">
+                                                    @Html.AntiForgeryToken()
+                                                    <input type="hidden" name="movieId" value="@movie.Id" />
+                                                    <input type="hidden" name="title" value="@movie.Title" />
+                                                    <input type="hidden" name="ratingValue" id="ratingValue" value="0" />
+
+                                                    <div class="modal-footer">
+                                                        @await Html.PartialAsync("_PrimaryButton", Tuple.Create("Close", "", "btn btn-secondary", "type=button data-dismiss=modal", "button"))
+
+                                                        @await Html.PartialAsync("_PrimaryButton", Tuple.Create("Submit", "style-1", "", "type=submit", "button"))
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
