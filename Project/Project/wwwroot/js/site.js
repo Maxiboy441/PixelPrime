@@ -10,21 +10,38 @@ document.addEventListener('DOMContentLoaded', (event) => {
     mySpaceMovies.forEach(movie => {
         movie.addEventListener("click", async (e) => {
             const movieId = movie.getAttribute("data-imdb-id");
-            try {
-                const response = await axios.get(`/SearchById?id=${movieId}`);
-                const detailsContainer = document.getElementById(`movie-details-${movieId}`);
-                const { Genre, Plot, imdbID } = response.data;
+            const detailsContainer = document.getElementById(`movie-details-${movieId}`);
 
-                detailsContainer.innerHTML = `
-                        <p class="card-title mt-3">${Genre}</p>
-                        <hr />
-                        <p class="card-title">${Plot}</p>
-                    `;
-            } catch (error) {
-                console.error(error);
+            // Check if the movie details are in session storage
+            const storedMovie = sessionStorage.getItem(`movie_${movieId}`);
+            if (storedMovie) {
+                // If found in session storage, use the stored data
+                const movieData = JSON.parse(storedMovie);
+                displayMovieDetails(detailsContainer, movieData);
+            } else {
+                // If not found, fetch from API
+                try {
+                    const response = await axios.get(`/SearchById?id=${movieId}`);
+                    const { Genre, Plot, imdbID } = response.data;
+
+                    // Store the fetched movie details in session storage
+                    sessionStorage.setItem(`movie_${movieId}`, JSON.stringify(response.data));
+
+                    displayMovieDetails(detailsContainer, response.data);
+                } catch (error) {
+                    console.error(error);
+                }
             }
-        })
+        });
     });
+
+    function displayMovieDetails(container, movieData) {
+        container.innerHTML = `
+            <p class="card-title mt-3">${movieData.Genre}</p>
+            <hr />
+            <p class="card-title">${movieData.Plot}</p>
+        `;
+    }
 
     const movieCards = document.querySelectorAll('.movie-card');
     const sideCards = document.querySelectorAll('.side-card');
