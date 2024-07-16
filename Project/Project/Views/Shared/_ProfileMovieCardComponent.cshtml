@@ -23,11 +23,11 @@
                 <div class="card-img-container">
                         @if (!string.IsNullOrEmpty(movie.Movie_poster) && movie.Movie_poster != "N/A")
                         {
-                            <img class="card-img-top" src="@movie.Movie_poster" alt="@movie.Movie_title">
+                            <img class="card-img-top movie-poster" src="@movie.Movie_poster" alt="@movie.Movie_title">
                         }
                         else
                         {
-                            <img class="card-img-top" src="@Url.Content("~/images/poster_not_found.png")" alt="Movie poster not found">
+                            <img class="card-img-top movie-poster" src="@Url.Content("~/images/poster_not_found.png")" alt="Movie poster not found">
                         }
                 </div>
                 <div class="card-body-movie d-flex flex-column">

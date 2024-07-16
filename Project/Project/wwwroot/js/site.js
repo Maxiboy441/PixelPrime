@@ -14,14 +14,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
             console.log(movieId)
             try {
                 const response = await axios.get(`/SearchById?id=${movieId}`);
-                console.log(response.data);
                 const detailsContainer = document.getElementById(`movie-details-${movieId}`);
                 const { Genre, Plot, imdbID } = response.data;
 
                 detailsContainer.innerHTML = `
-                        <p class="card-title mt-3"><a href="#">${Genre}</a></p>
+                        <p class="card-title mt-3">${Genre}</p>
                         <hr />
-                        <p class="card-title"><a href="#">${Plot}</a></p>
+                        <p class="card-title">${Plot}</p>
                     `;
             } catch (error) {
                 console.error(error);

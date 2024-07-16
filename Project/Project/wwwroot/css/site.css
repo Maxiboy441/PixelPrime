@@ -129,13 +129,17 @@ html .swiper-button-next, html .swiper-button-prev {
     background-color: var(--secondary-color);
 }
 
+.card {
+    border: none !important;
+}
+
 .card .btn-danger {
     position: absolute;
     z-index: 99;
     right: 0;
 }
 
-.card-img-top {
+.movie-poster {
     cursor: pointer;
 }
 
