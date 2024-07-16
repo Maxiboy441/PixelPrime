@@ -57,9 +57,13 @@
                                             <div class="rating text-center" id="ratingContainer">
                                                 <form asp-action="AddRating" method="post" class="d-flex align-items-center" id="ratingForm">
                                                     @Html.AntiForgeryToken()
-                                                    <input type="hidden" name="movieId" value="@movie.Id" />
-                                                    <input type="hidden" name="title" value="@movie.Title" />
-                                                    <input type="hidden" name="ratingValue" id="ratingValue" value="0" />
+                                                    <div>
+                                                        <input type="hidden" name="movieId" value="@movie.Id" />
+                                                        <input type="hidden" name="title" value="@movie.Title" />
+                                                        <input type="hidden" name="poster" value="@movie.Poster" />
+
+                                                        <input type="hidden" name="ratingValue" id="ratingValue" value="0" />
+                                                    </div>
 
                                                     <div class="modal-footer">
                                                         @await Html.PartialAsync("_PrimaryButton", Tuple.Create("Close", "", "btn btn-secondary", "type=button data-dismiss=modal", "button"))

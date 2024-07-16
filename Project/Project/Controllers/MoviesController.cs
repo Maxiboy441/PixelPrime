@@ -187,7 +187,7 @@ namespace Project.Controllers
 
     
         [HttpPost]
-        public async Task<IActionResult> AddRating(string movieId, int ratingValue)
+        public async Task<IActionResult> AddRating(string movieId, string poster, string title, int ratingValue)
         {
             var userJson = HttpContext.Session.GetString("CurrentUser");
 
@@ -210,6 +210,8 @@ namespace Project.Controllers
                     {
                         
                         Movie_id = movieId,
+                        Movie_poster = poster,
+                        Movie_title = title,
                         User_id = currentUser.Id,
                         Rating_value = ratingValue,
                         Created_at = DateTime.Now,
@@ -224,7 +226,8 @@ namespace Project.Controllers
             }
             else
             {
-                return RedirectToAction("Login", "Auth");
+                var originalUrl = Request.Headers["Referer"].ToString();
+                return RedirectToAction("Login", "Auth", new { returnUrl = originalUrl });
             }
         }
     }
