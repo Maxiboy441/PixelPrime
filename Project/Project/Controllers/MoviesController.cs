@@ -38,6 +38,8 @@ namespace Project.Controllers
                 _context.Favorites.Add(favorite);
                 await _context.SaveChangesAsync();
 
+                TempData["SuccessMessage"] = "Movie successfully added to your favorites!";
+
                 return Redirect(Request.Headers["Referer"].ToString());
             }
             else
@@ -60,12 +62,14 @@ namespace Project.Controllers
 
                 if (favorite == null)
                 {
-                    return View("NotFound");
+                    TempData["FailMessage"] = "The movie you are trying to remove does not exist in your favorites.";
+                    return Redirect(Request.Headers["Referer"].ToString());
                 }
 
                 _context.Favorites.Remove(favorite);
                 await _context.SaveChangesAsync();
 
+                TempData["SuccessMessage"] = $"The movie '{favorite.Movie_title}' has been removed from your favorites.";
                 return Redirect(Request.Headers["Referer"].ToString());
             }
             else
@@ -94,6 +98,8 @@ namespace Project.Controllers
                 _context.Watchlists.Add(watchlist);
                 await _context.SaveChangesAsync();
 
+                TempData["SuccessMessage"] = "Movie successfully added to your watchlist!";
+
                 return Redirect(Request.Headers["Referer"].ToString());
             }
             else
@@ -116,11 +122,14 @@ namespace Project.Controllers
 
                 if (movie == null)
                 {
-                    return View("NotFound");
+                    TempData["FailMessage"] = "The movie you are trying to remove does not exist in your watchlist.";
+                    return Redirect(Request.Headers["Referer"].ToString());
                 }
 
                 _context.Watchlists.Remove(movie);
                 await _context.SaveChangesAsync();
+
+                TempData["SuccessMessage"] = $"The movie '{movie.Movie_title}' has been removed from your favorites.";
 
                 return Redirect(Request.Headers["Referer"].ToString());
             }
