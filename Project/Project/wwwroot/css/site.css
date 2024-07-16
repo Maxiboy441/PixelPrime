@@ -123,6 +123,12 @@ html .swiper-button-next, html .swiper-button-prev {
 
 /*Profile Page styles*/
 
+.profile_image {
+    width: 10rem;
+    height: 10rem;
+    background-color: var(--secondary-color);
+}
+
 .card .btn-danger {
     position: absolute;
     z-index: 99;

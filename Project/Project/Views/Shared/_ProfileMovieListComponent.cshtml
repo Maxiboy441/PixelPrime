@@ -14,7 +14,7 @@
 
     @*SIDE CARD*@
 
-    @*@if (Model.Item1 != null && Model.Item1.Any())
+    @if (Model.Item1 != null && Model.Item1.Any())
     {
         <div id="side-card-container">
             @foreach (var movie in Model.Item1)
@@ -27,19 +27,26 @@
                     </div>
                     <div class="card bg-secondary-color" style="width: 18rem;">
                         <div class="card-img-container">
-                            <a href="#"><img class="card-img-top" src="@movie.Movie_poster" alt="Card image cap"></a>
+                            @if (!string.IsNullOrEmpty(movie.Movie_poster) && movie.Movie_poster != "N/A")
+                            {
+                                <img class="card-img-top" src="@movie.Movie_poster" alt="@movie.Movie_title">
+                            }
+                            else
+                            {
+                                <img class="card-img-top" src="@Url.Content("~/images/poster_not_found.png")" alt="@movie.Movie_title">
+                            }
                         </div>
-                        <div class="card-body-movie d-flex flex-column">
+                        @*<div class="card-body-movie d-flex flex-column">
                                 <p class="card-title mt-3"><a href="#">@movie.Genre</a></p>
                                 <hr />
                                 <p class="card-title"><a href="#">@movie.Plot</a></p>
                                 <p class="card-text"><i class="fa-solid fa-star" style="color: #FFD43B;"></i>@movie.PixelRating</p>
-                        </div>
+                        </div>*@
                     </div>
                 </div>
             }
         </div>
-    }*@
+    }
 </div>
 
 @*<script>
