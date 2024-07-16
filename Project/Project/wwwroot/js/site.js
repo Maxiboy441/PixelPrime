@@ -10,8 +10,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
     mySpaceMovies.forEach(movie => {
         movie.addEventListener("click", async (e) => {
             const movieId = movie.getAttribute("data-imdb-id");
-
-            console.log(movieId)
             try {
                 const response = await axios.get(`/SearchById?id=${movieId}`);
                 const detailsContainer = document.getElementById(`movie-details-${movieId}`);
