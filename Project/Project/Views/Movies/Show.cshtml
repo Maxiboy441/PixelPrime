@@ -49,10 +49,16 @@
                         <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered" role="document">
                                 <div class="modal-content">
-                                    <div class="d-flex justify-content-center flex-column align-items-center">
+                                    <div class="d-flex justify-content-between flex-column">
                                         <div class="modal-header">
-                                            <h5 class="modal-title text-dark" id="exampleModalLongTitle">@movie.Title</h5>
+                                            <div>
+                                                <h5 class="modal-title text-dark" id="exampleModalLongTitle">@movie.Title</h5>
+                                            </div>
+                                            <div>
+                                                @await Html.PartialAsync("_PrimaryButton", Tuple.Create("X", "", "btn-without", "type=button data-dismiss=modal", "button"))
+                                            </div>
                                         </div>
+                                        
                                         <div class="modal-body">
                                             <div class="rating text-center" id="ratingContainer">
                                                 <form asp-action="AddRating" method="post" class="d-flex align-items-center" id="ratingForm">
@@ -65,11 +71,9 @@
                                                         <input type="hidden" name="ratingValue" id="ratingValue" value="0" />
                                                     </div>
 
-                                                    <div class="modal-footer">
-                                                        @await Html.PartialAsync("_PrimaryButton", Tuple.Create("Close", "", "btn btn-secondary", "type=button data-dismiss=modal", "button"))
-
-                                                        @await Html.PartialAsync("_PrimaryButton", Tuple.Create("Submit", "style-1", "", "type=submit", "button"))
-                                                    </div>
+                                                    @* <div class="modal"> *@
+                                                    @*     @await Html.PartialAsync("_PrimaryButton", Tuple.Create("Submit", "style-1", "", "type=submit", "button")) *@
+                                                    @* </div> *@
                                                 </form>
                                             </div>
                                         </div>

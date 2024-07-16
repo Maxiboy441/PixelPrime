@@ -124,7 +124,7 @@ html .swiper-button-next, html .swiper-button-prev {
 /*Movie Page styles*/
 
 .star {
-    font-size: 20px;
+    font-size: 25px;
     color: lightgray;
     cursor: pointer;
     transition: color 0.2s;

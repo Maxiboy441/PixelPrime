@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function setRating(value) {
         document.getElementById('ratingValue').value = value;
         highlightStars(value, 'selected');
+        form.submit();
     }
 
     function highlightStars(limit, className = 'hovered') {
