@@ -100,7 +100,6 @@ namespace Project.Services
         
         public static string ConvertToValidJson(string input)
         {
-            // Remove any non-JSON content before and after the JSON-like structure
             var jsonMatch = Regex.Match(input, @"\[[\s\S]*\]");
             if (!jsonMatch.Success)
             {
@@ -109,30 +108,24 @@ namespace Project.Services
 
             string jsonContent = jsonMatch.Value;
 
-            // Remove any non-JSON elements
             jsonContent = Regex.Replace(jsonContent, @"(?m)^\s*[^""\[\],\s]+.*$", "");
 
-            // Remove any empty lines
             jsonContent = Regex.Replace(jsonContent, @"(?m)^\s*$[\r\n]*", "");
 
-            // Try to parse as JArray
             try
             {
                 var jArray = JArray.Parse(jsonContent);
         
-                // Filter out non-string elements and trim each string
                 var fixedArray = jArray
                     .Where(token => token.Type == JTokenType.String)
                     .Select(token => token.Value<string>().Trim())
                     .Where(s => !string.IsNullOrWhiteSpace(s))
                     .ToArray();
 
-                // Return the fixed JSON
                 return JsonConvert.SerializeObject(fixedArray, Formatting.Indented);
             }
             catch (JsonException)
             {
-                // If parsing as JArray fails, try a more aggressive approach
                 var matches = Regex.Matches(jsonContent, @"""([^""\\]*(?:\\.[^""\\]*)*)""");
                 var fixedArray = matches
                     .Cast<Match>()

@@ -29,7 +29,9 @@ namespace Project.Services
                     ex.Message.Contains("Response property not found in API response") ||
                     ex.Message.Contains("API request failed with status code") ||
                     ex.Message.Contains("Failed to parse API response as JSON") ||
-                    ex.Message.Contains("Failed to deserialize JSON content"))
+                    ex.Message.Contains("Failed to deserialize JSON content") ||
+                    ex.Message.Contains("No JSON-like structure found in the input.")
+                    ) 
                 .WaitAndRetryAsync(
                     3, 
                     retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)),
