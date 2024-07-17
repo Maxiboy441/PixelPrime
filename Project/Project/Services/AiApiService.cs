@@ -100,31 +100,47 @@ namespace Project.Services
         
         public static string ConvertToValidJson(string input)
         {
-            string cleanedInput = Regex.Replace(input, @"\s+", " ").Trim();
+            // Remove any non-JSON content before and after the JSON-like structure
+            var jsonMatch = Regex.Match(input, @"\[[\s\S]*\]");
+            if (!jsonMatch.Success)
+            {
+                throw new ArgumentException("No JSON-like structure found in the input.");
+            }
 
-            cleanedInput = Regex.Replace(cleanedInput, @"^```json?\s*|\s*```$", "");
+            string jsonContent = jsonMatch.Value;
 
+            // Remove any non-JSON elements
+            jsonContent = Regex.Replace(jsonContent, @"(?m)^\s*[^""\[\],\s]+.*$", "");
+
+            // Remove any empty lines
+            jsonContent = Regex.Replace(jsonContent, @"(?m)^\s*$[\r\n]*", "");
+
+            // Try to parse as JArray
             try
             {
-                var jsonArray = JArray.Parse(cleanedInput);
+                var jArray = JArray.Parse(jsonContent);
+        
+                // Filter out non-string elements and trim each string
+                var fixedArray = jArray
+                    .Where(token => token.Type == JTokenType.String)
+                    .Select(token => token.Value<string>().Trim())
+                    .Where(s => !string.IsNullOrWhiteSpace(s))
+                    .ToArray();
 
-                return JsonConvert.SerializeObject(jsonArray, Formatting.Indented);
+                // Return the fixed JSON
+                return JsonConvert.SerializeObject(fixedArray, Formatting.Indented);
             }
             catch (JsonException)
             {
-                string[] items = Regex.Split(cleanedInput, @",\s*(?=(?:[^""]*""[^""]*"")*[^""]*$)");
+                // If parsing as JArray fails, try a more aggressive approach
+                var matches = Regex.Matches(jsonContent, @"""([^""\\]*(?:\\.[^""\\]*)*)""");
+                var fixedArray = matches
+                    .Cast<Match>()
+                    .Select(m => m.Groups[1].Value.Trim())
+                    .Where(s => !string.IsNullOrWhiteSpace(s))
+                    .ToArray();
 
-                var validItems = new JArray();
-                foreach (var item in items)
-                {
-                    string trimmedItem = item.Trim().Trim('[', ']', '"');
-                    if (!string.IsNullOrWhiteSpace(trimmedItem))
-                    {
-                        validItems.Add(trimmedItem);
-                    }
-                }
-                
-                return JsonConvert.SerializeObject(validItems, Formatting.Indented);
+                return JsonConvert.SerializeObject(fixedArray, Formatting.Indented);
             }
         }
     }
