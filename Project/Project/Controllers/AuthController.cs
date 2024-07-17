@@ -1,6 +1,4 @@
-﻿using System;
-using System.Diagnostics.CodeAnalysis;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Project.Models;
 using Newtonsoft.Json;
 using static BCrypt.Net.BCrypt;
@@ -57,7 +55,7 @@ namespace Project.Controllers
             var newestRecommendationDate = await _recommendationService.GetNewestRecommendationDate(userId);
             var favorites = await _recommendationService.GetFavorites(userId);
             var ratings = await _recommendationService.GetLikedMovies(userId);
-
+            
             if ((favorites.Any() || ratings.Any()) &&
                 (newestRecommendationDate == null || newestRecommendationDate < DateTime.Now.AddDays(-7)))
             {

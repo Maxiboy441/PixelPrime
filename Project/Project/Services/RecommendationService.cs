@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Project.Data;
 using Project.Models;
@@ -30,7 +26,7 @@ namespace Project.Services
             string prompt1 = GenerateRatingsString(liked);
             string prompt2 = GenerateFavoritesString(favorites);
 
-            string finalPrompt = $"{prompt1}\n{prompt2}";
+            string finalPrompt = $"{prompt1}\n{prompt2}. Give me only json ,no notes etc!";
 
             List<string> response = await _aiApiService.GenerateResponse(finalPrompt);
 
