@@ -66,23 +66,23 @@ app.MapControllerRoute(
 
 app.MapControllerRoute(
     name: "movies_storefavorite",
-    pattern: "Movies/StoreFavorite/{id?}",
-    defaults: new { controller = "Movies", action = "StoreFavorite" });
+    pattern: "Movies/StoreFavoriteMovie/{id?}",
+    defaults: new { controller = "Movies", action = "StoreFavoriteMovie" });
 
 app.MapControllerRoute(
     name: "movies_destroyfavorite",
-    pattern: "Movies/DestroyFavorite/{id?}",
-    defaults: new { controller = "Movies", action = "DestroyFavorite" });
+    pattern: "Movies/DestroyFavoriteMovie/{id?}",
+    defaults: new { controller = "Movies", action = "DestroyFavoriteMovie" });
 
 app.MapControllerRoute(
     name: "movies_storetowatchlist",
-    pattern: "Movies/StoreWatchlist/{id?}",
-    defaults: new { controller = "Movies", action = "StoreWatchlist" });
+    pattern: "Movies/StoreWatchlistMovie/{id?}",
+    defaults: new { controller = "Movies", action = "StoreWatchlistMovie" });
 
 app.MapControllerRoute(
     name: "movies_destroyfromwatchlist",
-    pattern: "Movies/DestroyWatchlist/{id?}",
-    defaults: new { controller = "Movies", action = "DestroyWatchlist" });
+    pattern: "Movies/DestroyWatchlistMovie/{id?}",
+    defaults: new { controller = "Movies", action = "DestroyWatchlistMovie" });
 
 app.MapControllerRoute(
     name: "movies",

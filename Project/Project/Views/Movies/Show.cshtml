@@ -82,7 +82,7 @@
                 <div class="d-flex gap-4">
                     @if (isFavorite)
                     {
-                    <form asp-action="DestroyFavorite" asp-controller="Movies" method="post" class="mb-2">
+                    <form asp-action="DestroyFavoriteMovie" asp-controller="Movies" method="post" class="mb-2">
                         @Html.AntiForgeryToken()
                         @Html.Hidden("favoriteId", @movie.Id)
                         <button type="submit" class="btn-without text-light">
@@ -92,7 +92,7 @@
                     }
                     else
                     {
-                    <form asp-action="StoreFavorite" asp-controller="Movies" method="post" class="mb-2">
+                    <form asp-action="StoreFavoriteMovie" asp-controller="Movies" method="post" class="mb-2">
                         @Html.AntiForgeryToken()
                         <input type="hidden" name="movieId" value="@movie.Id" />
                         <input type="hidden" name="title" value="@movie.Title" />
@@ -105,7 +105,7 @@
 
                     @if (isWatchlist)
                     {
-                    <form asp-action="DestroyWatchlist" asp-controller="Movies" method="post" class="mb-2">
+                    <form asp-action="DestroyWatchlistMovie" asp-controller="Movies" method="post" class="mb-2">
                         @Html.AntiForgeryToken()
                         @Html.Hidden("id", @movie.Id)
                         <button type="submit" class="btn-without text-light">
@@ -115,7 +115,7 @@
                     }
                     else
                     {
-                    <form asp-action="StoreWatchlist" asp-controller="Movies" method="post" class="mb-2">
+                    <form asp-action="StoreWatchlistMovie" asp-controller="Movies" method="post" class="mb-2">
                         @Html.AntiForgeryToken()
                         <input type="hidden" name="movieId" value="@movie.Id" />
                         <input type="hidden" name="title" value="@movie.Title" />
