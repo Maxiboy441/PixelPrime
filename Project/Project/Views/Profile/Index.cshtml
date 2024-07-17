@@ -15,8 +15,8 @@
 
     @await Html.PartialAsync("_ProfileTabButton",
         Tuple.Create("Watchlist", "Favorites", "Recommendations",
-        await Html.PartialAsync("_ProfileMovieListComponent", Tuple.Create(Model.Watchlist, true)),
-        await Html.PartialAsync("_ProfileMovieListComponent", Tuple.Create(Model.Favorites, true)),
-        await Html.PartialAsync("_ProfileMovieListComponent", Tuple.Create(Model.Recommendations, false))
+        await Html.PartialAsync("_ProfileMovieListComponent", Tuple.Create(Model.Watchlist, true, "/Movies/DestroyWatchlistMovie")),
+        await Html.PartialAsync("_ProfileMovieListComponent", Tuple.Create(Model.Favorites, true, "/Movies/DestroyFavoriteMovie")),
+        await Html.PartialAsync("_ProfileMovieListComponent", Tuple.Create(Model.Recommendations, false, ""))
         ))
 </section>
