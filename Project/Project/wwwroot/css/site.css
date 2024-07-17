@@ -267,7 +267,7 @@ html .swiper-button-next, html .swiper-button-prev {
     }
 
     .profile-movie-container {
-        padding: 0 20px;
+        margin-inline-start: 100px;
     }
 
     .profile-movie-container__row {
