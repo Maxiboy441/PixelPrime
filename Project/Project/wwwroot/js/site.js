@@ -69,6 +69,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 sideCard.classList.remove('d-none', 'hide');
                 sideCard.classList.add('show');
             }
+
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
         });
     });
 

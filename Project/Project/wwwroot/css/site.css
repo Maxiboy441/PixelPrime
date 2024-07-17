@@ -247,17 +247,6 @@ html .swiper-button-next, html .swiper-button-prev {
     margin-right: 10px;
 }
 
-@media (max-width: 409px) {
-    .profile-movie-container {
-        flex-direction: column;
-    }
-
-    .profile-movie-container__row {
-        flex-direction: column;
-        align-items: center;
-    }
-}
-
 @media (max-width: 576px) {
     #advert-carousel {
         width: 100vw;
@@ -291,11 +280,6 @@ html .swiper-button-next, html .swiper-button-prev {
 }
 
 @media (min-width: 580px) {
-/*    .profile-movie-container {
-        justify-content: flex-start;
-        flex-wrap: wrap;
-    }*/
-
     #advert-carousel {
         width: 100vw;
     }
