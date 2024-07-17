@@ -143,6 +143,10 @@ html .swiper-button-next, html .swiper-button-prev {
     cursor: pointer;
 }
 
+.side-card {
+    margin-left: 20px;
+}
+
 .side-card .card .card-img-container {
     height: 30rem;
 }
@@ -185,12 +189,6 @@ html .swiper-button-next, html .swiper-button-prev {
 
 .side-card.hide {
     animation: slideOut 0.5s forwards;
-}
-
-@media (min-width: 768px) {
-    html {
-        font-size: 1rem;
-    }
 }
 
 #carousel-wrapper {
@@ -247,4 +245,98 @@ html .swiper-button-next, html .swiper-button-prev {
 .dropdown-item img {
     height: 50px;
     margin-right: 10px;
+}
+
+@media (max-width: 409px) {
+    .profile-movie-container {
+        flex-direction: column;
+    }
+
+    .profile-movie-container__row {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+@media (max-width: 576px) {
+    #advert-carousel {
+        width: 100vw;
+    }
+
+    .carousel-inner img {
+        width: 100%;
+        height: 30vh;
+    }
+
+    .carousel-caption {
+        display: block !important;
+    }
+
+    .singUp-advert {
+        height: auto;
+        padding: 8px;
+    }
+
+    .profile-movie-container {
+        padding: 0 20px;
+    }
+
+    .profile-movie-container__row {
+        justify-content: space-between;
+    }
+
+    .side-card {
+        width: 250px;
+    }
+}
+
+@media (min-width: 580px) {
+/*    .profile-movie-container {
+        justify-content: flex-start;
+        flex-wrap: wrap;
+    }*/
+
+    #advert-carousel {
+        width: 100vw;
+    }
+
+    .carousel-caption {
+        display: block !important;
+    }
+
+    .carousel-inner img {
+        width: 100%;
+        height: 40vh;
+    }
+}
+
+@media (max-width: 1399px) {
+    .side-card {
+        position: absolute;
+        justify-content: space-around;
+        right: 0;
+        width: 350px;
+        background-color: var(--secondary-color);
+        padding: 50px;
+        z-index: 100;
+        margin-left: 0;
+        border: 1px solid var(--primary-color);
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 1rem;
+    }
+
+    #advert-carousel {
+        width: 100vw;
+    }
+
+    .carousel-inner img {
+        width: 100%;
+        height: 55vh;
+    }
 }
