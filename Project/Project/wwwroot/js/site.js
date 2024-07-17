@@ -37,7 +37,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     function displayMovieDetails(container, movieData) {
         container.innerHTML = `
-            <p class="card-title mt-3">${movieData.Genre}</p>
+            <h5 class="card-title mt-3">${movieData.Title}</h5>
+            <p class="card-title">${movieData.Genre}</p>
             <hr />
             <p class="card-title">${movieData.Plot}</p>
         `;
@@ -70,10 +71,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 sideCard.classList.add('show');
             }
 
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
+            document.getElementById('top').scrollIntoView({ behavior: 'smooth' });
+
         });
     });
 
