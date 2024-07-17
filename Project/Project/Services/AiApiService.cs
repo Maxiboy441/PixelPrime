@@ -1,6 +1,11 @@
 using System.Text;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using JsonException = System.Text.Json.JsonException;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace Project.Services
 {
@@ -47,7 +52,7 @@ namespace Project.Services
                     if (responseObject.TryGetProperty("response", out var responseProperty))
                     {
                         var responseString = responseProperty.GetString();
-                        var jsonContent = ExtractJsonFromMarkdown(responseString);
+                        var jsonContent = ConvertToValidJson(ExtractJsonFromMarkdown(responseString));
 
                         if (!string.IsNullOrEmpty(jsonContent))
                         {
@@ -91,6 +96,36 @@ namespace Project.Services
         {
             var match = System.Text.RegularExpressions.Regex.Match(markdown, @"```json\s*([\s\S]*?)\s*```");
             return match.Success ? match.Groups[1].Value.Trim() : string.Empty;
+        }
+        
+        public static string ConvertToValidJson(string input)
+        {
+            string cleanedInput = Regex.Replace(input, @"\s+", " ").Trim();
+
+            cleanedInput = Regex.Replace(cleanedInput, @"^```json?\s*|\s*```$", "");
+
+            try
+            {
+                var jsonArray = JArray.Parse(cleanedInput);
+
+                return JsonConvert.SerializeObject(jsonArray, Formatting.Indented);
+            }
+            catch (JsonException)
+            {
+                string[] items = Regex.Split(cleanedInput, @",\s*(?=(?:[^""]*""[^""]*"")*[^""]*$)");
+
+                var validItems = new JArray();
+                foreach (var item in items)
+                {
+                    string trimmedItem = item.Trim().Trim('[', ']', '"');
+                    if (!string.IsNullOrWhiteSpace(trimmedItem))
+                    {
+                        validItems.Add(trimmedItem);
+                    }
+                }
+                
+                return JsonConvert.SerializeObject(validItems, Formatting.Indented);
+            }
         }
     }
 }
