@@ -133,7 +133,7 @@ namespace Project.Controllers
                 _context.Watchlists.Remove(movie);
                 await _context.SaveChangesAsync();
 
-                TempData["SuccessMessage"] = $"The movie '{movie.Movie_title}' has been removed from your favorites.";
+                TempData["SuccessMessage"] = $"The movie '{movie.Movie_title}' has been removed from your watchlist.";
 
                 return Redirect(Request.Headers["Referer"].ToString());
             }
