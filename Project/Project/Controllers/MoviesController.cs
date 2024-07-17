@@ -19,7 +19,7 @@ namespace Project.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> StoreFavorite(Favorite favorite, string movieId, string title, string poster)
+        public async Task<IActionResult> StoreFavoriteMovie(Favorite favorite, string movieId, string title, string poster)
         {
             var userJson = HttpContext.Session.GetString("CurrentUser");
 
@@ -51,7 +51,7 @@ namespace Project.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> DestroyFavorite(string favoriteId)
+        public async Task<IActionResult> DestroyFavoriteMovie(string favoriteId)
         {
             var userJson = HttpContext.Session.GetString("CurrentUser");
             
@@ -82,7 +82,7 @@ namespace Project.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> StoreWatchlist(Watchlist watchlist, string movieId, string title, string poster)
+        public async Task<IActionResult> StoreWatchlistMovie(Watchlist watchlist, string movieId, string title, string poster)
         {
             var userJson = HttpContext.Session.GetString("CurrentUser");
 
@@ -114,7 +114,7 @@ namespace Project.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> DestroyWatchlist(string id)
+        public async Task<IActionResult> DestroyWatchlistMovie(string id)
         {
             var userJson = HttpContext.Session.GetString("CurrentUser");
 
