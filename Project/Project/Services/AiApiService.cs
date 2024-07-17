@@ -1,7 +1,6 @@
 using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using JsonException = System.Text.Json.JsonException;
@@ -94,7 +93,7 @@ namespace Project.Services
 
         private string ExtractJsonFromMarkdown(string markdown)
         {
-            var match = System.Text.RegularExpressions.Regex.Match(markdown, @"```json\s*([\s\S]*?)\s*```");
+            var match = Regex.Match(markdown, @"```json\s*([\s\S]*?)\s*```");
             return match.Success ? match.Groups[1].Value.Trim() : string.Empty;
         }
         
