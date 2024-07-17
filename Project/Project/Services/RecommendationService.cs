@@ -27,7 +27,9 @@ namespace Project.Services
                 .Handle<Exception>(ex => 
                     ex.Message.Contains("No valid JSON found in the response") ||
                     ex.Message.Contains("Response property not found in API response") ||
-                    ex.Message.Contains("API request failed with status code"))
+                    ex.Message.Contains("API request failed with status code") ||
+                    ex.Message.Contains("Failed to parse API response as JSON") ||
+                    ex.Message.Contains("Failed to deserialize JSON content"))
                 .WaitAndRetryAsync(
                     3, 
                     retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)),

@@ -40,28 +40,44 @@ namespace Project.Services
                 var responseContent = await response.Content.ReadAsStringAsync();
                 _logger.LogInformation("Received response: {ResponseContent}", responseContent);
 
-                var responseObject = JsonSerializer.Deserialize<JsonElement>(responseContent);
-
-                if (responseObject.TryGetProperty("response", out var responseProperty))
+                try
                 {
-                    var responseString = responseProperty.GetString();
-                    var jsonContent = ExtractJsonFromMarkdown(responseString);
+                    var responseObject = JsonSerializer.Deserialize<JsonElement>(responseContent);
 
-                    if (!string.IsNullOrEmpty(jsonContent))
+                    if (responseObject.TryGetProperty("response", out var responseProperty))
                     {
-                        var movieList = JsonSerializer.Deserialize<List<string>>(jsonContent);
-                        return movieList;
+                        var responseString = responseProperty.GetString();
+                        var jsonContent = ExtractJsonFromMarkdown(responseString);
+
+                        if (!string.IsNullOrEmpty(jsonContent))
+                        {
+                            try
+                            {
+                                var movieList = JsonSerializer.Deserialize<List<string>>(jsonContent);
+                                return movieList;
+                            }
+                            catch (JsonException ex)
+                            {
+                                _logger.LogError(ex, "Failed to deserialize JSON content: {JsonContent}", jsonContent);
+                                throw new Exception("Failed to deserialize JSON content", ex);
+                            }
+                        }
+                        else
+                        {
+                            _logger.LogError("No valid JSON found in the response: {ResponseString}", responseString);
+                            throw new Exception("No valid JSON found in the response");
+                        }
                     }
                     else
                     {
-                        _logger.LogError("No valid JSON found in the response: {ResponseString}", responseString);
-                        throw new Exception("No valid JSON found in the response");
+                        _logger.LogError("Response property not found in API response: {ResponseContent}", responseContent);
+                        throw new Exception("Response property not found in API response");
                     }
                 }
-                else
+                catch (JsonException ex)
                 {
-                    _logger.LogError("Response property not found in API response: {ResponseContent}", responseContent);
-                    throw new Exception("Response property not found in API response");
+                    _logger.LogError(ex, "Failed to parse API response as JSON: {ResponseContent}", responseContent);
+                    throw new Exception("Failed to parse API response as JSON", ex);
                 }
             }
             else
