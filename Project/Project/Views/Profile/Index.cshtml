@@ -5,11 +5,15 @@
 }
 
 <section>
-    <div class="container mb-5">
+    <div class="container mb-5 d-flex justify-content-between">
         <div class="d-flex gap-3">
             <img src="@Url.Content("~/images/user_profile.png")" class="profile_image rounded-circle overflow-hidden" />
 
             <h1 class="align-self-end">@Model.User.Name</h1>
+        </div>
+
+        <div class="align-self-end">
+            @await Html.PartialAsync("_PrimaryButton", Tuple.Create("Account Settings", "style-2", "text-sm", "href=/user/account", "a"))
         </div>
     </div>
     <a id="top"></a>
