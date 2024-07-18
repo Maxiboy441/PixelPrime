@@ -1,5 +1,6 @@
 ﻿using Project.Data;
 using Microsoft.EntityFrameworkCore;
+using Project.Database.Seeders;
 using Project.Services;
 using Project.HostedServices;
 
@@ -13,7 +14,6 @@ builder.Services.AddScoped<RecommendationService>();
 builder.Services.AddScoped<BackgroundRecommendationService>();
 builder.Services.AddHostedService<BackgroundRecommendationService>();
 
-// Add services to the container.
 builder.Services.AddControllersWithViews();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -44,6 +44,16 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+else
+{
+    // Seed the database in development environment
+    using (var scope = app.Services.CreateScope())
+    {
+        var context = scope.ServiceProvider.GetRequiredService<DataContext>();
+        var seeder = new DatabaseSeeder(context);
+        seeder.Seed();
+    }
+}
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
@@ -61,5 +71,20 @@ app.MapControllerRoute(
 app.MapControllerRoute(
     name: "auth",
     pattern: "{controller=Auth}/{action=Login}");
+
+app.MapControllerRoute(
+    name: "search",
+    pattern: "Search",
+    defaults: new { controller = "Api", action = "Search" });
+
+app.MapControllerRoute(
+    name: "searchbyid",
+    pattern: "Searchbyid",
+    defaults: new { controller = "Api", action = "SearchById" });
+
+app.MapControllerRoute(
+    name: "profile",
+    pattern: "profile/",
+    defaults: new { controller = "Profile", action = "Index" });
 
 app.Run();

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Project.Models;
 
-public class Watchlist
+public class Watchlist : IMovieItem
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

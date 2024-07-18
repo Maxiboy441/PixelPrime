@@ -123,10 +123,28 @@ html .swiper-button-next, html .swiper-button-prev {
 
 /*Profile Page styles*/
 
+.profile_image {
+    width: 10rem;
+    height: 10rem;
+    background-color: var(--secondary-color);
+}
+
+.card {
+    border: none !important;
+}
+
 .card .btn-danger {
     position: absolute;
     z-index: 99;
     right: 0;
+}
+
+.movie-poster {
+    cursor: pointer;
+}
+
+.side-card {
+    margin-left: 20px;
 }
 
 .side-card .card .card-img-container {
@@ -173,12 +191,6 @@ html .swiper-button-next, html .swiper-button-prev {
     animation: slideOut 0.5s forwards;
 }
 
-@media (min-width: 768px) {
-    html {
-        font-size: 1rem;
-    }
-}
-
 #carousel-wrapper {
     display: flex;
     justify-content: center;
@@ -213,4 +225,102 @@ html .swiper-button-next, html .swiper-button-prev {
     background: rgba(0, 0, 0, 0.7);
     padding: 20px;
     border-radius: 10px;
+}
+
+.results {
+    max-height: 500px;
+    overflow-y: scroll;
+}
+
+.dropdown-menu {
+    visibility: hidden;
+}
+
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    height: 60px;
+}
+
+.dropdown-item img {
+    height: 50px;
+    margin-right: 10px;
+}
+
+@media (max-width: 576px) {
+    #advert-carousel {
+        width: 100vw;
+    }
+
+    .carousel-inner img {
+        width: 100%;
+        height: 30vh;
+    }
+
+    .carousel-caption {
+        display: block !important;
+    }
+
+    .singUp-advert {
+        height: auto;
+        padding: 8px;
+    }
+
+    .profile-movie-container {
+        margin-inline-start: 100px;
+    }
+
+    .profile-movie-container__row {
+        justify-content: space-between;
+    }
+
+    .side-card {
+        width: 250px;
+    }
+}
+
+@media (min-width: 580px) {
+    #advert-carousel {
+        width: 100vw;
+    }
+
+    .carousel-caption {
+        display: block !important;
+    }
+
+    .carousel-inner img {
+        width: 100%;
+        height: 40vh;
+    }
+}
+
+@media (max-width: 1399px) {
+    .side-card {
+        position: absolute;
+        justify-content: space-around;
+        right: 0;
+        width: 350px;
+        background-color: var(--secondary-color);
+        padding: 50px;
+        z-index: 100;
+        margin-left: 0;
+        border: 1px solid var(--primary-color);
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 1rem;
+    }
+
+    #advert-carousel {
+        width: 100vw;
+    }
+
+    .carousel-inner img {
+        width: 100%;
+        height: 55vh;
+    }
 }

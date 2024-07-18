@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Project.Models;
 
-public class Favorite
+public class Favorite : IMovieItem
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
