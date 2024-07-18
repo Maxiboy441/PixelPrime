@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     sideCard.classList.remove('d-none', 'hide');
                     sideCard.classList.add('show');
                 }
-            }, 600);
+            }, 700);
 
             document.getElementById('top').scrollIntoView({ behavior: 'smooth' });
 
