@@ -80,7 +80,7 @@ public class UserController : Controller
 
             TempData["SuccessMessage"] = "Account updated successfully";
 
-            return View(model);
+            return RedirectToAction("Update", "User");
 
         }
         return RedirectToAction("Login", "Auth");
