@@ -22,6 +22,7 @@ namespace Project.Controllers
             if (userJson != null)
             {
                 var currentUser = JsonConvert.DeserializeObject<User>(userJson);
+                var user = await _context.Users.FirstOrDefaultAsync(user => user.Id == currentUser.Id);
 
                 var favorites = await _context.Favorites
                     .Where(movie => movie.User_id == currentUser.Id)
@@ -38,7 +39,7 @@ namespace Project.Controllers
 
                 var viewModel = new ProfileViewModel
                 {
-                    User = currentUser,
+                    User = user,
                     Favorites = favorites.Cast<IMovieItem>().ToList(),
                     Watchlist = watchlist.Cast<IMovieItem>().ToList(),
                     Recommendations = recommendation.Cast<IMovieItem>().ToList()
