@@ -202,7 +202,7 @@ namespace Project.Controllers
             ViewData["IsFavorite"] = isFavorite;
             ViewData["IsWatchlist"] = isWatchlist;
             ViewData["isRated"] = isRated;
-            ViewData["CurrentUserRating"] = currentUserRating;
+            ViewData["CurrentUserRating"] = currentUserRating == 0.0 ? string.Empty : currentUserRating;
 
             return View(movie);
         }

@@ -2,7 +2,7 @@
 @{
     ViewData["Title"] = "Home Page";
     var convertService = new ConvertModelService();
-    List<Rating>? ratings = (List<Rating>)ViewData["TopRated"]!;
+    List<Rating>? ratings = (List<Rating>)ViewData["TopRated"];
     List<Movie> moviesFromReviews = convertService.ConvertToMovies(ratings);
 }
 
