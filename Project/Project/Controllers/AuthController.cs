@@ -20,6 +20,11 @@ namespace Project.Controllers
         [HttpGet]
         public IActionResult Login(string returnUrl = null)
         {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("CurrentUser")))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             ViewData["ReturnUrl"] = returnUrl;
 
             return View();
@@ -61,7 +66,11 @@ namespace Project.Controllers
         [HttpGet]
         public IActionResult SignUp()
         {
-            return View();
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString("CurrentUser")))
+            {
+                return View();
+            }
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]

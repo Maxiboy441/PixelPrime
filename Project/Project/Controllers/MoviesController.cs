@@ -11,9 +11,11 @@ namespace Project.Controllers
     {
         private readonly DataContext _context;
         private readonly MovieApiService _movieApiService;
-        
-        public MoviesController(DataContext context, MovieApiService movieApiService)
+        private readonly ILogger<MoviesController> _logger;
+
+        public MoviesController(ILogger<MoviesController> logger, DataContext context, MovieApiService movieApiService)
         {
+            _logger = logger;
             _context = context;
             _movieApiService = movieApiService;
         }
@@ -58,9 +60,7 @@ namespace Project.Controllers
             if (userJson != null)
             {
                 var currentUser = JsonConvert.DeserializeObject<User>(userJson);
-
                 var favorite = await _context.Favorites.FirstOrDefaultAsync(movie => movie.Movie_id == favoriteId && movie.User_id == currentUser.Id);
-                
                 
                 if (favorite == null)
                 {
@@ -152,10 +152,27 @@ namespace Project.Controllers
         [HttpGet]
         public async Task<IActionResult> Show(string id)
         {
-            var movie = await _movieApiService.GetMovieById(id);
-            if (movie == null)
+            var movieJson = HttpContext.Session.GetString($"movie_{id}");
+
+            Movie movie = null;
+
+            if (!string.IsNullOrEmpty(movieJson))
             {
-                return View("NotFound");
+                movie = JsonConvert.DeserializeObject<Movie>(movieJson);
+                Console.WriteLine($"Movie fetched from session: {movie.Title}");
+            }
+            else
+            {
+                movie = await _movieApiService.GetMovieById(id);
+
+                if (movie == null)
+                {
+                    return View("NotFound");
+                }
+
+                movieJson = JsonConvert.SerializeObject(movie);
+                HttpContext.Session.SetString($"movie_{id}", movieJson);
+                Console.WriteLine($"Movie fetched from API and saved to session: {movie.Title}");
             }
 
             var userJson = HttpContext.Session.GetString("CurrentUser");
