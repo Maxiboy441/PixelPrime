@@ -1,0 +1,37 @@
+﻿@model AccountViewModel
+
+@{
+    ViewData["Title"] = "Account";
+}
+
+<section>
+    <div class="row d-flex justify-content-center align-items-center p-5">
+        <div class="col-8 col-xs-6 col-md-6 col-lg-3">
+            <form asp-action="Update" asp-controller="User" method="post" class="rounded p-5 bg-secondary-color ">
+                <div class="d-flex flex-column justify-content-center align-items-center">
+                    <h2 class="text-center fw-bold mb-4 display-6">Update Account</h2>
+
+                    <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+
+                    <label asp-for="Name" class="col-form-label align-self-start">Change Name</label>
+                    <input asp-for="Name" class="form-control w-100 rounded-pill mb-2" type="text" name="name" id="name" autocomplete="name" aria-required="true" placeholder="Name" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+
+                    <label asp-for="Email" class="col-form-label align-self-start">Change Email</label>
+                    <input asp-for="Email" class="form-control w-100 rounded-pill mb-2" type="email" name="email" id="email" autocomplete="email" aria-required="true" placeholder="Email" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+
+                    <label asp-for="Password" class="col-form-label align-self-start">Change Password</label>
+                    <input asp-for="Password" class="form-control w-100 rounded-pill mb-2" type="password" name="password" id="password" aria-required="true" placeholder="Password" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+
+                    <label asp-for="PasswordConfirmation" class="col-form-label align-self-start">Confirm Password</label>
+                    <input asp-for="PasswordConfirmation" class="form-control w-100 rounded-pill mb-2" type="password" name="passwordConfirmation" id="passwordConfirmation" placeholder="Confirm Password" />
+                    <span asp-validation-for="PasswordConfirmation" class="text-danger"></span>
+
+                    <button type="submit" class="w-100 btn fw-bold rounded-pill text-white mb-3 mt-3" style="background: #7432F9">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
