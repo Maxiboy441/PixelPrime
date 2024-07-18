@@ -73,4 +73,9 @@ app.MapControllerRoute(
     pattern: "Search",
     defaults: new { controller = "Api", action = "Search" });
 
+app.MapControllerRoute(
+    name: "store_review",
+    pattern: "movies/{movieId?}/review",
+    defaults: new { controller = "Reviews", action = "Store" });
+
 app.Run();
