@@ -310,6 +310,25 @@ html .swiper-button-next, html .swiper-button-prev {
     }
 }
 
+.impress-card, .card {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #212529;
+    color: white;
+    padding: 2rem;
+    border-radius: 10px;
+}
+.impress-card h5, .card-title {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+}
+.impress-card p, .card-text {
+    margin-bottom: 0.5rem;
+}
+.card-body {
+    min-height: 150px;
+}
+
 @media (min-width: 768px) {
     html {
         font-size: 1rem;

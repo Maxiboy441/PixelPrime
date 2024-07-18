@@ -33,38 +33,15 @@ ViewData["Title"] = "Info";
                     <h5 class="card-title">PixelPrime</h5>
                     <h6 class="card-subtitle mb-2 text-muted">GitHub Repository</h6>
                     <p class="card-text">Check out our project repository on GitHub for more details and source code.</p>
-                    <a href="https://github.com/Maxiboy441/PixelPrime" class="btn btn-primary" target="_blank">View on GitHub</a>
+                    @await Html.PartialAsync("_PrimaryButton",
+                    Tuple.Create(
+                    "View on GitHub",
+                    "style-1",
+                    "",
+                    "href=https://www.google.com",
+                    "https://github.com/Maxiboy441/PixelPrime"))
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-<style>
-    .impress-card, .card {
-        max-width: 800px;
-        margin: 0 auto;
-        background-color: #212529;
-        color: white;
-        padding: 2rem;
-        border-radius: 10px;
-    }
-    .impress-card h5, .card-title {
-        font-size: 1.2rem;
-        margin-bottom: 1rem;
-    }
-    .impress-card p, .card-text {
-        margin-bottom: 0.5rem;
-    }
-    .btn-primary {
-        background-color: #0366d6;
-        border-color: #0366d6;
-    }
-    .btn-primary:hover {
-        background-color: #0056b3;
-        border-color: #0056b3;
-    }
-    .card-body {
-        min-height: 150px;
-    }
-</style>
