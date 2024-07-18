@@ -26,6 +26,17 @@ body {
     color: var(--text-color)
 }
 
+.btn-green {
+    background-color: #00BF63;
+    color: var(--text-color);
+    transition: all 0.3s ease-in-out;
+}
+
+.btn-green:hover {
+    background-color: #008F4A;
+    color: var(--text-color);
+}
+
 .navbar-brand img {
     height: 2.5rem;
     width: auto;
@@ -247,6 +258,12 @@ html .swiper-button-next, html .swiper-button-prev {
     margin-right: 10px;
 }
 
+/*Account page*/
+
+.account-form {
+    width: 40vw;
+}
+
 @media (max-width: 576px) {
     #advert-carousel {
         width: 100vw;
@@ -276,6 +293,10 @@ html .swiper-button-next, html .swiper-button-prev {
 
     .side-card {
         width: 250px;
+    }
+
+    .account-form {
+        width: 60vw;
     }
 }
 

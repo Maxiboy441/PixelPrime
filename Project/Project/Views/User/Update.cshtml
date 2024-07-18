@@ -6,7 +6,7 @@
 
 <section>
     <div class="row d-flex justify-content-center align-items-center p-5">
-        <div class="col-8 col-xs-6 col-md-6 col-lg-3">
+        <div class="container account-form">
             <form asp-action="Update" asp-controller="User" method="post" class="rounded p-5 bg-secondary-color ">
                 <div class="d-flex flex-column justify-content-center align-items-center">
                     <h2 class="text-center fw-bold mb-4 display-6">Update Account</h2>
@@ -29,9 +29,67 @@
                     <input asp-for="PasswordConfirmation" class="form-control w-100 rounded-pill mb-2" type="password" name="passwordConfirmation" id="passwordConfirmation" placeholder="Confirm Password" />
                     <span asp-validation-for="PasswordConfirmation" class="text-danger"></span>
 
-                    <button type="submit" class="w-100 btn fw-bold rounded-pill text-white mb-3 mt-3" style="background: #7432F9">Save</button>
+                    <button type="button" class="w-25 btn fw-bold rounded-pill text-white mb-3 mt-3 btn-green">
+                        Save
+                    </button>
+
+                    <div class="modal fade" id="updateAccountForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered text-dark" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Confirm Update</h5>
+                                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    Are you sure you want to update your account?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                                    <button type="submit" class="btn btn-green">Save changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal fade" id="emptyFieldsModal" tabindex="-1" role="dialog" aria-labelledby="emptyFieldsModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered text-dark" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="emptyFieldsModalLabel">Form Incomplete</h5>
+                                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    Please fill out all any field before saving.
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-purple" data-dismiss="modal">OK</button>
+                                    @*@await Html.PartialAsync("_PrimaryButton", Tuple.Create("Ok", "style-1", "", "type=button data-dismiss=modal", "button"))*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </form>
         </div>
     </div>
 </section>
+
+<script>
+    document.querySelector('.btn-green').addEventListener('click', function () {
+        var name = document.getElementById('name').value.trim();
+        var email = document.getElementById('email').value.trim();
+        var password = document.getElementById('password').value.trim();
+        var passwordConfirmation = document.getElementById('passwordConfirmation').value.trim();
+
+        if (name === "" && email === "" && password === "" && passwordConfirmation === "") {
+            // Show the empty fields modal
+            var emptyFieldsModal = new bootstrap.Modal(document.getElementById('emptyFieldsModal'));
+            emptyFieldsModal.show();
+        } else {
+            // Show the confirmation modal
+            var confirmModal = new bootstrap.Modal(document.getElementById('updateAccountForm'));
+            confirmModal.show();
+        }
+    });
+</script>
