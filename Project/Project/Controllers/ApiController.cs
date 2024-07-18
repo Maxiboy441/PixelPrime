@@ -33,5 +33,26 @@ namespace Project.Controllers
                 return StatusCode(500, new { error = "An error occurred while processing your request." });
             }
         }
+
+        [HttpGet]
+        public async Task<IActionResult> SearchById(string id)
+        {
+            try
+            {
+                var encodedSearchTerm = HttpUtility.UrlEncode(id);
+                Console.WriteLine($"id{encodedSearchTerm}");
+                var apiUrl = $"https://www.omdbapi.com/?apikey={_apiKey}&i={id}";
+
+                var response = await _httpClient.GetStringAsync(apiUrl);
+
+                return Content(response, "application/json");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in Search action: {ex.Message}");
+
+                return StatusCode(500, new { error = "An error occurred while processing your request." });
+            }
+        }
     }
 }
