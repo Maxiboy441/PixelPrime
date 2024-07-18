@@ -60,9 +60,7 @@ namespace Project.Controllers
             if (userJson != null)
             {
                 var currentUser = JsonConvert.DeserializeObject<User>(userJson);
-
                 var favorite = await _context.Favorites.FirstOrDefaultAsync(movie => movie.Movie_id == favoriteId && movie.User_id == currentUser.Id);
-                
                 
                 if (favorite == null)
                 {
@@ -175,7 +173,6 @@ namespace Project.Controllers
                 movieJson = JsonConvert.SerializeObject(movie);
                 HttpContext.Session.SetString($"movie_{id}", movieJson);
                 Console.WriteLine($"Movie fetched from API and saved to session: {movie.Title}");
-
             }
 
             var userJson = HttpContext.Session.GetString("CurrentUser");
