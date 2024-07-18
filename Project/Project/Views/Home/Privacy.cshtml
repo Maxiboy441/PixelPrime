@@ -1,8 +1,70 @@
 ﻿@{
-    ViewData["Title"] = "Privacy Policy";
+ViewData["Title"] = "Info";
 }
 
-<h1>@ViewData["Title"]</h1>
+<div class="container mt-5">
+    <div class="impress mb-5">
+        <h1 class="mb-4 text-white">Impress</h1>
+        <div class="impress-card">
+            <h5>Project Title: PixelPrime</h5>
+            <p><strong>Created by:</strong><br>
+                Rui Felipe Pedrosso Ramos, Maximilian Horst August Huber, Amir Hassan, Marius Wenzel, Mehrulloh Boboev</p>
+            <p><strong>School:</strong><br>
+                ITS Stuttgart</p>
+            <p><strong>Class:</strong><br>
+                E2FI5</p>
+            <p><strong>Teacher:</strong><br>
+                Stephan Baldes</p>
+        </div>
+    </div>
 
-<p>Use this page to detail your site's privacy policy.</p>
+    <div class="information mb-5">
+        <h1 class="mb-4">Information</h1>
+        <p class="lead mb-5">This project was developed as part of the software engineering apprenticeship program at ITS Stuttgart. It represents the culmination of our second-year studies, showcasing the skills and knowledge we've acquired throughout our training.</p>
+    </div>
 
+    <div class="repo-card mb-5">
+        <div class="card bg-dark text-white">
+            <div class="card-body d-flex flex-column flex-sm-row align-items-center">
+                <div class="mb-3 mb-sm-0 me-sm-4">
+                    <img src="~/images/pixel_prime_logo.png" alt="PixelPrime Logo" class="img-fluid" style="max-width: 100px;">
+                </div>
+                <div>
+                    <h5 class="card-title">PixelPrime</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">GitHub Repository</h6>
+                    <p class="card-text">Check out our project repository on GitHub for more details and source code.</p>
+                    <a href="https://github.com/Maxiboy441/PixelPrime" class="btn btn-primary" target="_blank">View on GitHub</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .impress-card, .card {
+        max-width: 800px;
+        margin: 0 auto;
+        background-color: #212529;
+        color: white;
+        padding: 2rem;
+        border-radius: 10px;
+    }
+    .impress-card h5, .card-title {
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+    }
+    .impress-card p, .card-text {
+        margin-bottom: 0.5rem;
+    }
+    .btn-primary {
+        background-color: #0366d6;
+        border-color: #0366d6;
+    }
+    .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
+    }
+    .card-body {
+        min-height: 150px;
+    }
+</style>
