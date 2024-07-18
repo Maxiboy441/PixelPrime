@@ -153,6 +153,16 @@ html .swiper-button-next, html .swiper-button-prev {
         
     }
 }
+
+.user-icon {
+    font-size: 3rem;
+    border: 4px solid white;
+    border-radius: 50%;
+    padding: 5px;
+    color: white;
+}
+
+
 /*Profile Page styles*/
 
 .card .btn-danger {

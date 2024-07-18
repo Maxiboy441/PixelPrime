@@ -18,11 +18,43 @@
             </div>
         </div>
 
-        <div class="row justify-content-between h-75 mt-3 mb-3">
+        <div class="d-flex h-75 mt-3 mb-3">
             <div class="col-3">
                 <img src="@(!string.IsNullOrEmpty(movie.Poster) && movie.Poster != "N/A" ? movie.Poster : Url.Content("~/images/poster_not_found.png"))" 
                      alt="@movie.Title" 
                      class="img-fluid" />
+            </div>
+            
+            <div class="d-flex flex-column w-50 flex-wrap">
+                <div class="d-flex flex-column gap-2 mb-3">
+                    <h3 class="fw-bold">Overview</h3>
+                    <p>@movie.Plot</p>
+                </div>
+                
+                <div class="d-flex flex-row gap-2">
+                    <h5 class="fw-bold">Director: </h5>
+                    <p>@movie.Director</p>
+                </div>
+
+                <div class="d-flex flex-row gap-2">
+                    <h5 class="fw-bold">Writers: </h5>
+                    <p>@movie.Writer</p>
+                </div>
+
+                <div class="d-flex flex-row gap-2">
+                    <h5 class="fw-bold">Actors: </h5>
+                    <p>@movie.Actors</p>
+                </div>
+
+                <div class="d-flex flex-row gap-2">
+                    <h5 class="fw-bold">Language: </h5>
+                    <p>@movie.Language</p>
+                </div>
+
+                <div class="d-flex flex-row gap-2">
+                    <h5 class="fw-bold">Genres: </h5>
+                    <p>@movie.Genre</p>
+                </div>
             </div>
         </div>
 
@@ -36,7 +68,7 @@
 
                     <div class="d-flex flex-column">
                         @await Html.PartialAsync("_RateMovieModal", 
-                        Tuple.Create(movie.Id, movie.Title, movie.Poster, isRated ? "Your Rating" : "Rate Movie", isRated ? "fa-solid fa-pen-to-square" : "fas fa-plus", "btn-without text-light"))
+                            Tuple.Create(movie.Id, movie.Title, movie.Poster, isRated ? "Your Rating" : "Rate Movie", isRated ? "fa-solid fa-pen-to-square" : "fas fa-plus", "btn-without text-light"))
                         <h6 class="mt-2" style="margin: 0">@currentUserRating</h6>
                     </div>
                 </div>
@@ -84,11 +116,32 @@
                             <input type="hidden" name="poster" value="@movie.Poster" />
                             <button type="submit" class="btn-without text-light">
                                 Add to Watchlist <i class="fas fa-plus"></i>
-                            </button>
+                            </button >
                         </form>
                     }
                 </div>
             </div>
         </div>
+
+        <div class="d-flex flex-column gap-4">
+            <div class="d-flex flex-row gap-4 align-items-center mt-5">
+                <h3 class="fw-bold mb-0">User Reviews </h3>
+                @await Html.PartialAsync("_PrimaryButton", Tuple.Create("Add Review", "style-1", "rounded-pill px-5", "", "button"))
+            </div>
+            
+            <div class="bg-secondary-color w-100 vh-20 p-3 rounded-3">
+                <div class="d-flex flex-row gap-3">
+                    <div>
+                        <i class="fa-regular fa-user user-icon"></i>
+                    </div>
+                    
+                    <div class="d-flex flex-column gap-2">
+                        <h3 class="fw-bold mb-0">Awesome movie. I love it!</h3>
+                        <p class="mb-0">Written by: @movie.Director on @DateTime.Now.ToString("D")</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
     </div>
 </div>
