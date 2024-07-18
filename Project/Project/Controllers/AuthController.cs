@@ -18,13 +18,20 @@ namespace Project.Controllers
         }
 
         [HttpGet]
-        public IActionResult Login()
+        public IActionResult Login(string returnUrl = null)
         {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("CurrentUser")))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            ViewData["ReturnUrl"] = returnUrl;
+
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel model)
+        public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
         {
             if (!ModelState.IsValid)
             {
@@ -48,13 +55,22 @@ namespace Project.Controllers
             string userJson = JsonConvert.SerializeObject(userWithoutPassword);
             HttpContext.Session.SetString("CurrentUser", userJson);
 
-            return RedirectToAction("index", "Home");
+            if (string.IsNullOrEmpty(returnUrl))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            return Redirect(returnUrl);
         }
 
         [HttpGet]
         public IActionResult SignUp()
         {
-            return View();
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString("CurrentUser")))
+            {
+                return View();
+            }
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]
