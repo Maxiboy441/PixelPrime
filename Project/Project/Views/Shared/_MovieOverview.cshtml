@@ -1,33 +1,14 @@
 <!-- Tuple<"Director", Movie.Director > -->
 
-@model Tuple<string, string> 
+@model Tuple<string, string, string> 
 
 @{
     var overviewTitle = Model.Item1;
     var overviewProperty = Model.Item2;
+    var overviewClass = Model.Item3;
 }
 
-<div class="d-flex flex-row gap-2">
+<div class="@overviewClass">
     <h5 class="fw-bold">@overviewTitle: </h5>
     <p>@overviewProperty</p>
 </div>
-
-@* <div class="d-flex flex-row gap-2"> *@
-@*     <h5 class="fw-bold">Writers: </h5> *@
-@*     <p>@movie.Writer</p> *@
-@* </div> *@
-@* *@
-@* <div class="d-flex flex-row gap-2"> *@
-@*     <h5 class="fw-bold">Actors: </h5> *@
-@*     <p>@movie.Actors</p> *@
-@* </div> *@
-@* *@
-@* <div class="d-flex flex-row gap-2"> *@
-@*     <h5 class="fw-bold">Language: </h5> *@
-@*     <p>@movie.Language</p> *@
-@* </div> *@
-@* *@
-@* <div class="d-flex flex-row gap-2"> *@
-@*     <h5 class="fw-bold">Genres: </h5> *@
-@*     <p>@movie.Genre</p> *@
-@* </div> *@

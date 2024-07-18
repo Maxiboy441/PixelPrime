@@ -5,7 +5,6 @@
     var isFavorite = (bool)ViewData["IsFavorite"];
     var isWatchlist = (bool)ViewData["IsWatchlist"];
     var isRated = (bool)ViewData["isRated"];
-    // var reviews = ViewData["Reviews"] as List<Project.Models.Review>;
 }
 
 <div class="container">
@@ -27,25 +26,23 @@
             </div>
             
             <div class="d-flex flex-column w-50 flex-wrap">
-                <div class="d-flex flex-column gap-2 mb-3">
-                    <h3 class="fw-bold">Overview</h3>
-                    <p>@movie.Plot</p>
-                </div>
+                @await Html.PartialAsync("_MovieOverview",
+                Tuple.Create("Overview", @movie.Plot, "d-flex flex-column gap-2 mb-3"))
                 
                 @await Html.PartialAsync("_MovieOverview",
-                Tuple.Create("Director", @movie.Director))
+                Tuple.Create("Director", @movie.Director, "d-flex flex-row gap-2"))
 
                 @await Html.PartialAsync("_MovieOverview",
-                Tuple.Create("Writers", @movie.Writer))
+                Tuple.Create("Writers", @movie.Writer,"d-flex flex-row gap-2"))
                 
                 @await Html.PartialAsync("_MovieOverview",
-                Tuple.Create("Actors", @movie.Actors))
+                Tuple.Create("Actors", @movie.Actors, "d-flex flex-row gap-2"))
 
                 @await Html.PartialAsync("_MovieOverview",
-                Tuple.Create("Language", @movie.Language))
+                Tuple.Create("Language", @movie.Language, "d-flex flex-row gap-2"))
 
                 @await Html.PartialAsync("_MovieOverview",
-                Tuple.Create("Genres", @movie.Genre))
+                Tuple.Create("Genres", @movie.Genre, "d-flex flex-row gap-2"))
             </div>
         </div>
 
