@@ -14,7 +14,7 @@
         @foreach (var movie in Model.Item2)
         {
             <swiper-slide>
-                @await Html.PartialAsync("_MovieCardComponent", Tuple.Create(movie.Poster, movie.PixelRating, movie.Title))
+                @await Html.PartialAsync("_MovieCardComponent", Tuple.Create(movie.Poster, movie.PixelRating, movie.Title, movie.Id))
             </swiper-slide>
         }
     </swiper-container>
