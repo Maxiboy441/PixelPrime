@@ -1,20 +1,23 @@
-﻿using System;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Project.Models;
 using Newtonsoft.Json;
 using static BCrypt.Net.BCrypt;
 using Microsoft.EntityFrameworkCore;
 using Project.Data;
+using Project.Services;
+using Project.HostedServices;
 
 namespace Project.Controllers
 {
     public class AuthController : Controller
     {
         private readonly DataContext _context;
+        private readonly RecommendationService _recommendationService;
 
-        public AuthController(DataContext context)
+        public AuthController(DataContext context, RecommendationService recommendationService)
         {
             _context = context;
+            _recommendationService = recommendationService;
         }
 
         [HttpGet]
@@ -47,6 +50,18 @@ namespace Project.Controllers
             };
             string userJson = JsonConvert.SerializeObject(userWithoutPassword);
             HttpContext.Session.SetString("CurrentUser", userJson);
+            
+            var userId = userWithoutPassword.Id;
+            var newestRecommendationDate = await _recommendationService.GetNewestRecommendationDate(userId);
+            var favorites = await _recommendationService.GetFavorites(userId);
+            var ratings = await _recommendationService.GetLikedMovies(userId);
+            
+            if ((favorites.Any() || ratings.Any()) &&
+                (newestRecommendationDate == null || newestRecommendationDate < DateTime.Now.AddDays(-7)))
+            {
+                var backgroundService = HttpContext.RequestServices.GetRequiredService<BackgroundRecommendationService>();
+                _ = backgroundService.RunRecommendationTask(userId);
+            }
 
             return RedirectToAction("index", "Home");
         }
