@@ -247,6 +247,30 @@ html .swiper-button-next, html .swiper-button-prev {
     margin-right: 10px;
 }
 
+
+/*Impresssum Styles*/
+.impress-card, .card {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #212529;
+    color: white;
+    padding: 2rem;
+    border-radius: 10px;
+}
+
+.impress-card h5, .card-title {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+}
+
+.impress-card p, .card-text {
+    margin-bottom: 0.5rem;
+}
+
+.card-body {
+    min-height: 150px;
+}
+
 @media (max-width: 576px) {
     #advert-carousel {
         width: 100vw;
@@ -308,25 +332,6 @@ html .swiper-button-next, html .swiper-button-prev {
         border-radius: 10px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
-}
-
-.impress-card, .card {
-    max-width: 800px;
-    margin: 0 auto;
-    background-color: #212529;
-    color: white;
-    padding: 2rem;
-    border-radius: 10px;
-}
-.impress-card h5, .card-title {
-    font-size: 1.2rem;
-    margin-bottom: 1rem;
-}
-.impress-card p, .card-text {
-    margin-bottom: 0.5rem;
-}
-.card-body {
-    min-height: 150px;
 }
 
 @media (min-width: 768px) {
