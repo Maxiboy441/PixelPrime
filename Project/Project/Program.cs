@@ -95,4 +95,9 @@ app.MapControllerRoute(
     pattern: "user/account/",
     defaults: new { controller = "User", action = "Update" });
 
+app.MapControllerRoute(
+    name: "actor",
+    pattern: "actor/{name?}",
+    defaults: new { controller = "Actor", action = "Show" });
+
 app.Run();
