@@ -12,8 +12,8 @@
             <h1 class="align-self-end">@Model.User.Name</h1>
         </div>
 
-        <div class="align-self-end">
-            @await Html.PartialAsync("_PrimaryButton", Tuple.Create("Account Settings", "style-2", "text-sm", "href=/user/account", "a"))
+        <div class="align-self-end account-btn">
+            @await Html.PartialAsync("_PrimaryButton", Tuple.Create("Account Settings", "style-2", "", "href=/user/account", "a"))
         </div>
     </div>
     <a id="top"></a>

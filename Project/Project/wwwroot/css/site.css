@@ -264,6 +264,19 @@ html .swiper-button-next, html .swiper-button-prev {
     width: 40vw;
 }
 
+.back-btn {
+    color: #fff;
+    transition: color 0.3s ease;
+}
+
+.back-btn:hover {
+    color: var(--purple-color);
+}
+
+.account-btn {
+    margin-inline-end: 30px;
+}
+
 @media (max-width: 576px) {
     #advert-carousel {
         width: 100vw;

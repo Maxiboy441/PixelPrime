@@ -4,9 +4,10 @@
     ViewData["Title"] = "Account";
 }
 
-<section>
+<section class="container">
+    <a href="/profile" class="back-btn"><i class="fa-solid fa-arrow-left fa-2xl mr-3"></i> Go back</a>
     <div class="row d-flex justify-content-center align-items-center p-5">
-        <div class="container account-form">
+        <div class="account-form">
             <form asp-action="Update" asp-controller="User" method="post" class="rounded p-5 bg-secondary-color ">
                 <div class="d-flex flex-column justify-content-center align-items-center">
                     <h2 class="text-center fw-bold mb-4 display-6">Update Account</h2>
@@ -44,8 +45,8 @@
                                     Are you sure you want to update your account?
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                                    <button type="submit" class="btn btn-green">Save changes</button>
+                                    @await Html.PartialAsync("_PrimaryButton", Tuple.Create("Cancel", "", "btn btn-danger", "type=button data-dismiss=modal", "button"))
+                                    @await Html.PartialAsync("_PrimaryButton", Tuple.Create("Save changes", "", "btn btn-green", "type=submit", "button"))
                                 </div>
                             </div>
                         </div>
@@ -62,8 +63,7 @@
                                     Please fill out all any field before saving.
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-purple" data-dismiss="modal">OK</button>
-                                    @*@await Html.PartialAsync("_PrimaryButton", Tuple.Create("Ok", "style-1", "", "type=button data-dismiss=modal", "button"))*@
+                                    @await Html.PartialAsync("_PrimaryButton", Tuple.Create("Ok", "style-1", "", "type=button data-dismiss=modal", "button"))
                                 </div>
                             </div>
                         </div>
