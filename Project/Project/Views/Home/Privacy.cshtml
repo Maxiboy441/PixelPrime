@@ -30,14 +30,90 @@ ViewData["Title"] = "Info";
                     <h6 class="card-subtitle mb-2 text-muted">GitHub Repository</h6>
                     <p class="card-text">Check out our project repository on GitHub for more details and source code.</p>
                     @await Html.PartialAsync("_PrimaryButton",
-                    Tuple.Create(
-                    "View on GitHub",
-                    "style-1",
-                    "",
-                    "href=https://github.com/Maxiboy441/PixelPrime target=_blank",
-                    "a"))
+                        Tuple.Create(
+                            "View on GitHub",
+                            "style-1",
+                            "",
+                            "href=https://github.com/Maxiboy441/PixelPrime target=_blank",
+                            "a"))
+                </div>
+            </div>
+        </div>
+    </div>
+    <h2 class="mb-4">Developers</h2>
+
+    <div class="row">
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card developer-card">
+                <img src="~/images/feliperamoss.jpeg" alt="Rui Felipe Pedrosso Ramos" class="card-img-top rounded-circle mx-auto mt-3">
+                <div class="card-body text-center">
+                    <h5 class="card-title">feliperamoss (Github)</h5>
+                    <p class="card-text">Full Stack apprentice focused to php + laravel, but used to much more. DevOps is also a part of my skillset, like docker and aws</p>
+                    <a href="https://github.com/feliperamoss" class="btn btn-outline-primary btn-sm me-2">GitHub</a>
+                    <a href="https://linkedin.com/in/mehrullohb" class="btn btn-outline-info btn-sm">LinkedIn</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card developer-card">
+                <img src="~/images/Max.jpeg" alt="Maximilian Horst August Huber" class="card-img-top rounded-circle mx-auto mt-3">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Maximilian Horst August Huber</h5>
+                    <p class="card-text">Full Stack apprentice focused to php + laravel, but used to much more. DevOps is also a part of my skillset, like docker and aws</p>
+                    <a href="https://github.com/maxiboy441" class="btn btn-outline-primary btn-sm me-2">GitHub</a>
+                    <a href="https://linkedin.com/in/mehrullohb" class="btn btn-outline-info btn-sm">LinkedIn</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card developer-card">
+                <img src="~/images/MehrullohGH.png" alt="Mehrulloh Boboev" class="card-img-top rounded-circle mx-auto mt-3">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Mehrulloh Boboev</h5>
+                    <p class="card-text">Apprentice as Ruby developer, thrilled to learn and grow.</p>
+                    <a href="https://github.com/mehrb98" class="btn btn-outline-primary btn-sm me-2">GitHub</a>
+                    <a href="https://linkedin.com/in/mehrullohb" class="btn btn-outline-info btn-sm">LinkedIn</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card developer-card">
+                <img src="~/images/MariusGH.png" alt="Marius Wenzel" class="card-img-top rounded-circle mx-auto mt-3">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Marius Wenzel</h5>
+                    <p class="card-text">German Apprentice for Software engineering (state 2024)</p>
+                    <a href="https://github.com/Mariuswenzelits" class="btn btn-outline-primary btn-sm me-2">GitHub</a>
+                    <a href="https://linkedin.com/in/mehrullohb" class="btn btn-outline-info btn-sm">LinkedIn</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card developer-card">
+                <img src="~/images/AmirGH.png" alt="Amir Hassan" class="card-img-top rounded-circle mx-auto mt-3">
+                <div class="card-body text-center">
+                    <h5 class="card-title">AmirHassanMojahed</h5>
+                    <p class="card-text">German Apprentice for Software engineering (state 2024)</p>
+                    <a href="https://github.com/AmirHassanMojahed" class="btn btn-outline-primary btn-sm me-2">GitHub</a>
+                    <a href="https://linkedin.com/in/mehrullohb" class="btn btn-outline-info btn-sm">LinkedIn</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<style>
+    .developer-card {
+        background-color: #1e1e1e;
+        border: none;
+        margin-bottom: 2rem;
+    }
+    .developer-card img {
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+    }
+</style>
