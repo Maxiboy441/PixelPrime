@@ -198,16 +198,6 @@ namespace Project.Controllers
                 currentUserRating = (await GetUserRating(userId, id)) ?? 0.0;
             }
 
-
-            //ViewData["Movie"] = movie;
-            //ViewData["AverageRating"] = averageRating.HasValue 
-            //    ? averageRating.Value.ToString("0.0") 
-            //    : "";
-            //ViewData["IsFavorite"] = isFavorite;
-            //ViewData["IsWatchlist"] = isWatchlist;
-            //ViewData["isRated"] = isRated;
-            //ViewData["CurrentUserRating"] = currentUserRating == 0.0 ? string.Empty : currentUserRating;
-
             var averageRating = await GetAverageRating(id);
 
             var viewModel = new MovieDetailsViewModel
