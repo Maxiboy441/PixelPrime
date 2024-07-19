@@ -1,7 +1,8 @@
 ﻿@{
     var movie = ViewData["Movie"] as Movie;
     var averageRating = ViewData["AverageRating"];
-    var currentUserRating = ViewData["CurrentUserRating"] ?? 0.0;
+    var currentUserRating = ViewData["CurrentUserRating"] ?? string.Empty;
+    bool hasRating = !string.IsNullOrEmpty(currentUserRating.ToString());
     var isFavorite = (bool)ViewData["IsFavorite"];
     var isWatchlist = (bool)ViewData["IsWatchlist"];
     var isRated = (bool)ViewData["isRated"];
@@ -51,13 +52,19 @@
                 <div class="d-flex gap-4">
                     <div class="d-flex flex-column">
                         <h5 style="font-size: 18px">Rating</h5>
-                        <h6>@averageRating</h6>
+                        <h6><i class="fa-solid fa-star" style="color: #FFD43B;"></i><span class="rate">@averageRating</span></h6>
                     </div>
 
                     <div class="d-flex flex-column">
                         @await Html.PartialAsync("_RateMovieModal", 
                             Tuple.Create(movie.Id, movie.Title, movie.Poster, isRated ? "Your Rating" : "Rate Movie", isRated ? "fa-solid fa-pen-to-square" : "fas fa-plus", "btn-without text-light"))
-                        <h6 class="mt-2" style="margin: 0">@currentUserRating</h6>
+                        <h6 class="mt-2" style="margin: 0">
+                            @if (hasRating)
+                            {
+                                <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
+                                <span class="rate">@currentUserRating</span>
+                            }
+                        </h6>
                     </div>
                 </div>
 

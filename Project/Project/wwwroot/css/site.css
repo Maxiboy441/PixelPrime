@@ -123,6 +123,10 @@ html .swiper-button-next, html .swiper-button-prev {
 
 /*Movie Page styles*/
 
+.rate {
+    margin-left: 5px;
+}
+
 .star {
     font-size: 25px;
     color: lightgray;
@@ -161,9 +165,6 @@ html .swiper-button-next, html .swiper-button-prev {
     padding: 5px;
     color: white;
 }
-
-
-/*Profile Page styles*/
 
 /*Profile Page styles*/
 
