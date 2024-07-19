@@ -1,0 +1,128 @@
+@*Usage: @await Html.PartialAsync("_ReviewPopUpForm", Tuple.Create( "Movie_Id", "Movie_Title", "Movie_Poster", "Review title", "Review text","Form_Action"))*@
+
+@model Tuple<string, string, string, string, string, string>
+
+@await Html.PartialAsync("_PrimaryButton",
+Tuple.Create(
+    "Edit Review",
+    "style-1",
+    "rounded-pill px-5",
+    "type=button data-toggle=modal data-target=#myModal",
+    "button")
+)
+
+<div class="modal" id="myModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                @if (!string.IsNullOrEmpty(Context.Session.GetString("CurrentUser")))
+                {
+                    <h4 class="modal-title text-black">Review for @Model.Item2</h4>
+                }
+                else
+                {
+                    <h4 class="modal-title text-black">Sign in to leave a review</h4>
+                }
+            </div>
+
+            <div class="modal-body">
+                @if (!string.IsNullOrEmpty(Context.Session.GetString("CurrentUser")))
+                {
+                    <form id="reviewForm" action="@Model.Item6" method="post">
+                        @Html.AntiForgeryToken()
+
+                        <input type="hidden" name="movieId" value="@Model.Item1" />
+                        <input type="hidden" name="movieTitle" value="@Model.Item2" />
+                        <input type="hidden" name="moviePoster" value="@Model.Item3" />
+                        <div class="form-group">
+                            <label class="text-black p-2" for="title">Title</label>
+                            <input value="@Model.Item4" type="text" class="form-control" name="reviewTitle" id="reviewTitle" placeholder="Edit Title" style="max-width: 95%" oninput="checkForm()">
+                        </div>
+                        <div class="form-group">
+                            <label class="text-black p-2" for="review">Review</label>
+                            <textarea class="form-control" name="reviewText" id="reviewText" placeholder="Edit your review" style="max-width: 95%; height: 150px;" oninput="checkForm()">@Model.Item5</textarea>
+                        </div>
+
+                        <div class="modal-footer">
+                            @await Html.PartialAsync("_PrimaryButton",
+                                Tuple.Create(
+                                    "Close",
+                                    "",
+                                    "btn btn-secondary",
+                                    "type=button data-dismiss=modal",
+                                    "button")
+                                )
+
+                            @await Html.PartialAsync("_PrimaryButton",
+                                Tuple.Create(
+                                    "Submit",
+                                    "style-1",
+                                    "",
+                                    "type=submit id=submitBtn disabled",
+                                    "button")
+                                )
+                        </div>
+                    </form>
+                }
+                else
+                {
+                    @await Html.PartialAsync("_PrimaryButton",
+                        Tuple.Create(
+                            "Close",
+                            "",
+                            "btn btn-secondary",
+                            "type=button data-dismiss=modal",
+                            "button")
+                        )
+                    @await Html.PartialAsync("_PrimaryButton", Tuple.Create("Sign in", "style-1", "", "href=/Auth/Login", "a"))
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function checkForm() {
+        const title = document.getElementById('reviewTitle').value;
+        const review = document.getElementById('reviewText').value;
+        const submitBtn = document.getElementById('submitBtn');
+
+        var isTitleValid = title.trim() !== "";
+        var isReviewValid = review.trim() !== "";
+
+        if (isTitleValid) {
+            document.getElementById('reviewTitle').classList.remove('invalid-input');
+        } else {
+            document.getElementById('reviewTitle').classList.add('invalid-input');
+        }
+
+        if (isReviewValid) {
+            document.getElementById('reviewText').classList.remove('invalid-input');
+        } else {
+            document.getElementById('reviewText').classList.add('invalid-input');
+        }
+
+        if (isTitleValid && isReviewValid) {
+            submitBtn.removeAttribute('disabled');
+        } else {
+            submitBtn.setAttribute('disabled', 'disabled');
+        }
+    }
+
+    function clearForm() {
+        document.getElementById('reviewTitle').value = '';
+        document.getElementById('reviewText').value = '';
+        document.getElementById('submitBtn').setAttribute('disabled', 'disabled');
+        document.getElementById('reviewTitle').classList.remove('invalid-input');
+        document.getElementById('reviewText').classList.remove('invalid-input');
+    }
+
+    document.querySelector('#myModal .close').addEventListener('click', clearForm);
+    document.getElementById('myModal').addEventListener('hidden.bs.modal', clearForm);
+    document.getElementById('submitBtn').addEventListener('click', function (event) {
+        event.preventDefault();
+        clearForm();
+        $('#myModal').modal('hide');
+    });
+</script>
