@@ -5,6 +5,45 @@
 
 // Profile side card
 document.addEventListener('DOMContentLoaded', (event) => {
+    const mySpaceMovies = document.querySelectorAll(".movie-card");
+
+    mySpaceMovies.forEach(movie => {
+        movie.addEventListener("click", async (e) => {
+            const movieId = movie.getAttribute("data-imdb-id");
+            const detailsContainer = document.getElementById(`movie-details-${movieId}`);
+
+            // Check if the movie details are in session storage
+            const storedMovie = sessionStorage.getItem(`movie_${movieId}`);
+            if (storedMovie) {
+                // If found in session storage, use the stored data
+                const movieData = JSON.parse(storedMovie);
+                displayMovieDetails(detailsContainer, movieData);
+            } else {
+                // If not found, fetch from API
+                try {
+                    const response = await axios.get(`/SearchById?id=${movieId}`);
+                    const { Genre, Plot, imdbID } = response.data;
+
+                    // Store the fetched movie details in session storage
+                    sessionStorage.setItem(`movie_${movieId}`, JSON.stringify(response.data));
+
+                    displayMovieDetails(detailsContainer, response.data);
+                } catch (error) {
+                    console.error(error);
+                }
+            }
+        });
+    });
+
+    function displayMovieDetails(container, movieData) {
+        container.innerHTML = `
+            <h5 class="card-title mt-3">${movieData.Title}</h5>
+            <p class="card-title">${movieData.Genre}</p>
+            <hr />
+            <p class="card-title">${movieData.Plot}</p>
+        `;
+    }
+
     const movieCards = document.querySelectorAll('.movie-card');
     const sideCards = document.querySelectorAll('.side-card');
     const sideCardContainer = document.getElementById('side-card-container');
@@ -27,10 +66,15 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 }
             });
 
-            if (sideCard) {
-                sideCard.classList.remove('d-none', 'hide');
-                sideCard.classList.add('show');
-            }
+            setTimeout(() => {
+                if (sideCard) {
+                    sideCard.classList.remove('d-none', 'hide');
+                    sideCard.classList.add('show');
+                }
+            }, 700);
+
+            document.getElementById('top').scrollIntoView({ behavior: 'smooth' });
+
         });
     });
 

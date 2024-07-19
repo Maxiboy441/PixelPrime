@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Project.Database.Seeders;
 using Project.Services;
+using Project.HostedServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,9 @@ builder.Services.AddHttpClient<AiApiService>();
 builder.Services.AddScoped<AiApiService>();
 builder.Services.AddHttpClient<MovieApiService>();
 builder.Services.AddScoped<MovieApiService>();
+builder.Services.AddScoped<RecommendationService>();
+builder.Services.AddScoped<BackgroundRecommendationService>();
+builder.Services.AddHostedService<BackgroundRecommendationService>();
 
 builder.Services.AddControllersWithViews();
 
@@ -97,5 +101,15 @@ app.MapControllerRoute(
     name: "search",
     pattern: "Search",
     defaults: new { controller = "Api", action = "Search" });
+
+app.MapControllerRoute(
+    name: "searchbyid",
+    pattern: "Searchbyid",
+    defaults: new { controller = "Api", action = "SearchById" });
+
+app.MapControllerRoute(
+    name: "profile",
+    pattern: "profile/",
+    defaults: new { controller = "Profile", action = "Index" });
 
 app.Run();
