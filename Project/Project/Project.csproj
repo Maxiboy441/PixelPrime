@@ -26,6 +26,7 @@
     <None Remove="Views\Movies\" />
     <None Remove="HostedServices\" />
     <None Remove="Views\Profile\" />
+    <None Remove="Views\User\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Migrations\" />
@@ -35,10 +36,12 @@
     <Folder Include="Views\Movies\" />
     <Folder Include="HostedServices\" />
     <Folder Include="Views\Profile\" />
+    <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>
     <Content Remove="wwwroot\lib\fontawesome\" />
     <Content Remove="wwwroot\images\" />
+    <Content Remove="User\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="wwwroot\js\swiper-element-bundle.min.js" />
