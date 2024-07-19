@@ -144,7 +144,7 @@
 
                             @if (Model.CurrentUserId == review.User_id)
                             {
-                                <div class="d-flex align-items-start gap-3">
+                                <div class="d-flex align-items-start gap-3 ms-auto">
                                     @await Html.PartialAsync("_EditReviewPopUpForm", Tuple.Create(
                                        Model.Movie.Id,
                                        Model.Movie.Title,
