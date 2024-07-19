@@ -1,6 +1,7 @@
 ﻿@{
     var movie = ViewData["Movie"] as Movie;
     var averageRating = ViewData["AverageRating"];
+    bool hasAverageRating = !string.IsNullOrEmpty(averageRating.ToString());
     var currentUserRating = ViewData["CurrentUserRating"] ?? string.Empty;
     bool hasRating = !string.IsNullOrEmpty(currentUserRating.ToString());
     var isFavorite = (bool)ViewData["IsFavorite"];
@@ -52,7 +53,14 @@
                 <div class="d-flex gap-4">
                     <div class="d-flex flex-column">
                         <h5 style="font-size: 18px">Rating</h5>
-                        <h6><i class="fa-solid fa-star" style="color: #FFD43B;"></i><span class="rate">@averageRating</span></h6>
+                        @if (hasAverageRating)
+                        {
+                            <h6><i class="fa-solid fa-star" style="color: #FFD43B;"></i><span class="rate">@averageRating</span></h6>
+                        }
+                        else
+                        {
+                            <h6>This movie has not yet been rated</h6>
+                        }
                     </div>
 
                     <div class="d-flex flex-column">
@@ -62,7 +70,7 @@
                             @if (hasRating)
                             {
                                 <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
-                                <span class="rate">@currentUserRating</span>
+                                <span class="rate">@currentUserRating/10</span>
                             }
                         </h6>
                     </div>

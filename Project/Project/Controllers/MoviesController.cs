@@ -198,7 +198,7 @@ namespace Project.Controllers
             ViewData["Movie"] = movie;
             ViewData["AverageRating"] = averageRating.HasValue 
                 ? averageRating.Value.ToString("0.0") 
-                : "This movie has not yet been rated";
+                : "";
             ViewData["IsFavorite"] = isFavorite;
             ViewData["IsWatchlist"] = isWatchlist;
             ViewData["isRated"] = isRated;
