@@ -21,14 +21,14 @@ ViewData["Title"] = "Info";
 
     <div class="repo-card mb-5">
         <div class="card bg-dark text-white">
-            <div class="card-body d-flex flex-column flex-sm-row align-items-center">
+            <div class="card-body impress-card-body d-flex flex-column flex-sm-row align-items-center">
                 <div class="mb-3 mb-sm-0 me-sm-4">
                     <img src="~/images/pixel_prime_logo.png" alt="PixelPrime Logo" class="img-fluid" style="max-width: 100px;">
                 </div>
                 <div>
-                    <h5 class="card-title">PixelPrime</h5>
+                    <h5 class="card-title impress-card-title">PixelPrime</h5>
                     <h6 class="card-subtitle mb-2 text-muted">GitHub Repository</h6>
-                    <p class="card-text">Check out our project repository on GitHub for more details and source code.</p>
+                    <p class="card-text impress-card-text">Check out our project repository on GitHub for more details and source code.</p>
                     @await Html.PartialAsync("_PrimaryButton",
                     Tuple.Create(
                     "View on GitHub",
