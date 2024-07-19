@@ -54,14 +54,14 @@ namespace Project.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> DestroyFavoriteMovie(string favoriteId)
+        public async Task<IActionResult> DestroyFavoriteMovie(string id)
         {
             var userJson = HttpContext.Session.GetString("CurrentUser");
             
             if (userJson != null)
             {
                 var currentUser = JsonConvert.DeserializeObject<User>(userJson);
-                var favorite = await _context.Favorites.FirstOrDefaultAsync(movie => movie.Movie_id == favoriteId && movie.User_id == currentUser.Id);
+                var favorite = await _context.Favorites.FirstOrDefaultAsync(movie => movie.Movie_id == id && movie.User_id == currentUser.Id);
                 
                 if (favorite == null)
                 {

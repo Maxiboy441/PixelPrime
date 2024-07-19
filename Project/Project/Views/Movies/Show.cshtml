@@ -72,17 +72,17 @@
                     {
                         <form asp-action="DestroyFavoriteMovie" asp-controller="Movies" method="post" class="mb-2">
                             @Html.AntiForgeryToken()
-                            @Html.Hidden("favoriteId", Model.Movie.Id)
+                            @Html.Hidden("id", Model.Movie.Id)
                             <button type="submit" class="btn-without text-light">
                                 Delete from Favorites <i class="fas fa-minus"></i>
                             </button>
                         </form>
-                    }
+                    }   
                     else
                     {
                         <form asp-action="StoreFavoriteMovie" asp-controller="Movies" method="post" class="mb-2">
                             @Html.AntiForgeryToken()
-                            <input type="hidden" name="movieId" value="Model.Movie.Id" />
+                            <input type="hidden" name="movieId" value="@Model.Movie.Id" />
                             <input type="hidden" name="title" value="@Model.Movie.Title" />
                             <input type="hidden" name="poster" value="@Model.Movie.Poster" />
                             <button type="submit" class="btn-without text-light">
