@@ -4,8 +4,8 @@
     ViewData["Title"] = "My Space";
 }
 
-<section>
-    <div class="container mb-5 d-flex justify-content-between">
+<section class="profile-session">
+    <div class="container mb-5 d-flex justify-content-between profile-container">
         <div class="d-flex gap-3">
             <img src="@Url.Content("~/images/user_profile.png")" class="profile_image rounded-circle overflow-hidden" />
 
@@ -20,8 +20,8 @@
 
     @await Html.PartialAsync("_ProfileTabButton",
         Tuple.Create("Watchlist", "Favorites", "Recommendations",
-        await Html.PartialAsync("_ProfileMovieListComponent", Tuple.Create(Model.Watchlist, true, "/Movies/DestroyWatchlistMovie")),
-        await Html.PartialAsync("_ProfileMovieListComponent", Tuple.Create(Model.Favorites, true, "/Movies/DestroyFavoriteMovie")),
+        await Html.PartialAsync("_ProfileMovieListComponent", Tuple.Create(Model.Watchlist, true, "/Movies/DestroyWatchlistMovieFromProfile")),
+        await Html.PartialAsync("_ProfileMovieListComponent", Tuple.Create(Model.Favorites, true, "/Movies/DestroyFavoriteMovieFromProfile")),
         await Html.PartialAsync("_ProfileMovieListComponent", Tuple.Create(Model.Recommendations, false, ""))
         ))
 </section>
