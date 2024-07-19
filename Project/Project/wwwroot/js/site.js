@@ -86,6 +86,60 @@ document.addEventListener('DOMContentLoaded', (event) => {
             card.addEventListener('animationend', () => card.classList.add('d-none'), { once: true });
         });
     });
+
+
+    // Handle delete Favorites or Watchlist
+    document.querySelectorAll('.delete-profile-button').forEach(button => {
+        button.addEventListener('click', function (event) {
+            event.preventDefault();
+
+            const form = this.closest('form');
+            const url = form.action;
+            const formData = new FormData(form);
+
+            fetch(url, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        displayFlashMessage('alert-success', data.message);
+                        form.closest('.movie-card').remove();
+                    } else {
+                        if (data.redirectToLogin) {
+                            window.location.href = '/Auth/Login';
+                        } else {
+                            displayFlashMessage('alert-danger', data.message);
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    displayFlashMessage('alert-danger', 'Error deleting movie.');
+                });
+        });
+    });
+
+    function displayFlashMessage(alertType, message) {
+        const flashMessageContainer = document.createElement('div');
+        flashMessageContainer.className = `alert ${alertType} alert-dismissible fade show profile-alert`;
+        flashMessageContainer.role = 'alert';
+        flashMessageContainer.innerHTML = `${message}<button type="button" class="btn btn-close" data-dismiss="alert" aria-label="Close" />`;
+
+        const container = document.querySelector('.profile-container');
+        container.appendChild(flashMessageContainer);
+
+        setTimeout(() => {
+            flashMessageContainer.classList.remove('show');
+            flashMessageContainer.classList.add('fade');
+            setTimeout(() => flashMessageContainer.remove(), 150);
+        }, 5000);
+    }
 });
 
 // Movies Slider

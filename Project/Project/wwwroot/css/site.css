@@ -226,6 +226,16 @@ html .swiper-button-next, html .swiper-button-prev {
     color: #fff;
 }
 
+.profile-session {
+    position: relative;
+}
+
+.profile-alert {
+    position: absolute;
+    width: 30%;
+    right: 0;
+}
+
 @keyframes slideIn {
     from {
         transform: translateX(100%);
