@@ -26,6 +26,17 @@ body {
     color: var(--text-color)
 }
 
+.btn-purple {
+    background-color: var(--purple-color);
+    color: var(--text-color);
+    transition: all 0.3s ease-in-out;
+}
+
+.btn-purple:hover {
+    background-color: #8A4BFF;
+    color: var(--text-color);
+}
+
 .btn-green {
     background-color: #00BF63;
     color: var(--text-color);
