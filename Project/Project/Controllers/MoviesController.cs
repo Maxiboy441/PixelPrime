@@ -83,6 +83,33 @@ namespace Project.Controllers
         }
 
         [HttpPost]
+        public async Task<IActionResult> DestroyFavoriteMovieFromProfile(string id)
+        {
+            var userJson = HttpContext.Session.GetString("CurrentUser");
+
+            if (userJson != null)
+            {
+                var currentUser = JsonConvert.DeserializeObject<User>(userJson);
+                var favorite = await _context.Favorites.FirstOrDefaultAsync(movie => movie.Movie_id == id && movie.User_id == currentUser.Id);
+
+                if (favorite == null)
+                {
+                    TempData["FailMessage"] = "The movie you are trying to remove does not exist in your favorites.";
+                    return Redirect(Request.Headers["Referer"].ToString());
+                }
+
+                _context.Favorites.Remove(favorite);
+                await _context.SaveChangesAsync();
+
+                return Json(new { success = true, message = $"The movie '{favorite.Movie_title}' has been removed from your watchlist." });
+            }
+            else
+            {
+                return Json(new { success = false, redirectToLogin = true, message = "User not logged in." });
+            }
+        }
+
+        [HttpPost]
         public async Task<IActionResult> StoreWatchlistMovie(Watchlist watchlist, string movieId, string title, string poster)
         {
             var userJson = HttpContext.Session.GetString("CurrentUser");
@@ -144,7 +171,35 @@ namespace Project.Controllers
                 return RedirectToAction("Login", "Auth", new { returnUrl = originalUrl });
             }
         }
-        
+
+        [HttpPost]
+        public async Task<IActionResult> DestroyWatchlistMovieFromProfile(string id)
+        {
+            var userJson = HttpContext.Session.GetString("CurrentUser");
+
+            if (userJson != null)
+            {
+                var currentUser = JsonConvert.DeserializeObject<User>(userJson);
+
+                var movie = await _context.Watchlists.FirstOrDefaultAsync(movie => movie.Movie_id == id && movie.User_id == currentUser.Id);
+
+                if (movie == null)
+                {
+                    TempData["FailMessage"] = "The movie you are trying to remove does not exist in your watchlist.";
+                    return Redirect(Request.Headers["Referer"].ToString());
+                }
+
+                _context.Watchlists.Remove(movie);
+                await _context.SaveChangesAsync();
+
+                return Json(new { success = true, message = $"The movie '{movie.Movie_title}' has been removed from your watchlist." });
+            }
+            else
+            {
+                return Json(new { success = false, redirectToLogin = true, message = "User not logged in." });
+            }
+        }
+
         public IActionResult Index()
         {
             return View();
