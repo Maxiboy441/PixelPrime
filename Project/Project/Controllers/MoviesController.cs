@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Project.Data;
 using Project.Models;
+using Project.Models.ViewModels;
 using Project.Services;
 
 namespace Project.Controllers
@@ -153,6 +154,10 @@ namespace Project.Controllers
         public async Task<IActionResult> Show(string id)
         {
             var movieJson = HttpContext.Session.GetString($"movie_{id}");
+            var reviews = await _context.Reviews
+                .Where(review => review.Movie_id == id)
+                .Include(review => review.User)
+                .ToListAsync();
 
             Movie movie = null;
 
@@ -193,18 +198,33 @@ namespace Project.Controllers
                 currentUserRating = (await GetUserRating(userId, id)) ?? 0.0;
             }
 
+
+            //ViewData["Movie"] = movie;
+            //ViewData["AverageRating"] = averageRating.HasValue 
+            //    ? averageRating.Value.ToString("0.0") 
+            //    : "";
+            //ViewData["IsFavorite"] = isFavorite;
+            //ViewData["IsWatchlist"] = isWatchlist;
+            //ViewData["isRated"] = isRated;
+            //ViewData["CurrentUserRating"] = currentUserRating == 0.0 ? string.Empty : currentUserRating;
+
             var averageRating = await GetAverageRating(id);
 
-            ViewData["Movie"] = movie;
-            ViewData["AverageRating"] = averageRating.HasValue 
-                ? averageRating.Value.ToString("0.0") 
-                : "";
-            ViewData["IsFavorite"] = isFavorite;
-            ViewData["IsWatchlist"] = isWatchlist;
-            ViewData["isRated"] = isRated;
-            ViewData["CurrentUserRating"] = currentUserRating == 0.0 ? string.Empty : currentUserRating;
+            var viewModel = new MovieDetailsViewModel
+            {
+                Movie = movie,
+                Reviews = reviews,
+                AverageRating = averageRating.HasValue ? averageRating.Value.ToString("0.0") : "",
+                IsFavorite = isFavorite,
+                IsWatchlist = isWatchlist,
+                IsRated = isRated,
+                HasAverageRating = !string.IsNullOrEmpty(averageRating.ToString()),
+                UserHasRating = currentUserRating != 0.0,
+                CurrentUserRating = currentUserRating == 0.0 ? string.Empty : currentUserRating.ToString("0.0"),
+                CurrentUserId = userId,
+            };
 
-            return View(movie);
+            return View(viewModel);
         }
         
         private async Task<bool> IsFavorite(int userId, string movieId)
@@ -244,28 +264,31 @@ namespace Project.Controllers
         {
             var userJson = HttpContext.Session.GetString("CurrentUser");
 
-            if (string.IsNullOrEmpty(userJson))
+            if (!string.IsNullOrEmpty(userJson))
             {
-                return RedirectToAction("Login", "Auth", new { returnUrl = Request.Headers["Referer"].ToString() });
-            }
+                var currentUser = JsonConvert.DeserializeObject<User>(userJson);
+                var existingRating = await _context.Ratings
+                    .FirstOrDefaultAsync(r => r.Movie_id == movieId && r.User_id == currentUser.Id);
 
-            var currentUser = JsonConvert.DeserializeObject<User>(userJson);
-            var existingRating = await _context.Ratings
-                .FirstOrDefaultAsync(r => r.Movie_id == movieId && r.User_id == currentUser.Id);
+                if (existingRating != null)
+                {
+                    UpdateExistingRating(existingRating, ratingValue);
+                }
+                else
+                {
+                    await AddNewRating(movieId, poster, title, ratingValue, currentUser.Id);
+                }
 
-            if (existingRating != null)
-            {
-                UpdateExistingRating(existingRating, ratingValue);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Show", new { id = movieId });
             }
             else
             {
-                await AddNewRating(movieId, poster, title, ratingValue, currentUser.Id);
+                var originalUrl = Request.Headers["Referer"].ToString();
+                return RedirectToAction("Login", "Auth", new { returnUrl = originalUrl });
             }
-
-            await _context.SaveChangesAsync();
-            return RedirectToAction("Show", new { id = movieId });
         }
-        
+
         private void UpdateExistingRating(Rating existingRating, int ratingValue)
         {
             existingRating.Rating_value = ratingValue;

@@ -1,50 +1,52 @@
-﻿@{
-    var movie = ViewData["Movie"] as Movie;
-    var averageRating = ViewData["AverageRating"];
-    bool hasAverageRating = !string.IsNullOrEmpty(averageRating.ToString());
-    var currentUserRating = ViewData["CurrentUserRating"] ?? string.Empty;
-    bool hasRating = !string.IsNullOrEmpty(currentUserRating.ToString());
-    var isFavorite = (bool)ViewData["IsFavorite"];
-    var isWatchlist = (bool)ViewData["IsWatchlist"];
-    var isRated = (bool)ViewData["isRated"];
+﻿@model Project.Models.ViewModels.MovieDetailsViewModel
+
+@{
+//var movie = ViewData["Movie"] as Movie;
+//var averageRating = ViewData["AverageRating"];
+//bool hasAverageRating = !string.IsNullOrEmpty(averageRating.ToString());
+//var currentUserRating = ViewData["CurrentUserRating"] ?? string.Empty;
+//bool hasRating = !string.IsNullOrEmpty(currentUserRating.ToString());
+//var isFavorite = (bool)ViewData["IsFavorite"];
+//var isWatchlist = (bool)ViewData["IsWatchlist"];
+//var isRated = (bool)ViewData["isRated"];
 }
 
 <div class="container">
     <div class="d-flex flex-column">
         <div class="d-flex justify-content-between align-items-center">
-            <h1>@movie.Title</h1>
+            <h1>@Model.Movie.Title</h1>
             <div class="d-flex justify-content-between align-items-center gap-3">
-                <h5>@movie.Year</h5>
-                <h5>@movie.Genre</h5>
-                <h5>@movie.Runtime</h5>
+                <h5>@Model.Movie.Year</h5>
+                <h5>@Model.Movie.Genre</h5>
+                <h5>@Model.Movie.Runtime</h5>
             </div>
         </div>
 
         <div class="d-flex h-75 mt-3 mb-3">
             <div class="col-3">
-                <img src="@(!string.IsNullOrEmpty(movie.Poster) && movie.Poster != "N/A" ? movie.Poster : Url.Content("~/images/poster_not_found.png"))" 
-                     alt="@movie.Title" 
+                <img src="@(!string.IsNullOrEmpty(Model.Movie.Poster) && Model.Movie.Poster != "N/A" ? Model.Movie.Poster : Url.Content("~/images/poster_not_found.png"))"
+                     alt="@Model.Movie.Title"
                      class="img-fluid" />
             </div>
-            
+
             <div class="d-flex flex-column w-50 flex-wrap">
                 @await Html.PartialAsync("_MovieOverview",
-                Tuple.Create("Overview", @movie.Plot, "d-flex flex-column gap-2 mb-3"))
-                
-                @await Html.PartialAsync("_MovieOverview",
-                Tuple.Create("Director", @movie.Director, "d-flex flex-row gap-2"))
+                Tuple.Create("Overview", @Model.Movie.Plot, "d-flex flex-column gap-2 mb-3"))
 
                 @await Html.PartialAsync("_MovieOverview",
-                Tuple.Create("Writers", @movie.Writer,"d-flex flex-row gap-2"))
-                
-                @await Html.PartialAsync("_MovieOverview",
-                Tuple.Create("Actors", @movie.Actors, "d-flex flex-row gap-2"))
+                Tuple.Create("Director", @Model.Movie.Director, "d-flex flex-row gap-2"))
 
                 @await Html.PartialAsync("_MovieOverview",
-                Tuple.Create("Language", @movie.Language, "d-flex flex-row gap-2"))
+                Tuple.Create("Writers", @Model.Movie.Writer, "d-flex flex-row gap-2"))
 
                 @await Html.PartialAsync("_MovieOverview",
-                Tuple.Create("Genres", @movie.Genre, "d-flex flex-row gap-2"))
+                Tuple.Create("Actors", @Model.Movie.Actors, "d-flex flex-row gap-2"))
+
+                @await Html.PartialAsync("_MovieOverview",
+                Tuple.Create("Language", @Model.Movie.Language, "d-flex flex-row gap-2"))
+
+                @await Html.PartialAsync("_MovieOverview",
+                Tuple.Create("Genres", @Model.Movie.Genre, "d-flex flex-row gap-2"))
             </div>
         </div>
 
@@ -53,9 +55,9 @@
                 <div class="d-flex gap-4">
                     <div class="d-flex flex-column">
                         <h5 style="font-size: 18px">Rating</h5>
-                        @if (hasAverageRating)
+                        @if (Model.HasAverageRating)
                         {
-                            <h6><i class="fa-solid fa-star" style="color: #FFD43B;"></i><span class="rate">@averageRating</span></h6>
+                            <h6><i class="fa-solid fa-star" style="color: #FFD43B;"></i><span class="rate">@Model.AverageRating</span></h6>
                         }
                         else
                         {
@@ -64,24 +66,24 @@
                     </div>
 
                     <div class="d-flex flex-column">
-                        @await Html.PartialAsync("_RateMovieModal", 
-                            Tuple.Create(movie.Id, movie.Title, movie.Poster, isRated ? "Your Rating" : "Rate Movie", isRated ? "fa-solid fa-pen-to-square" : "fas fa-plus", "btn-without text-light"))
+                        @await Html.PartialAsync("_RateMovieModal",
+                            Tuple.Create(Model.Movie.Id, Model.Movie.Title, Model.Movie.Poster, Model.IsRated ? "Your Rating" : "Rate Movie", Model.IsRated ? "fa-solid fa-pen-to-square" : "fas fa-plus", "btn-without text-light"))
                         <h6 class="mt-2" style="margin: 0">
-                            @if (hasRating)
+                            @if (Model.UserHasRating)
                             {
                                 <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
-                                <span class="rate">@currentUserRating/10</span>
+                                <span class="rate">@Model.CurrentUserRating /10</span>
                             }
                         </h6>
                     </div>
                 </div>
 
                 <div class="d-flex gap-4">
-                    @if (isFavorite)
+                    @if (Model.IsFavorite)
                     {
                         <form asp-action="DestroyFavoriteMovie" asp-controller="Movies" method="post" class="mb-2">
                             @Html.AntiForgeryToken()
-                            @Html.Hidden("favoriteId", movie.Id)
+                            @Html.Hidden("favoriteId", Model.Movie.Id)
                             <button type="submit" class="btn-without text-light">
                                 Delete from Favorites <i class="fas fa-minus"></i>
                             </button>
@@ -91,20 +93,20 @@
                     {
                         <form asp-action="StoreFavoriteMovie" asp-controller="Movies" method="post" class="mb-2">
                             @Html.AntiForgeryToken()
-                            <input type="hidden" name="movieId" value="@movie.Id" />
-                            <input type="hidden" name="title" value="@movie.Title" />
-                            <input type="hidden" name="poster" value="@movie.Poster" />
+                            <input type="hidden" name="movieId" value="Model.Movie.Id" />
+                            <input type="hidden" name="title" value="@Model.Movie.Title" />
+                            <input type="hidden" name="poster" value="@Model.Movie.Poster" />
                             <button type="submit" class="btn-without text-light">
                                 Add to Favorites <i class="fas fa-plus"></i>
                             </button>
                         </form>
                     }
 
-                    @if (isWatchlist)
+                    @if (Model.IsWatchlist)
                     {
                         <form asp-action="DestroyWatchlistMovie" asp-controller="Movies" method="post" class="mb-2">
                             @Html.AntiForgeryToken()
-                            @Html.Hidden("id", movie.Id)
+                            @Html.Hidden("id", Model.Movie.Id)
                             <button type="submit" class="btn-without text-light">
                                 Delete from Watchlist <i class="fas fa-minus"></i>
                             </button>
@@ -114,12 +116,12 @@
                     {
                         <form asp-action="StoreWatchlistMovie" asp-controller="Movies" method="post" class="mb-2">
                             @Html.AntiForgeryToken()
-                            <input type="hidden" name="movieId" value="@movie.Id" />
-                            <input type="hidden" name="title" value="@movie.Title" />
-                            <input type="hidden" name="poster" value="@movie.Poster" />
+                            <input type="hidden" name="movieId" value="@Model.Movie.Id" />
+                            <input type="hidden" name="title" value="@Model.Movie.Title" />
+                            <input type="hidden" name="poster" value="@Model.Movie.Poster" />
                             <button type="submit" class="btn-without text-light">
                                 Add to Watchlist <i class="fas fa-plus"></i>
-                            </button >
+                            </button>
                         </form>
                     }
                 </div>
@@ -129,22 +131,46 @@
         <div class="d-flex flex-column gap-4">
             <div class="d-flex flex-row gap-4 align-items-center mt-5">
                 <h3 class="fw-bold mb-0">User Reviews </h3>
-                @await Html.PartialAsync("_ReviewPopUpForm", Tuple.Create( movie.Id, movie.Title, movie.Poster, "/movies/tt908980/review"))
+                @await Html.PartialAsync("_ReviewPopUpForm", Tuple.Create("Add Review", Model.Movie.Id, Model.Movie.Title, Model.Movie.Poster, $"/movies/{Model.Movie.Id}/review"))
             </div>
-            
-            <div class="bg-secondary-color w-100 vh-20 mb-3 p-3 rounded-3">
-                <div class="d-flex flex-row gap-3">
-                    <div>
-                        <i class="fa-regular fa-user user-icon"></i>
+
+            @if (Model.Reviews == null || !Model.Reviews.Any())
+            {
+                <p>No reviews available.</p>
+            }
+            else
+            {
+                foreach (var review in Model.Reviews)
+                {
+                    <div class="bg-secondary-color w-100 vh-20 mb-3 p-3 rounded-3">
+                        <div class="d-flex flex-row gap-3 mb-3">
+                            <div>
+                                <i class="fa-regular fa-user user-icon"></i>
+                            </div>
+
+                            <div class="d-flex flex-column gap-2">
+                                <h3 class="fw-bold mb-0">@review.Title</h3>
+                                <p class="mb-0">Written by: @review.User.Name on @review.Updated_at.ToString("MMMM dd, yyyy")</p>
+                            </div>
+                            @if (Model.CurrentUserId == review.User_id)
+                            {
+                                <div class="d-flex justify-content-end">
+                                    @await Html.PartialAsync("_ReviewPopUpForm", Tuple.Create("Edit Review", Model.Movie.Id, Model.Movie.Title, Model.Movie.Poster, $"/movies/{Model.Movie.Id}/review"))
+
+
+                                    <form method="post" action="@Url.Action("DeleteReview", new { id = review.Id })">
+                                        @await Html.PartialAsync("_PrimaryButton", Tuple.Create("Delete", "", "btn btn-danger", "type=submit", "button"))
+                                    </form>
+                                </div>
+                            }
+                        </div>
+
+                        <div id="review-view-@review.Id" class="review-view">
+                            <p>@review.Text</p>
+                        </div>
                     </div>
-                    
-                    <div class="d-flex flex-column gap-2">
-                        <h3 class="fw-bold mb-0">Awesome movie. I love it!</h3>
-                        <p class="mb-0">Written by: @movie.Director on @DateTime.Now.ToString("D")</p>
-                    </div>
-                </div>
-            </div>
+                }
+            }
         </div>
-        
     </div>
 </div>
