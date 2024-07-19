@@ -26,6 +26,17 @@ body {
     color: var(--text-color)
 }
 
+.btn-green {
+    background-color: #00BF63;
+    color: var(--text-color);
+    transition: all 0.3s ease-in-out;
+}
+
+.btn-green:hover {
+    background-color: #008F4A;
+    color: var(--text-color);
+}
+
 .navbar-brand img {
     height: 2.5rem;
     width: auto;
@@ -247,9 +258,28 @@ html .swiper-button-next, html .swiper-button-prev {
     margin-right: 10px;
 }
 
+/*Account page*/
+
+.account-form {
+    width: 40vw;
+}
+
+.back-btn {
+    color: #fff;
+    transition: color 0.3s ease;
+}
+
+.back-btn:hover {
+    color: var(--purple-color);
+}
+
+.account-btn {
+    margin-inline-end: 30px;
+}
 
 /*Impresssum Styles*/
-.impress-card, .card {
+
+.impress-card {
     max-width: 800px;
     margin: 0 auto;
     background-color: #212529;
@@ -258,16 +288,16 @@ html .swiper-button-next, html .swiper-button-prev {
     border-radius: 10px;
 }
 
-.impress-card h5, .card-title {
+.impress-card h5, .impress-card-title {
     font-size: 1.2rem;
     margin-bottom: 1rem;
 }
 
-.impress-card p, .card-text {
+.impress-card p, .impress-card-text {
     margin-bottom: 0.5rem;
 }
 
-.card-body {
+.impress-card-body {
     min-height: 150px;
 }
 
@@ -300,6 +330,10 @@ html .swiper-button-next, html .swiper-button-prev {
 
     .side-card {
         width: 250px;
+    }
+
+    .account-form {
+        width: 60vw;
     }
 }
 
