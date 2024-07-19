@@ -152,20 +152,21 @@
                                 <h3 class="fw-bold mb-0">@review.Title</h3>
                                 <p class="mb-0">Written by: @review.User.Name on @review.Updated_at.ToString("MMMM dd, yyyy")</p>
                             </div>
+
                             @if (Model.CurrentUserId == review.User_id)
                             {
-                                <div class="d-flex justify-content-end">
+                                <div class="d-flex align-items-start gap-3">
                                     @await Html.PartialAsync("_EditReviewPopUpForm", Tuple.Create(
-                                   Model.Movie.Id,
-                                   Model.Movie.Title,
-                                   Model.Movie.Poster,
-                                   review.Title,
-                                   review.Text,
-                                   $"/movies/{Model.Movie.Id}/review")
-                                   )
+                                       Model.Movie.Id,
+                                       Model.Movie.Title,
+                                       Model.Movie.Poster,
+                                       review.Title,
+                                       review.Text,
+                                       $"/movies/{Model.Movie.Id}/review"))
 
+                                    @* TODO : adjust action for editing review if needed *@
                                     <form method="post" action="@Url.Action("DeleteReview", new { id = review.Id })">
-                                        @await Html.PartialAsync("_PrimaryButton", Tuple.Create("Delete", "", "btn btn-danger", "type=submit", "button"))
+                                        @await Html.PartialAsync("_PrimaryButton", Tuple.Create("Delete", "", "btn btn-danger btn-sm", "type=submit", "button"))
                                     </form>
                                 </div>
                             }
