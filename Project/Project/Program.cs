@@ -13,6 +13,9 @@ builder.Services.AddScoped<MovieApiService>();
 builder.Services.AddScoped<RecommendationService>();
 builder.Services.AddScoped<BackgroundRecommendationService>();
 builder.Services.AddHostedService<BackgroundRecommendationService>();
+builder.Services.AddScoped<ActorAPIService>();
+builder.Services.AddScoped<WikipediaMediaAPIService>();
+
 
 builder.Services.AddControllersWithViews();
 
