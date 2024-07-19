@@ -6,12 +6,12 @@
 Tuple.Create(
     "Edit Review",
     "style-1",
-    "rounded-pill px-5",
-    "type=button data-toggle=modal data-target=#myModal",
+    "",
+    "type=button data-toggle=modal data-target=#editReviewModal",
     "button")
 )
 
-<div class="modal" id="myModal">
+<div class="modal" id="editReviewModal">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
 
@@ -22,14 +22,14 @@ Tuple.Create(
                 }
                 else
                 {
-                    <h4 class="modal-title text-black">Sign in to leave a review</h4>
+                    <h4 class="modal-title text-black">Sign in to update a review</h4>
                 }
             </div>
 
             <div class="modal-body">
                 @if (!string.IsNullOrEmpty(Context.Session.GetString("CurrentUser")))
                 {
-                    <form id="reviewForm" action="@Model.Item6" method="post">
+                    <form id="editReviewForm" action="@Model.Item6" method="post">
                         @Html.AntiForgeryToken()
 
                         <input type="hidden" name="movieId" value="@Model.Item1" />
@@ -37,11 +37,11 @@ Tuple.Create(
                         <input type="hidden" name="moviePoster" value="@Model.Item3" />
                         <div class="form-group">
                             <label class="text-black p-2" for="title">Title</label>
-                            <input value="@Model.Item4" type="text" class="form-control" name="reviewTitle" id="reviewTitle" placeholder="Edit Title" style="max-width: 95%" oninput="checkForm()">
+                            <input value="@Model.Item4" type="text" class="form-control" name="reviewTitle" id="editReviewTitle" placeholder="Edit Title" style="max-width: 95%" oninput="checkForm()">
                         </div>
                         <div class="form-group">
                             <label class="text-black p-2" for="review">Review</label>
-                            <textarea class="form-control" name="reviewText" id="reviewText" placeholder="Edit your review" style="max-width: 95%; height: 150px;" oninput="checkForm()">@Model.Item5</textarea>
+                            <textarea class="form-control" name="reviewText" id="editReviewText" placeholder="Edit your review" style="max-width: 95%; height: 150px;" oninput="checkForm()">@Model.Item5</textarea>
                         </div>
 
                         <div class="modal-footer">
@@ -84,23 +84,23 @@ Tuple.Create(
 
 <script>
     function checkForm() {
-        const title = document.getElementById('reviewTitle').value;
-        const review = document.getElementById('reviewText').value;
+        const title = document.getElementById('editReviewTitle').value;
+        const review = document.getElementById('editReviewText').value;
         const submitBtn = document.getElementById('submitBtn');
 
         var isTitleValid = title.trim() !== "";
         var isReviewValid = review.trim() !== "";
 
         if (isTitleValid) {
-            document.getElementById('reviewTitle').classList.remove('invalid-input');
+            document.getElementById('editReviewTitle').classList.remove('invalid-input');
         } else {
-            document.getElementById('reviewTitle').classList.add('invalid-input');
+            document.getElementById('editReviewTitle').classList.add('invalid-input');
         }
 
         if (isReviewValid) {
-            document.getElementById('reviewText').classList.remove('invalid-input');
+            document.getElementById('editReviewText').classList.remove('invalid-input');
         } else {
-            document.getElementById('reviewText').classList.add('invalid-input');
+            document.getElementById('editReviewText').classList.add('invalid-input');
         }
 
         if (isTitleValid && isReviewValid) {
@@ -111,18 +111,18 @@ Tuple.Create(
     }
 
     function clearForm() {
-        document.getElementById('reviewTitle').value = '';
-        document.getElementById('reviewText').value = '';
+        document.getElementById('editReviewTitle').value = '';
+        document.getElementById('editReviewText').value = '';
         document.getElementById('submitBtn').setAttribute('disabled', 'disabled');
-        document.getElementById('reviewTitle').classList.remove('invalid-input');
-        document.getElementById('reviewText').classList.remove('invalid-input');
+        document.getElementById('editReviewTitle').classList.remove('invalid-input');
+        document.getElementById('editReviewText').classList.remove('invalid-input');
     }
 
-    document.querySelector('#myModal .close').addEventListener('click', clearForm);
-    document.getElementById('myModal').addEventListener('hidden.bs.modal', clearForm);
+    document.querySelector('#editReviewModal .close').addEventListener('click', clearForm);
+    document.getElementById('editReviewModal').addEventListener('hidden.bs.modal', clearForm);
     document.getElementById('submitBtn').addEventListener('click', function (event) {
         event.preventDefault();
         clearForm();
-        $('#myModal').modal('hide');
+        $('#editReviewModal').modal('hide');
     });
 </script>
