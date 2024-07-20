@@ -41,7 +41,7 @@ namespace Project.Controllers
                 _context.Favorites.Add(favorite);
                 await _context.SaveChangesAsync();
 
-                TempData["SuccessMessage"] = "Movie successfully added to your favorites!";
+                TempData["SuccessMessage"] = $"{title} successfully added to your favorites!";
 
                 return Redirect(Request.Headers["Referer"].ToString());
             }
@@ -85,10 +85,10 @@ namespace Project.Controllers
 
                 if(route == "profile")
                 {
-                    return Json(new { success = true, message = $"The movie '{favorite.Movie_title}' has been removed from your watchlist." });
+                    return Json(new { success = true, message = $"{favorite.Movie_title} has been removed from your favorites." });
                 } else
                 {
-                    TempData["SuccessMessage"] = $"The movie '{favorite.Movie_title}' has been removed from your favorites.";
+                    TempData["SuccessMessage"] = $"{favorite.Movie_title} has been removed from your favorites.";
                     return Redirect(Request.Headers["Referer"].ToString());
                 }
             }
@@ -125,7 +125,7 @@ namespace Project.Controllers
                 _context.Watchlists.Add(watchlist);
                 await _context.SaveChangesAsync();
 
-                TempData["SuccessMessage"] = "Movie successfully added to your watchlist!";
+                TempData["SuccessMessage"] = $"{title} successfully added to your watchlist!";
 
                 return Redirect(Request.Headers["Referer"].ToString());
             }
@@ -170,10 +170,10 @@ namespace Project.Controllers
 
                 if(route == "profile")
                 {
-                    return Json(new { success = true, message = $"The movie '{movie.Movie_title}' has been removed from your watchlist." });
+                    return Json(new { success = true, message = $"{movie.Movie_title} has been removed from your watchlist." });
                 } else
                 {
-                    TempData["SuccessMessage"] = "Movie successfully added to your watchlist!";
+                    TempData["SuccessMessage"] = $"{movie.Movie_title} has been removed from your watchlist.";
 
                     return Redirect(Request.Headers["Referer"].ToString());
                 }
@@ -319,12 +319,15 @@ namespace Project.Controllers
                 }
 
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Show", new { id = movieId });
+
+                TempData["SuccessMessage"] = "Movie rated successfully!";
+                return Redirect(Request.Headers["Referer"].ToString());
             }
             else
             {
                 var originalUrl = Request.Headers["Referer"].ToString();
                 return RedirectToAction("Login", "Auth", new { returnUrl = originalUrl });
+
             }
         }
 
