@@ -1,9 +1,10 @@
 ﻿@using Project.Services
 @{
-    ViewData["Title"] = "Home Page";
-    var convertService = new ConvertModelService();
-    List<Rating>? ratings = (List<Rating>)ViewData["TopRated"];
-    List<Movie> moviesFromReviews = convertService.ConvertToMovies(ratings);
+ViewData["Title"] = "Home Page";
+var convertService = new ConvertModelService();
+List<Rating>? ratings = (List<Rating>)ViewData["TopRated"]!;
+List<Movie> moviesFromReviews = convertService.ConvertToMovies(ratings);
+
 }
 
 <div class="container">
@@ -20,16 +21,14 @@
                         <img class="d-block" src="~/images/ai-advert.png" alt="First slide">
                         <div class="carousel-caption d-none d-md-block">
                             <h1>AI Recommendations</h1>
-                            @if (string.IsNullOrEmpty(Context.Session.GetString("CurrentUser")))
-                            {
-                                @await Html.PartialAsync("_PrimaryButton",
+                            <!-- TODO: Add SignUp Link -->
+                            @await Html.PartialAsync("_PrimaryButton",
                                 Tuple.Create(
                                     "Sign Up",
                                     "style-1",
                                     "singUp-advert",
-                                    "href=/Auth/SignUp",
+                                    "href=https://www.google.com",
                                     "a"))
-                            }
                         </div>
                     </div>
                     <div class="carousel-item">

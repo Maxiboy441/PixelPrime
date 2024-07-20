@@ -9,6 +9,7 @@ public class Review
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
+    // TODO: Add User_id as foreign key
     public int User_id { get; set; }
     public string Movie_id { get; set; }
     public string Title { get; set; }
@@ -18,6 +19,4 @@ public class Review
     public DateTime Created_at { get; set; }
     public DateTime Updated_at { get; set; }
 
-    [ForeignKey("User_id")]
-    public virtual User User { get; set; }
 }

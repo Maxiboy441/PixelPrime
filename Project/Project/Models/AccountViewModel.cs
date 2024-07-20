@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Project.Models.ViewModels
+namespace Project.Models
 {
     public class AccountViewModel
     {

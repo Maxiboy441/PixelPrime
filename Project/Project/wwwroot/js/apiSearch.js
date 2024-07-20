@@ -33,27 +33,12 @@ const createAutoComplete = ({
     const dropdownMenu = root.querySelector(".dropdown-menu");
 
     const onInput = async event => {
-        const searchTerm = event.target.value;
-
-        resultsWrapper.innerHTML = "";
-
-        if (!searchTerm) {
-            // Hide the dropdown if input is empty
-            dropdown.classList.remove("is-active");
-            dropdownMenu.style.visibility = "hidden";
-            return;
-        }
-
         const items = await fetchData(event.target.value);
 
         if (!items.length) {
+            dropdownMenu.style.visibility = "hidden";
+            dropdown.classList.remove("is-active");
             resultsWrapper.innerHTML = "";
-            const notFoundMessage = document.createElement("div");
-            notFoundMessage.classList.add("dropdown-item");
-            notFoundMessage.textContent = "No results found.";
-            resultsWrapper.appendChild(notFoundMessage);
-            dropdown.classList.add("is-active");
-            dropdownMenu.style.visibility = "visible";
             return;
         }
 
