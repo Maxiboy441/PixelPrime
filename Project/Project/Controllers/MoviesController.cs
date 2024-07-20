@@ -232,6 +232,7 @@ namespace Project.Controllers
             bool isWatchlist = false;
             bool isRated = false;
             double currentUserRating = 0.0;
+            bool userHasReview = false;
 
             if (userJson != null)
             {
@@ -242,6 +243,7 @@ namespace Project.Controllers
                 isWatchlist = await IsWatchlist(userId, id);
                 isRated = await IsRated(userId, id);
                 currentUserRating = (await GetUserRating(userId, id)) ?? 0.0;
+                userHasReview = reviews.Any(r => r.User_id == userId);
             }
 
             var averageRating = await GetAverageRating(id);
@@ -258,6 +260,7 @@ namespace Project.Controllers
                 UserHasRating = currentUserRating != 0.0,
                 CurrentUserRating = currentUserRating == 0.0 ? string.Empty : currentUserRating.ToString("0.0"),
                 CurrentUserId = userId,
+                UserHasReview = userHasReview
             };
 
             return View(viewModel);
