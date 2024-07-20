@@ -9,7 +9,8 @@
     var buttonText = Model.Item4;
     var buttonIcon = Model.Item5;
     var buttonClass = Model.Item6;
-}
+    var returnUrl = Url.Action("Login", "Auth", new { returnUrl = Context.Request.Path });
+ }
 
 <!-- Button to trigger the modal -->
 <button type="button" class="@buttonClass" data-toggle="modal" data-target="#exampleModalCenter">
@@ -56,10 +57,11 @@
                                 "type=button data-dismiss=modal",
                                 "button")
                             )
-                        @await Html.PartialAsync("_PrimaryButton", Tuple.Create("Sign in", "style-1", "", "href=/Auth/Login", "a"))
+                        @await Html.PartialAsync("_PrimaryButton", Tuple.Create("Sign in", "style-1", "", $"href={returnUrl}", "a"))
                     }
                 </div>
             </div>
         </div>
     </div>
 </div>
+    
