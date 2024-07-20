@@ -56,34 +56,16 @@ namespace Project.Controllers
         [HttpPost]
         public async Task<IActionResult> DestroyFavoriteMovie(string id)
         {
-            var userJson = HttpContext.Session.GetString("CurrentUser");
-            
-            if (userJson != null)
-            {
-                var currentUser = JsonConvert.DeserializeObject<User>(userJson);
-                var favorite = await _context.Favorites.FirstOrDefaultAsync(movie => movie.Movie_id == id && movie.User_id == currentUser.Id);
-                
-                if (favorite == null)
-                {
-                    TempData["FailMessage"] = "The movie you are trying to remove does not exist in your favorites.";
-                    return Redirect(Request.Headers["Referer"].ToString());
-                }
-
-                _context.Favorites.Remove(favorite);
-                await _context.SaveChangesAsync();
-
-                TempData["SuccessMessage"] = $"The movie '{favorite.Movie_title}' has been removed from your favorites.";
-                return Redirect(Request.Headers["Referer"].ToString());
-            }
-            else
-            {
-                var originalUrl = Request.Headers["Referer"].ToString();
-                return RedirectToAction("Login", "Auth", new { returnUrl = originalUrl });
-            }
+            return await DeleteFavorite(id, "movie_page");
         }
 
         [HttpPost]
         public async Task<IActionResult> DestroyFavoriteMovieFromProfile(string id)
+        {
+            return await DeleteFavorite(id, "profile");
+        }
+
+        private async Task<IActionResult> DeleteFavorite(string id, string route)
         {
             var userJson = HttpContext.Session.GetString("CurrentUser");
 
@@ -101,11 +83,25 @@ namespace Project.Controllers
                 _context.Favorites.Remove(favorite);
                 await _context.SaveChangesAsync();
 
-                return Json(new { success = true, message = $"The movie '{favorite.Movie_title}' has been removed from your watchlist." });
+                if(route == "profile")
+                {
+                    return Json(new { success = true, message = $"The movie '{favorite.Movie_title}' has been removed from your watchlist." });
+                } else
+                {
+                    TempData["SuccessMessage"] = $"The movie '{favorite.Movie_title}' has been removed from your favorites.";
+                    return Redirect(Request.Headers["Referer"].ToString());
+                }
             }
             else
             {
-                return Json(new { success = false, redirectToLogin = true, message = "User not logged in." });
+                if(route == "profile")
+                {
+                    return Json(new { success = false, redirectToLogin = true, message = "User not logged in." });
+                } else
+                {
+                    var originalUrl = Request.Headers["Referer"].ToString();
+                    return RedirectToAction("Login", "Auth", new { returnUrl = originalUrl });
+                }
             }
         }
 
@@ -144,36 +140,16 @@ namespace Project.Controllers
         [HttpPost]
         public async Task<IActionResult> DestroyWatchlistMovie(string id)
         {
-            var userJson = HttpContext.Session.GetString("CurrentUser");
-
-            if (userJson != null)
-            {
-                var currentUser = JsonConvert.DeserializeObject<User>(userJson);
-
-                var movie = await _context.Watchlists.FirstOrDefaultAsync(movie => movie.Movie_id == id && movie.User_id == currentUser.Id);
-
-                if (movie == null)
-                {
-                    TempData["FailMessage"] = "The movie you are trying to remove does not exist in your watchlist.";
-                    return Redirect(Request.Headers["Referer"].ToString());
-                }
-
-                _context.Watchlists.Remove(movie);
-                await _context.SaveChangesAsync();
-
-                TempData["SuccessMessage"] = $"The movie '{movie.Movie_title}' has been removed from your watchlist.";
-
-                return Redirect(Request.Headers["Referer"].ToString());
-            }
-            else
-            {
-                var originalUrl = Request.Headers["Referer"].ToString();
-                return RedirectToAction("Login", "Auth", new { returnUrl = originalUrl });
-            }
+            return await DeleteWatchlist(id, "movie_page");
         }
 
         [HttpPost]
         public async Task<IActionResult> DestroyWatchlistMovieFromProfile(string id)
+        {
+            return await DeleteWatchlist(id, "profile");
+        }
+
+        private async Task<IActionResult> DeleteWatchlist (string id, string route)
         {
             var userJson = HttpContext.Session.GetString("CurrentUser");
 
@@ -192,11 +168,26 @@ namespace Project.Controllers
                 _context.Watchlists.Remove(movie);
                 await _context.SaveChangesAsync();
 
-                return Json(new { success = true, message = $"The movie '{movie.Movie_title}' has been removed from your watchlist." });
+                if(route == "profile")
+                {
+                    return Json(new { success = true, message = $"The movie '{movie.Movie_title}' has been removed from your watchlist." });
+                } else
+                {
+                    TempData["SuccessMessage"] = "Movie successfully added to your watchlist!";
+
+                    return Redirect(Request.Headers["Referer"].ToString());
+                }
             }
             else
             {
-                return Json(new { success = false, redirectToLogin = true, message = "User not logged in." });
+                if (route == "profile")
+                {
+                    return Json(new { success = false, redirectToLogin = true, message = "User not logged in." });
+                } else
+                {
+                    var originalUrl = Request.Headers["Referer"].ToString();
+                    return RedirectToAction("Login", "Auth", new { returnUrl = originalUrl });
+                }
             }
         }
 
