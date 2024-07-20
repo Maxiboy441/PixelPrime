@@ -1,0 +1,67 @@
+<!-- Tuple<MovieId, MovieTitle, MoviePoster, ButtonText, ButtonIcon, ButtonClass> -->
+
+@model Tuple<string, string, string, string, string, string> 
+
+@{
+    var movieId = Model.Item1;
+    var movieTitle = Model.Item2;
+    var moviePoster = Model.Item3;
+    var buttonText = Model.Item4;
+    var buttonIcon = Model.Item5;
+    var buttonClass = Model.Item6;
+    var returnUrl = Url.Action("Login", "Auth", new { returnUrl = Context.Request.Path });
+ }
+
+<!-- Button to trigger the modal -->
+<button type="button" class="@buttonClass" data-toggle="modal" data-target="#exampleModalCenter">
+    @buttonText
+    <i class="@buttonIcon"></i >
+</button>
+
+<!-- Modal Structure -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="d-flex justify-content-between flex-column">
+                <div class="modal-header">
+                    <div>
+                        <h5 class="modal-title text-dark" id="exampleModalLongTitle">@movieTitle</h5>
+                    </div>
+                    <div>
+                        @await Html.PartialAsync("_PrimaryButton", Tuple.Create("X", "", "btn-without pe-auto", "type=button data-dismiss=modal", "button"))
+                    </div>
+                </div>
+                
+                <div class="modal-body">
+                    @if (!string.IsNullOrEmpty(Context.Session.GetString("CurrentUser")))
+                    {
+                        <div class="rating text-center" id="ratingContainer">
+                            <form asp-action="AddRating" method="post" class="d-flex align-items-center" id="ratingForm">
+                                @Html.AntiForgeryToken()
+                                <div>
+                                    <input type="hidden" name="movieId" value="@movieId" />
+                                    <input type="hidden" name="title" value="@movieTitle" />
+                                    <input type="hidden" name="poster" value="@moviePoster" />
+                                    <input type="hidden" name="ratingValue" id="ratingValue" value="0" />
+                                </div>
+                            </form>
+                        </div>
+                    }
+                    else
+                    {
+                        @await Html.PartialAsync("_PrimaryButton",
+                            Tuple.Create(
+                                "Close",
+                                "",
+                                "btn btn-secondary",
+                                "type=button data-dismiss=modal",
+                                "button")
+                            )
+                        @await Html.PartialAsync("_PrimaryButton", Tuple.Create("Sign in", "style-1", "", $"href={returnUrl}", "a"))
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    

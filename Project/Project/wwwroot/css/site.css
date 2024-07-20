@@ -26,6 +26,17 @@ body {
     color: var(--text-color)
 }
 
+.btn-purple {
+    background-color: var(--purple-color);
+    color: var(--text-color);
+    transition: all 0.3s ease-in-out;
+}
+
+.btn-purple:hover {
+    background-color: #8A4BFF;
+    color: var(--text-color);
+}
+
 .btn-green {
     background-color: #00BF63;
     color: var(--text-color);
@@ -132,6 +143,51 @@ html .swiper-button-next, html .swiper-button-prev {
     color: #fff !important;
 }
 
+/*Movie Page styles*/
+
+.rate {
+    margin-left: 5px;
+}
+
+.star {
+    font-size: 25px;
+    color: lightgray;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.star.selected {
+    color: gold;
+}
+
+.star.hovered {
+    color: gold;
+}
+
+.btn-without {
+    margin: 0;
+    padding: 0;
+    border: none;
+    font-size: 18px;
+    line-height: 1.2;
+    background: none;
+    font-weight: 500;
+    transition: 0.2s ease-in-out;
+    
+    &:hover {
+        color: var(--purple-color) !important;
+        
+    }
+}
+
+.user-icon {
+    font-size: 3rem;
+    border: 4px solid white;
+    border-radius: 50%;
+    padding: 5px;
+    color: white;
+}
+
 /*Profile Page styles*/
 
 .profile_image {
@@ -168,6 +224,16 @@ html .swiper-button-next, html .swiper-button-prev {
 
 .side-btn-container button i {
     color: #fff;
+}
+
+.profile-session {
+    position: relative;
+}
+
+.profile-alert {
+    position: absolute;
+    width: 30%;
+    right: 0;
 }
 
 @keyframes slideIn {

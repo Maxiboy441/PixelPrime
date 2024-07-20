@@ -1,4 +1,4 @@
-﻿@model LoginViewModel
+﻿@model Project.Models.ViewModels.LoginViewModel
 
 @{
     ViewData["Title"] = "Login";
@@ -8,13 +8,15 @@
     <div class="row d-flex justify-content-center align-items-center p-5">
         <div class="col-8 col-xs-6 col-md-6 col-lg-3">
             <form asp-action="login" method="post" class="rounded p-5 bg-secondary-color ">
+                <input type="hidden" name="returnUrl" value="@ViewData["ReturnUrl"]" />
+
                 <div class="d-flex flex-column justify-content-center align-items-center">
                     <h2 class="text-center fw-bold mb-4 display-6">Sign In</h2>
 
                     <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
 
                     <label asp-for="Email" class="col-md-4 col-form-label align-self-start">Email</label>
-                    <input asp-for="Email" class="form-control w-100 rounded-pill mb-2" type="email" name="email" id="email" autocomplete="email" aria-required="true" placeholder="Email" />
+                    <input asp-for="Email" class="form-control w-100 rounded-pill mb-2" type="email" name="email" id="email" autocomplete="email" aria-required="true" placeholder="Email" autofocus />
                     <div></div>
                     <span asp-validation-for="Email" class="text-danger"></span>
 

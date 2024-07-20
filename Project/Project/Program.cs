@@ -69,6 +69,41 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.MapControllerRoute(
+    name: "movies_storefavorite",
+    pattern: "Movies/StoreFavoriteMovie/{id?}",
+    defaults: new { controller = "Movies", action = "StoreFavoriteMovie" });
+
+app.MapControllerRoute(
+    name: "movies_destroyfavorite",
+    pattern: "Movies/DestroyFavoriteMovie/{id?}",
+    defaults: new { controller = "Movies", action = "DestroyFavoriteMovie" });
+
+app.MapControllerRoute(
+    name: "movies_destroyfavoritefromprofile",
+    pattern: "Movies/DestroyFavoriteMovieFromProfile/{id?}",
+    defaults: new { controller = "Movies", action = "DestroyFavoriteMovieFromProfile" });
+
+app.MapControllerRoute(
+    name: "movies_storetowatchlist",
+    pattern: "Movies/StoreWatchlistMovie/{id?}",
+    defaults: new { controller = "Movies", action = "StoreWatchlistMovie" });
+
+app.MapControllerRoute(
+    name: "movies_destroyfromwatchlist",
+    pattern: "Movies/DestroyWatchlistMovie/{id?}",
+    defaults: new { controller = "Movies", action = "DestroyWatchlistMovie" });
+
+app.MapControllerRoute(
+    name: "movies_destroyfromwatchlistfromprofile",
+    pattern: "Movies/DestroyWatchlistMovieFromProfile/{id?}",
+    defaults: new { controller = "Movies", action = "DestroyWatchlistMovieFromProfile" });
+
+app.MapControllerRoute(
+    name: "movies",
+    pattern: "Movies/{id?}",
+    defaults: new { controller = "Movies", action = "Show" });
+
+app.MapControllerRoute(
     name: "auth",
     pattern: "{controller=Auth}/{action=Login}");
 

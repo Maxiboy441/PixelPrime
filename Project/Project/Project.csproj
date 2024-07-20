@@ -23,18 +23,22 @@
   <ItemGroup>
     <None Remove="DummyData\" />
     <None Remove="Views\Auth\" />
+    <None Remove="Views\Movies\" />
     <None Remove="HostedServices\" />
     <None Remove="Views\Profile\" />
     <None Remove="Views\User\" />
+    <None Remove="Models\ViewModels\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Migrations\" />
     <Folder Include="wwwroot\lib\fontawesome\" />
     <Folder Include="wwwroot\images\" />
     <Folder Include="Views\Auth\" />
+    <Folder Include="Views\Movies\" />
     <Folder Include="HostedServices\" />
     <Folder Include="Views\Profile\" />
     <Folder Include="Views\User\" />
+    <Folder Include="Models\ViewModels\" />
   </ItemGroup>
   <ItemGroup>
     <Content Remove="wwwroot\lib\fontawesome\" />
