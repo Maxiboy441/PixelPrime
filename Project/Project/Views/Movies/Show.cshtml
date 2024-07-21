@@ -19,16 +19,16 @@
             </div>
 
             <div class="d-flex flex-column w-50 flex-wrap">
-                @await Html.PartialAsync("_MovieOverview",
+                @await Html.PartialAsync("_MovieActorOverview",
                 Tuple.Create("Overview", @Model.Movie.Plot, "d-flex flex-column gap-2 mb-3"))
 
-                @await Html.PartialAsync("_MovieOverview",
+                @await Html.PartialAsync("_MovieActorOverview",
                 Tuple.Create("Director", @Model.Movie.Director, "d-flex flex-row gap-2"))
 
-                @await Html.PartialAsync("_MovieOverview",
+                @await Html.PartialAsync("_MovieActorOverview",
                 Tuple.Create("Writers", @Model.Movie.Writer, "d-flex flex-row gap-2"))
 
-                @await Html.PartialAsync("_MovieOverview",
+                @await Html.PartialAsync("_MovieActorOverview",
                 Tuple.Create("Actors", @Model.Movie.Actors, "d-flex flex-row gap-2"))
 
                 @await Html.PartialAsync("_MovieOverview",

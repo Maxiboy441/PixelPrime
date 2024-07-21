@@ -28,24 +28,36 @@ public class ActorAPIService
 
         var content = await response.Content.ReadAsStringAsync();
         var celebrities = JsonConvert.DeserializeObject<List<CelebrityResponse>>(content);
-
-        var actor = celebrities.FirstOrDefault(c => c.occupation.Contains("actor"));
-
-        if (actor == null) throw new Exception($"No actor found with the name: {actorName}");
-
+        
         var service = new WikipediaMediaAPIService();
         var imageUrl = await service.GetFirstImageUrlAsync(actorName);
 
+        if (celebrities == null || !celebrities.Any())
+            return new Actor
+            {
+                Name = ToTitleCase(actorName) + "Not found",
+                NetWorth = 0,
+                Gender = "Not found",
+                Nationality = "Not found",
+                Height = 0,
+                Birthday = DateTime.Parse("01.01.1001"),
+                IsAlive = false,
+                Occupations = "Not found",
+                Image = imageUrl
+            };
+
+        var celebrity = celebrities.FirstOrDefault(c => c.occupation.Contains("actor")) ?? celebrities.First();
+
         var newActor = new Actor
         {
-            Name = ToTitleCase(actor.name),
-            NetWorth = actor.net_worth,
-            Gender = CapitalizeFirstLetter(actor.gender),
-            Nationality = actor.nationality.ToUpper(),
-            Height = (decimal)actor.height,
-            Birthday = DateTime.Parse(actor.birthday),
-            IsAlive = actor.is_alive,
-            Occupations = string.Join(",", actor.occupation),
+            Name = ToTitleCase(celebrity.name),
+            NetWorth = celebrity.net_worth,
+            Gender = CapitalizeFirstLetter(celebrity.gender),
+            Nationality = celebrity.nationality.ToUpper(),
+            Height = (decimal)celebrity.height,
+            Birthday = DateTime.Parse(celebrity.birthday),
+            IsAlive = celebrity.is_alive,
+            Occupations = string.Join(",", celebrity.occupation),
             Image = imageUrl
         };
 
@@ -71,7 +83,6 @@ public class ActorAPIService
 
         return char.ToUpper(value[0]) + value.Substring(1);
     }
-
 
     public class CelebrityResponse
     {

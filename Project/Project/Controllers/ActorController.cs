@@ -22,10 +22,15 @@ public class ActorController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Show(Actor actor,string name)
+    public async Task<IActionResult> Show(string name)
     {
-        // TODO: check for the actor in the DB
-        actor = await _actorApiService.GetAndSaveActorAsync(name);
+        var actor = await _context.Actors.FirstOrDefaultAsync(a => a.Name == name);
+
+        if (actor == null)
+        {
+            actor = await _actorApiService.GetAndSaveActorAsync(name);
+        }
+
         return View(actor);
     }
     

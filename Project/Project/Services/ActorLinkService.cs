@@ -2,14 +2,14 @@ namespace Project.Services;
 
 public class ActorLinkService
 {
-    private readonly string _baseUrl;
+    private static string _baseUrl;
 
     public ActorLinkService(string baseUrl)
     {
         _baseUrl = baseUrl.TrimEnd('/');
     }
 
-    public string GetLink(string name)
+    public static string GetLink(string name)
     {
         if (string.IsNullOrWhiteSpace(name))
         {

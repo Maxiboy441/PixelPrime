@@ -15,16 +15,31 @@
         <div class="col-md-8" id="actor-info">
             <h1 class="display-4 text-white mb-4">
                 @Model.Name
-                <span class="badge m-1 @(Model.IsAlive ? "bg-success" : "bg-danger") status-badge">
-                    @(Model.IsAlive ? "Alive" : "Deceased")
-                </span>
+                @if (@Model.NetWorth.ToString("N0") != "0") //cant check it on the bool value
+                {
+                    <span class="badge m-1 @(Model.IsAlive ? "bg-success" : "bg-danger") status-badge">
+                        @(Model.IsAlive ? "Alive" : "Deceased")
+                    </span>   
+                }
+                else {
+                    <span class="badge m-1 @(Model.IsAlive ? "bg-success" : "bg-danger") status-badge">
+                        Not found
+                    </span>
+                }
             </h1>
             <div class="row g-3 h-100">
                 <div class="col-sm-6 col-lg-4">
                     <div class="card bg-dark-gray text-light h-100">
                         <div class="card-body">
                             <h5 class="card-title text-purple">Net Worth</h5>
-                            <p class="card-text fs-4">$@Model.NetWorth.ToString("N0")</p>
+                            @if (@Model.NetWorth.ToString("N0") != "0")
+                            {
+                                <p class="card-text fs-4">$@Model.NetWorth.ToString("N0")</p>
+                            }
+                            else
+                            {
+                                <p class="card-text fs-4">Not Found</p>
+                            }
                         </div>
                     </div>
                 </div>
@@ -48,7 +63,14 @@
                     <div class="card bg-dark-gray text-light h-100">
                         <div class="card-body">
                             <h5 class="card-title text-purple">Height</h5>
-                            <p class="card-text fs-4">@Model.Height.ToString("F2") m</p>
+                            @if (@Model.Height.ToString("F2") != "0,00")
+                            {
+                                <p class="card-text fs-4">@Model.Height.ToString("F2") m</p>
+                            }
+                            else
+                            {
+                                <p class="card-text fs-4">Not Found</p>
+                            }
                         </div>
                     </div>
                 </div>
@@ -56,7 +78,14 @@
                     <div class="card bg-dark-gray text-light h-100">
                         <div class="card-body">
                             <h5 class="card-title text-purple">Birthday</h5>
-                            <p class="card-text fs-4">@Model.Birthday.ToShortDateString()</p>
+                            @if (@Model.Birthday.ToShortDateString() != "01.01.1001")
+                            {
+                                <p class="card-text fs-4">@Model.Birthday.ToShortDateString()</p>
+                            }
+                            else
+                            {
+                                <p class="card-text fs-4">Not Found</p>
+                            }
                         </div>
                     </div>
                 </div>

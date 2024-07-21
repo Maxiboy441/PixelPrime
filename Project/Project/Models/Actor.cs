@@ -14,7 +14,7 @@ public class Actor
     public string Name { get; set; }
 
     [Column(TypeName = "bigint")]
-    public long NetWorth { get; set; }
+    public long? NetWorth { get; set; }
 
     [StringLength(10)]
     public string Gender { get; set; }
@@ -26,9 +26,9 @@ public class Actor
     public decimal Height { get; set; }
 
     [Column(TypeName = "date")]
-    public DateTime Birthday { get; set; }
+    public DateTime? Birthday { get; set; }
     
-    public bool IsAlive { get; set; }
+    public bool? IsAlive { get; set; }
 
     public string Occupations { get; set; }
     
