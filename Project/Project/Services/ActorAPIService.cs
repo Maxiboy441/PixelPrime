@@ -40,7 +40,7 @@ public class ActorAPIService
                 Gender = "Not found",
                 Nationality = "Not found",
                 Height = 0,
-                Birthday = DateTime.Parse("01.01.1001"),
+                Birthday = new DateTime(1001, 1, 1),
                 IsAlive = false,
                 Occupations = "Not found",
                 Image = imageUrl
@@ -55,7 +55,7 @@ public class ActorAPIService
             Gender = CapitalizeFirstLetter(celebrity.gender),
             Nationality = celebrity.nationality.ToUpper(),
             Height = (decimal)celebrity.height,
-            Birthday = DateTime.Parse(celebrity.birthday),
+            Birthday = ParseBirthday(celebrity.birthday),
             IsAlive = celebrity.is_alive,
             Occupations = string.Join(",", celebrity.occupation),
             Image = imageUrl
@@ -65,6 +65,16 @@ public class ActorAPIService
         await _context.SaveChangesAsync();
 
         return newActor;
+    }
+
+    private DateTime ParseBirthday(string birthday)
+    {
+        if (DateTime.TryParse(birthday, out DateTime result))
+        {
+            return result;
+        }
+
+        return new DateTime(1001, 1, 1);
     }
 
     public static string ToTitleCase(string input)
