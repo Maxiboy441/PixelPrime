@@ -2,6 +2,10 @@
 
 @model Tuple<string, string, string, string>
 
+@{
+    var returnUrl = Url.Action("Login", "Auth", new { returnUrl = Context.Request.Path });
+}
+
 @await Html.PartialAsync("_PrimaryButton",
 Tuple.Create(
     "Add Review",
@@ -75,7 +79,7 @@ Tuple.Create(
                             "type=button data-dismiss=modal",
                             "button")
                         )
-                    @await Html.PartialAsync("_PrimaryButton", Tuple.Create("Sign in", "style-1", "", "href=/Auth/Login", "a"))
+                    @await Html.PartialAsync("_PrimaryButton", Tuple.Create("Sign in", "style-1", "", $"href={returnUrl}", "a"))
                 }
             </div>
         </div>
