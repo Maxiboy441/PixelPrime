@@ -31,7 +31,8 @@ public class ActorController : Controller
             actor = await _actorApiService.GetAndSaveActorAsync(name);
         }
 
-        if (actor.Name == "Error")
+        if (actor.Name == "Error" &&
+            actor.Image == "Error: Response status code does not indicate success: 404 (Not Found).")
         {
             return View("NotFound");
         }
