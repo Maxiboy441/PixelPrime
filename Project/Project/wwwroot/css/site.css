@@ -367,6 +367,49 @@ html .swiper-button-next, html .swiper-button-prev {
     min-height: 150px;
 }
 
+.text-purple {
+    color: #7432F9;
+}
+
+.bg-dark-gray {
+    background-color: #252626;
+}
+
+.card {
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.status-badge {
+    font-size: 1rem;
+    padding: 3px 7px;
+}
+
+.occupation-list {
+    max-height: 150px;
+}
+
+.card-body {
+    height: 100%;
+}
+
+.image-container {
+    width: 100%;
+    margin-top: 10vh;
+    padding-bottom: 150%;
+    position: relative;
+}
+
+.image-container img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
 @media (max-width: 576px) {
     #advert-carousel {
         width: 100vw;
