@@ -35,7 +35,7 @@ public class ActorAPIService
         if (celebrities == null || !celebrities.Any())
             return new Actor
             {
-                Name = ToTitleCase(actorName),
+                Name = "Error",
                 NetWorth = 0,
                 Gender = "Not found",
                 Nationality = "Not found",
