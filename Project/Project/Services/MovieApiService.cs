@@ -17,7 +17,7 @@ namespace Project.Services
             _apiKey = configuration.GetValue<string>("Api:MovieApi");
         }
 
-        public async Task<Movie> GetMovieById(string id)
+        public async Task<Movie?> GetMovieById(string id)
         {
             var url = $"{_baseApiUrl}?i={id}&apikey={_apiKey}";
 
@@ -32,19 +32,14 @@ namespace Project.Services
 
             if (IsErrorResponse(content, out string? errorMessage))
             {
-                return new Movie
-                {
-                    Id = "error",
-                    Title = "error",
-                };
-
+                return null;
             }
 
             Movie movie = MappJsonToMovie(content);
             return movie;
         }
 
-        public async Task<Movie> GetMovieByName(string name)
+        public async Task<Movie?> GetMovieByName(string name)
         {
             var url = $"{_baseApiUrl}?t={name}&apikey={_apiKey}";
 
@@ -59,12 +54,7 @@ namespace Project.Services
 
             if (IsErrorResponse(content, out string? errorMessage))
             {
-                return new Movie
-                {
-                    Id = "error",
-                    Title = "error",
-                };
-
+                return null;
             }
 
             Movie movie = MappJsonToMovie(content);
