@@ -1,0 +1,18 @@
+@using Project.Services
+@model Tuple<string, string, string> 
+
+@{
+    var overviewTitle = Model.Item1;
+    var overviewProperty = Model.Item2;
+    var overviewClass = Model.Item3;
+}
+
+<div class="@overviewClass">
+    <h5 class="fw-bold">@overviewTitle: </h5>
+    <p class="d-flex flex-wrap">
+        @foreach (var name in overviewProperty.Split(',', StringSplitOptions.TrimEntries))
+        {
+            <a href="@ActorLinkService.GetLink(name)" class="me-2">@name</a>
+        }
+    </p>
+</div>

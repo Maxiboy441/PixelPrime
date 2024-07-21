@@ -12,6 +12,9 @@ namespace Project.Data
         public DbSet<Favorite> Favorites { get; set; }
         public DbSet<Watchlist> Watchlists { get; set; }
         public DbSet<User> Users { get; set; }
+        
+        public DbSet<Actor> Actors { get; set; }
+
 
         public DataContext(DbContextOptions<DataContext> options)
             : base(options) { }
@@ -57,6 +60,13 @@ namespace Project.Data
                 .HasKey(p => p.Id);
         
             modelBuilder.Entity<Watchlist>()
+                .Property(p => p.Id)
+                .ValueGeneratedOnAdd();
+            
+            modelBuilder.Entity<Actor>()
+                .HasKey(p => p.Id);
+
+            modelBuilder.Entity<Actor>()
                 .Property(p => p.Id)
                 .ValueGeneratedOnAdd();
         }

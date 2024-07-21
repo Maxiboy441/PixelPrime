@@ -13,6 +13,9 @@ builder.Services.AddScoped<MovieApiService>();
 builder.Services.AddScoped<RecommendationService>();
 builder.Services.AddScoped<BackgroundRecommendationService>();
 builder.Services.AddHostedService<BackgroundRecommendationService>();
+builder.Services.AddScoped<ActorAPIService>();
+builder.Services.AddScoped<WikipediaMediaAPIService>();
+
 
 builder.Services.AddControllersWithViews();
 
@@ -126,5 +129,10 @@ app.MapControllerRoute(
     name: "account",
     pattern: "user/account/",
     defaults: new { controller = "User", action = "Update" });
+
+app.MapControllerRoute(
+    name: "actor",
+    pattern: "actor/{name?}",
+    defaults: new { controller = "Actor", action = "Show" });
 
 app.Run();
