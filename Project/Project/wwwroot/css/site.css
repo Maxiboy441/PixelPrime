@@ -149,15 +149,11 @@ html .swiper-button-next, html .swiper-button-prev {
     color: gold;
 }
 
-.movie-interaction-h5 {
-    font-size: 16px;
-}
-
 .btn-without {
     margin: 0;
     padding: 0;
     border: none;
-    font-size: 16px;
+    font-size: 1rem;
     line-height: 1.2;
     background: none;
     font-weight: 500;
@@ -184,6 +180,10 @@ html .swiper-button-next, html .swiper-button-prev {
 .actor-link:hover {
     color: #007BFF;
     text-decoration: underline;
+}
+
+.movie-title-container {
+    width: 50%;
 }
 
 /*Profile Page styles*/
@@ -438,6 +438,10 @@ html .swiper-button-next, html .swiper-button-prev {
 
     .account-form {
         width: 70vw;
+    }
+
+    .movie-title-container {
+        width: 100%;
     }
 }
 
