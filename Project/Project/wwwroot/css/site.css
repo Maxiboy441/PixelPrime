@@ -336,10 +336,6 @@ html .swiper-button-next, html .swiper-button-prev {
     color: var(--purple-color);
 }
 
-.account-btn {
-    margin-inline-end: 30px;
-}
-
 /*Impresssum Styles*/
 
 .impress-card {
