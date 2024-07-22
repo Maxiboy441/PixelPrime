@@ -43,12 +43,15 @@
             <div class="d-flex flex-row gap-4">
                 <div class="d-flex gap-4 flex-wrap gap-4 align-items-start">
                     <div class="d-flex flex-column">
-                        <div class="d-flex flex-column">
-                            @await Html.PartialAsync("_PrimaryButton", Tuple.Create("Rating", "", "btn-without text-light mb-2", "type=submit disabled", "button"))
+                        <div>
+                            @await Html.PartialAsync("_PrimaryButton", Tuple.Create("Rating", "", "btn-without text-light", "type=submit disabled", "button"))
 
                             @if (Model.HasAverageRating)
                             {
-                                <h6 style="margin: 0"><i class="fa-solid fa-star" style="color: #FFD43B;"></i><span class="rate">@Model.AverageRating</span></h6>
+                                <h6 style="margin: 0">
+                                    <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
+                                    <span class="rate">@Model.AverageRating</span>
+                                </h6>
                             }
                             else
                             {
@@ -58,11 +61,10 @@
                     </div>
 
                     <div class="d-flex flex-column">
-                        <div class="d-flex flex-column">
+                        <div>
                             @await Html.PartialAsync("_RateMovieModal",
                             Tuple.Create(Model.Movie.Id, Model.Movie.Title, Model.Movie.Poster, Model.IsRated ? "Your Rating" : "Rate Movie", Model.IsRated ? "fa-solid fa-pen-to-square" : "fas fa-plus", "btn-without text-light"))
-                            <h6 class="mt-2" style="margin: 0">
-
+                            <h6 style="margin: 0">
                                 @if (Model.UserHasRating)
                                 {
                                     <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
