@@ -7,14 +7,6 @@
     --green-color: #008F4A;
 }
 
-*,
-*::after,
-*::before {
-    margin: 0;
-    padding: 0;
-    box-sizing: inherit;
-}
-
 html {
     font-size: 62.5%;
     position: relative;
@@ -24,7 +16,9 @@ html {
 body {
     margin-bottom: 6rem;
     background-color: var(--primary-color);
-    color: var(--text-color)
+    color: var(--text-color);
+    margin-bottom: 60px;
+    background-color: #18191B;
 }
 
 .btn-purple {
@@ -90,16 +84,6 @@ a:hover {
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
     box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
-}
-
-body {
-    margin-bottom: 60px;
-    background-color: #18191B;
 }
 
 .nav-tabs .nav-link {
@@ -203,7 +187,6 @@ html .swiper-button-next, html .swiper-button-prev {
 }
 
 /*Profile Page styles*/
-
 .profile_image {
     width: 10rem;
     height: 10rem;
