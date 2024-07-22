@@ -4,6 +4,7 @@
     --secondary-color: #252626;
     --purple-color: #7432F9;
     --text-color: #fff;
+    --green-color: #008F4A;
 }
 
 *,
@@ -186,6 +187,16 @@ html .swiper-button-next, html .swiper-button-prev {
     border-radius: 50%;
     padding: 5px;
     color: white;
+}
+
+.actor-link {
+    color: #007BFF;
+    transition: 0.3s ease-in-out;
+}
+
+.actor-link:hover {
+    color: #007BFF;
+    text-decoration: underline;
 }
 
 /*Profile Page styles*/

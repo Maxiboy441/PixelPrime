@@ -12,7 +12,7 @@
     <p class="d-flex flex-wrap">
         @foreach (var name in overviewProperty.Split(',', StringSplitOptions.TrimEntries))
         {
-            <a href="@ActorLinkService.GetLink(name)" class="me-2">@name</a>
+            <a href="@ActorLinkService.GetLink(name)" class="me-2 actor-link">@name</a>
         }
     </p>
 </div>
