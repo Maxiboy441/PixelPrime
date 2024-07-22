@@ -15,7 +15,7 @@
             <div class="col-12 col-md-3">
                 <img src="@(!string.IsNullOrEmpty(Model.Movie.Poster) && Model.Movie.Poster != "N/A" ? Model.Movie.Poster : Url.Content("~/images/poster_not_found.png"))"
                      alt="@Model.Movie.Title"
-                     class="img-fluid" />
+                     class="img-fluid mx-auto mx-md-0 d-block d-md-inline-block" />
             </div>
 
             <div class="d-flex flex-column mt-3 mt-md-0 w-10 w-md-50 flex-wrap">
@@ -165,7 +165,7 @@
                             }
                         </div>
 
-                        <div id="review-view-@review.Id" class="review-view">
+                        <div id="review-view-@review.Id" class="review-view p-3">
                             <p>@review.Text</p>
                         </div>
                     </div>
