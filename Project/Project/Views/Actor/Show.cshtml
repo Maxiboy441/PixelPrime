@@ -29,8 +29,8 @@
             </h1>
             <div class="row g-3 h-100">
                 <div class="col-sm-6 col-lg-4">
-                    <div class="card bg-dark-gray text-light h-100">
-                        <div class="card-body">
+                    <div class="actor-card card bg-dark-gray text-light h-100">
+                        <div class="actor-card-body card-body">
                             <h5 class="card-title text-purple">Net Worth</h5>
                             @if (@Model.NetWorth.ToString("N0") != "0")
                             {
@@ -44,24 +44,24 @@
                     </div>
                 </div>
                 <div class="col-sm-6 col-lg-4">
-                    <div class="card bg-dark-gray text-light h-100">
-                        <div class="card-body">
+                    <div class="actor-card card bg-dark-gray text-light h-100">
+                        <div class="actor-card-body card-body">
                             <h5 class="card-title text-purple">Gender</h5>
                             <p class="card-text fs-4">@Model.Gender</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-sm-6 col-lg-4">
-                    <div class="card bg-dark-gray text-light h-100">
-                        <div class="card-body">
+                    <div class="actor-card card bg-dark-gray text-light h-100">
+                        <div class="actor-card-body card-body">
                             <h5 class="card-title text-purple">Nationality</h5>
                             <p class="card-text fs-4">@Model.Nationality</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-sm-6 col-lg-4">
-                    <div class="card bg-dark-gray text-light h-100">
-                        <div class="card-body">
+                    <div class="actor-card card bg-dark-gray text-light h-100">
+                        <div class="actor-card-body card-body">
                             <h5 class="card-title text-purple">Height</h5>
                             @if (@Model.Height.ToString("F2") != "0,00")
                             {
@@ -75,8 +75,8 @@
                     </div>
                 </div>
                 <div class="col-sm-6 col-lg-4">
-                    <div class="card bg-dark-gray text-light h-100">
-                        <div class="card-body">
+                    <div class="actor-card card bg-dark-gray text-light h-100">
+                        <div class="actor-card-body card-body">
                             <h5 class="card-title text-purple">Birthday</h5>
                             @if (@Model.Birthday.ToShortDateString() != "01.01.1001")
                             {
@@ -90,8 +90,8 @@
                     </div>
                 </div>
                 <div class="col-sm-6 col-lg-4">
-                    <div class="card bg-dark-gray text-light h-100">
-                        <div class="card-body d-flex flex-column">
+                    <div class="actor-card card bg-dark-gray text-light h-100">
+                        <div class="actor-card-body card-body d-flex flex-column">
                             <h5 class="card-title text-purple">Occupations</h5>
                             <div class="card-text fs-5 occupation-list flex-grow-1 overflow-auto">
                                 @foreach (var occupation in Model.Occupations.Split(','))

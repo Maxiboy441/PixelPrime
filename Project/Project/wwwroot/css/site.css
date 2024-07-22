@@ -375,11 +375,14 @@ html .swiper-button-next, html .swiper-button-prev {
     background-color: #252626;
 }
 
-.card {
+
+/*Actor's page styles*/
+
+.actor-card {
     transition: transform 0.2s;
 }
 
-.card:hover {
+.actor-card:hover {
     transform: translateY(-5px);
 }
 
@@ -392,7 +395,7 @@ html .swiper-button-next, html .swiper-button-prev {
     max-height: 150px;
 }
 
-.card-body {
+.actor-card-body {
     height: 100%;
 }
 
