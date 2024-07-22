@@ -157,13 +157,33 @@ Object.assign(swiperEl, {
             centeredSlides: false,
         },
         768: {
-            slidesPerView: 4,
-            spaceBetween: 20,
+            slidesPerView: 2,
+            spaceBetween: 10,
             centeredSlides: false,
         },
+        769: {
+            slidesPerView: 2,
+            spaceBetween: 10,
+            centeredSlides: false,
+        },
+        992: {
+            slidesPerView: 3,
+            spaceBetween: 10,
+            centeredSlides: false
+        },
         1024: {
+            slidesPerView: 3,
+            spaceBetween: 10,
+            centeredSlides: false
+        },
+        1245: {
+            slidesPerView: 3,
+            spaceBetween: 10,
+            centeredSlides: false
+        },
+        1399: {
             slidesPerView: 4,
-            spaceBetween: 20,
+            spaceBetween: 10,
             centeredSlides: false
         },
     },
@@ -203,3 +223,47 @@ stars.forEach(star => {
     });
 });
 
+
+// Pop up review form
+function checkForm() {
+    const title = document.getElementById('reviewTitle').value;
+    const review = document.getElementById('reviewText').value;
+    const submitBtn = document.getElementById('submitBtn');
+
+    var isTitleValid = title.trim() !== "";
+    var isReviewValid = review.trim() !== "";
+
+    if (isTitleValid) {
+        document.getElementById('reviewTitle').classList.remove('invalid-input');
+    } else {
+        document.getElementById('reviewTitle').classList.add('invalid-input');
+    }
+
+    if (isReviewValid) {
+        document.getElementById('reviewText').classList.remove('invalid-input');
+    } else {
+        document.getElementById('reviewText').classList.add('invalid-input');
+    }
+
+    if (isTitleValid && isReviewValid) {
+        submitBtn.removeAttribute('disabled');
+    } else {
+        submitBtn.setAttribute('disabled', 'disabled');
+    }
+}
+
+function clearForm() {
+    document.getElementById('reviewTitle').value = '';
+    document.getElementById('reviewText').value = '';
+    document.getElementById('submitBtn').setAttribute('disabled', 'disabled');
+    document.getElementById('reviewTitle').classList.remove('invalid-input');
+    document.getElementById('reviewText').classList.remove('invalid-input');
+}
+
+document.querySelector('#myModal .close').addEventListener('click', clearForm);
+document.getElementById('myModal').addEventListener('hidden.bs.modal', clearForm);
+document.getElementById('submitBtn').addEventListener('click', function (event) {
+    event.preventDefault();
+    clearForm();
+    $('#myModal').modal('hide');
+});

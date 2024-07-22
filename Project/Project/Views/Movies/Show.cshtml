@@ -2,23 +2,23 @@
 
 <div class="container">
     <div class="d-flex flex-column">
-        <div class="d-flex justify-content-between align-items-center">
-            <h1 class="w-50">@Model.Movie.Title</h1>
-            <div class="d-flex justify-content-between align-items-center gap-3">
-                <h5>@Model.Movie.Year</h5>
-                <h5>@Model.Movie.Genre</h5>
-                <h5>@Model.Movie.Runtime</h5>
+        <div class="d-flex flex-column flex-md-row justify-content-md-between align-items-md-start">
+            <h1 class="movie-title-container mb-3 mb-md-0">@Model.Movie.Title</h1>
+            <div class="d-flex justify-content-between gap-3">
+                <h6>@Model.Movie.Year</h6>
+                <h6>@Model.Movie.Genre</h6>
+                <h6>@Model.Movie.Runtime</h6>
             </div>
         </div>
 
-        <div class="d-flex h-75 mt-3 mb-3">
-            <div class="col-3">
+        <div class="d-flex h-75 mt-3 mb-3 flex-column flex-md-row gap-3">
+            <div class="col-12 col-md-3">
                 <img src="@(!string.IsNullOrEmpty(Model.Movie.Poster) && Model.Movie.Poster != "N/A" ? Model.Movie.Poster : Url.Content("~/images/poster_not_found.png"))"
                      alt="@Model.Movie.Title"
-                     class="img-fluid" />
+                     class="img-fluid mx-auto mx-md-0 d-block d-md-inline-block" />
             </div>
 
-            <div class="d-flex flex-column w-50 flex-wrap">
+            <div class="d-flex flex-column mt-3 mt-md-0 overview-container flex-wrap">
                 @await Html.PartialAsync("_MovieOverview",
                 Tuple.Create("Overview", @Model.Movie.Plot, "d-flex flex-column gap-2 mb-3"))
 
@@ -41,78 +41,88 @@
 
         <div class="w-100 d-flex justify-content-between">
             <div class="d-flex flex-row gap-4">
-                <div class="d-flex gap-4">
+                <div class="d-flex gap-4 flex-wrap gap-4 align-items-start">
                     <div class="d-flex flex-column">
-                        <h5 style="font-size: 18px">Rating</h5>
-                        @if (Model.HasAverageRating)
+                        <div>
+                            @await Html.PartialAsync("_PrimaryButton", Tuple.Create("Rating", "", "btn-without text-light", "type=submit disabled", "button"))
+
+                            @if (Model.HasAverageRating)
+                            {
+                                <h6 style="margin: 0">
+                                    <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
+                                    <span class="rate">@Model.AverageRating</span>
+                                </h6>
+                            }
+                            else
+                            {
+                                <h6>This movie has not yet been rated</h6>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="d-flex flex-column">
+                        <div>
+                            @await Html.PartialAsync("_RateMovieModal",
+                            Tuple.Create(Model.Movie.Id, Model.Movie.Title, Model.Movie.Poster, Model.IsRated ? "Your Rating" : "Rate Movie", Model.IsRated ? "fa-solid fa-pen-to-square" : "fas fa-plus", "btn-without text-light"))
+                            <h6 style="margin: 0">
+                                @if (Model.UserHasRating)
+                                {
+                                    <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
+                                    <span class="rate">@Model.CurrentUserRating /10</span>
+                                }
+                            </h6>
+                        </div>
+                    </div>
+
+                    <div class="d-flex flex-column">
+                        @if (Model.IsFavorite)
                         {
-                            <h6><i class="fa-solid fa-star" style="color: #FFD43B;"></i><span class="rate">@Model.AverageRating</span></h6>
+                            <form asp-action="DestroyFavoriteMovie" asp-controller="Movies" method="post" class="mb-2">
+                                @Html.AntiForgeryToken()
+                                @Html.Hidden("id", Model.Movie.Id)
+                                <button type="submit" class="btn-without text-light">
+                                    Delete from Favorites <i class="fas fa-minus"></i>
+                                </button>
+                            </form>
                         }
                         else
                         {
-                            <h6>This movie has not yet been rated</h6>
+                            <form asp-action="StoreFavoriteMovie" asp-controller="Movies" method="post" class="mb-2">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="movieId" value="@Model.Movie.Id" />
+                                <input type="hidden" name="title" value="@Model.Movie.Title" />
+                                <input type="hidden" name="poster" value="@Model.Movie.Poster" />
+                                <button type="submit" class="btn-without text-light">
+                                    Add to Favorites <i class="fas fa-plus"></i>
+                                </button>
+                            </form>
                         }
                     </div>
 
                     <div class="d-flex flex-column">
-                        @await Html.PartialAsync("_RateMovieModal",
-                            Tuple.Create(Model.Movie.Id, Model.Movie.Title, Model.Movie.Poster, Model.IsRated ? "Your Rating" : "Rate Movie", Model.IsRated ? "fa-solid fa-pen-to-square" : "fas fa-plus", "btn-without text-light"))
-                        <h6 class="mt-2" style="margin: 0">
-                            @if (Model.UserHasRating)
-                            {
-                                <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
-                                <span class="rate">@Model.CurrentUserRating /10</span>
-                            }
-                        </h6>
+                        @if (Model.IsWatchlist)
+                        {
+                            <form asp-action="DestroyWatchlistMovie" asp-controller="Movies" method="post" class="mb-2">
+                                @Html.AntiForgeryToken()
+                                @Html.Hidden("id", Model.Movie.Id)
+                                <button type="submit" class="btn-without text-light">
+                                    Delete from Watchlist <i class="fas fa-minus"></i>
+                                </button>
+                            </form>
+                        }
+                        else
+                        {
+                            <form asp-action="StoreWatchlistMovie" asp-controller="Movies" method="post" class="mb-2">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="movieId" value="@Model.Movie.Id" />
+                                <input type="hidden" name="title" value="@Model.Movie.Title" />
+                                <input type="hidden" name="poster" value="@Model.Movie.Poster" />
+                                <button type="submit" class="btn-without text-light">
+                                    Add to Watchlist <i class="fas fa-plus"></i>
+                                </button>
+                            </form>
+                        }
                     </div>
-                </div>
-
-                <div class="d-flex gap-4">
-                    @if (Model.IsFavorite)
-                    {
-                        <form asp-action="DestroyFavoriteMovie" asp-controller="Movies" method="post" class="mb-2">
-                            @Html.AntiForgeryToken()
-                            @Html.Hidden("id", Model.Movie.Id)
-                            <button type="submit" class="btn-without text-light">
-                                Delete from Favorites <i class="fas fa-minus"></i>
-                            </button>
-                        </form>
-                    }   
-                    else
-                    {
-                        <form asp-action="StoreFavoriteMovie" asp-controller="Movies" method="post" class="mb-2">
-                            @Html.AntiForgeryToken()
-                            <input type="hidden" name="movieId" value="@Model.Movie.Id" />
-                            <input type="hidden" name="title" value="@Model.Movie.Title" />
-                            <input type="hidden" name="poster" value="@Model.Movie.Poster" />
-                            <button type="submit" class="btn-without text-light">
-                                Add to Favorites <i class="fas fa-plus"></i>
-                            </button>
-                        </form>
-                    }
-
-                    @if (Model.IsWatchlist)
-                    {
-                        <form asp-action="DestroyWatchlistMovie" asp-controller="Movies" method="post" class="mb-2">
-                            @Html.AntiForgeryToken()
-                            @Html.Hidden("id", Model.Movie.Id)
-                            <button type="submit" class="btn-without text-light">
-                                Delete from Watchlist <i class="fas fa-minus"></i>
-                            </button>
-                        </form>
-                    }
-                    else
-                    {
-                        <form asp-action="StoreWatchlistMovie" asp-controller="Movies" method="post" class="mb-2">
-                            @Html.AntiForgeryToken()
-                            <input type="hidden" name="movieId" value="@Model.Movie.Id" />
-                            <input type="hidden" name="title" value="@Model.Movie.Title" />
-                            <input type="hidden" name="poster" value="@Model.Movie.Poster" />
-                            <button type="submit" class="btn-without text-light">
-                                Add to Watchlist <i class="fas fa-plus"></i>
-                            </button>
-                        </form>
-                    }
                 </div>
             </div>
         </div>
@@ -165,7 +175,7 @@
                             }
                         </div>
 
-                        <div id="review-view-@review.Id" class="review-view">
+                        <div id="review-view-@review.Id" class="review-view p-3">
                             <p>@review.Text</p>
                         </div>
                     </div>
