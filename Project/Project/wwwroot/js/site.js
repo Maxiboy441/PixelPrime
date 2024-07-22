@@ -157,13 +157,33 @@ Object.assign(swiperEl, {
             centeredSlides: false,
         },
         768: {
-            slidesPerView: 4,
-            spaceBetween: 20,
+            slidesPerView: 2,
+            spaceBetween: 10,
             centeredSlides: false,
         },
+        769: {
+            slidesPerView: 2,
+            spaceBetween: 10,
+            centeredSlides: false,
+        },
+        992: {
+            slidesPerView: 3,
+            spaceBetween: 10,
+            centeredSlides: false
+        },
         1024: {
+            slidesPerView: 3,
+            spaceBetween: 10,
+            centeredSlides: false
+        },
+        1245: {
+            slidesPerView: 3,
+            spaceBetween: 10,
+            centeredSlides: false
+        },
+        1399: {
             slidesPerView: 4,
-            spaceBetween: 20,
+            spaceBetween: 10,
             centeredSlides: false
         },
     },
@@ -203,6 +223,8 @@ stars.forEach(star => {
     });
 });
 
+
+// Pop up review form
 function checkForm() {
     const title = document.getElementById('reviewTitle').value;
     const review = document.getElementById('reviewText').value;

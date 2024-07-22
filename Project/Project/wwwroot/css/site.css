@@ -130,6 +130,10 @@ html .swiper-button-next, html .swiper-button-prev {
 
 /*Movie Page styles*/
 
+.overview-container {
+    width: 100%;
+}
+
 .rate {
     margin-left: 5px;
 }
@@ -492,5 +496,9 @@ html .swiper-button-next, html .swiper-button-prev {
 
     .image-container {
         margin-top: 10vh;
+    }
+
+    .overview-container {
+        width: 50%;
     }
 }
