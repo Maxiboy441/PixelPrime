@@ -165,20 +165,23 @@ html .swiper-button-next, html .swiper-button-prev {
     color: gold;
 }
 
+.movie-interaction-h5 {
+    font-size: 16px;
+}
+
 .btn-without {
     margin: 0;
     padding: 0;
     border: none;
-    font-size: 18px;
+    font-size: 16px;
     line-height: 1.2;
     background: none;
     font-weight: 500;
     transition: 0.2s ease-in-out;
-    
-    &:hover {
-        color: var(--purple-color) !important;
-        
-    }
+}
+
+.btn-without:hover {
+    color: var(--purple-color);
 }
 
 .user-icon {
