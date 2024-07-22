@@ -1,10 +1,10 @@
-<div class="container-fluid py-4 container">
-    <div class="row d-flex justify-content-start">
+<div class="container-fluid py-4 container mb-5">
+    <div class="row d-flex justify-content-start mb-5">
         <div class="col-md-3" id="actor-image">
             <div class="image-container">
-                @if (Model.Image == "Error: Response status code does not indicate success: 404 (Not Found).")
+                @if (Model.Image == "No image found")
                 {
-                    <img src="~/images/image_not_found.png" alt="pixel prime logo" class="img-fluid rounded-3 shadow-lg mb-3"/>
+                    <img src="~/images/img_not_found.png" alt="pixel prime logo" class="img-fluid rounded-3 shadow-lg mb-3"/>
                 }
                 else
                 {
@@ -13,7 +13,7 @@
             </div>
         </div>
         <div class="col-md-8" id="actor-info">
-            <h1 class="display-4 text-white mb-4">
+            <h1 class="display-4 text-white mb-4 mt-4 mt-md-0">
                 @Model.Name
                 @if (@Model.NetWorth.ToString("N0") != "0") //cant check it on the bool value
                 {
