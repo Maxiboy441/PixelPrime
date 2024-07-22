@@ -13,27 +13,14 @@ namespace Project.Database.Factories
         public ReviewFactory(DataContext context)
         {
             _context = context;
-            _posters = new[]
-            {
-                "https://m.media-amazon.com/images/M/MV5BZWI1OWM3ZmEtNjQ2OS00NzI2LTgwNWMtZDAyMGI1OTM2MzJmXkEyXkFqcGdeQXVyNjc5NjEzNA@@._V1_SX300.jpg",
-                "https://m.media-amazon.com/images/M/MV5BYmZkYWRlNWQtOGY0Zi00MWZkLWJiZTktNjRjMDY4MTU2YzAyXkEyXkFqcGdeQXVyMzYzNzc1NjY@._V1_SX300.jpg",
-                "https://m.media-amazon.com/images/M/MV5BOTk5ODg0OTU5M15BMl5BanBnXkFtZTgwMDQ3MDY3NjM@._V1_SX300.jpg",
-                "https://m.media-amazon.com/images/M/MV5BMjIxODgxNTE5N15BMl5BanBnXkFtZTcwODM0MTM3Mg@@._V1_SX300.jpg",
-                "https://m.media-amazon.com/images/M/MV5BM2YwYTkwNjItNGQzNy00MWE1LWE1M2ItOTMzOGI1OWQyYjA0XkEyXkFqcGdeQXVyMTUzMTg2ODkz._V1_SX300.jpg",
-                "https://m.media-amazon.com/images/M/MV5BNWIwODRlZTUtY2U3ZS00Yzg1LWJhNzYtMmZiYmEyNmU1NjMzXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg",
-                "https://m.media-amazon.com/images/M/MV5BYjBkM2RjMzItM2M3Ni00N2NjLWE3NzMtMGY4MzE4MDAzMTRiXkEyXkFqcGdeQXVyNDUzOTQ5MjY@._V1_SX300.jpg",
-                "https://m.media-amazon.com/images/M/MV5BY2Q0ODg4ZmItNDZiYi00ZWY5LTg2NzctNmYwZjA5OThmNzE1XkEyXkFqcGdeQXVyMjM4MzQ4OTQ@._V1_SX300.jpg",
-                "https://m.media-amazon.com/images/M/MV5BYjU5YTA5OGItYzFmZi00YmFjLWJjNWEtZTk0MjExMTFjYzE2XkEyXkFqcGdeQXVyNjcwMzExMzU@._V1_SX300.jpg",
-                "https://m.media-amazon.com/images/M/MV5BNzA5ZDNlZWMtM2NhNS00NDJjLTk4NDItYTRmY2EwMWZlMTY3XkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SX300.jpg"
-            };
 
             _faker = new Faker<Review>()
                 .RuleFor(r => r.User_id, f => GetRandomUserId())
-                .RuleFor(r => r.Movie_id, f => f.Random.AlphaNumeric(10))
+                .RuleFor(f => f.Movie_id, f => f.PickRandom(DummyData.movieIds))
                 .RuleFor(r => r.Title, f => f.Lorem.Sentence())
                 .RuleFor(r => r.Text, f => f.Lorem.Paragraphs(3))
                 .RuleFor(r => r.Movie_title, f => f.Lorem.Words(3).Aggregate((a, b) => a + " " + b))
-                .RuleFor(r => r.Movie_poster, f => f.PickRandom(_posters))
+                .RuleFor(f => f.Movie_poster, f => f.PickRandom(DummyData.posters))
                 .RuleFor(r => r.Created_at, f => f.Date.Past(2))
                 .RuleFor(r => r.Updated_at, (f, r) => f.Date.Between(r.Created_at, DateTime.Now));
         }
