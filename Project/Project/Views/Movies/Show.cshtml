@@ -166,9 +166,10 @@
                                        Model.Movie.Poster,
                                        review.Title,
                                        review.Text,
-                                       $"/movies/{Model.Movie.Id}/review"))
+                                       $"/movies/{Model.Movie.Id}/update-review"))
 
-                                    <form method="post" action="@Url.Action("DeleteReview", new { id = review.Id })">
+                                    <form action="/movies/@Model.Movie.Id/delete-review" method="post">
+                                        <input type="hidden" name="movieId" value="@Model.Movie.Id" />
                                         @await Html.PartialAsync("_PrimaryButton", Tuple.Create("Delete", "", "btn btn-danger btn-sm", "type=submit", "button"))
                                     </form>
                                 </div>
