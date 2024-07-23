@@ -267,3 +267,48 @@ document.getElementById('submitBtn').addEventListener('click', function (event) 
     clearForm();
     $('#myModal').modal('hide');
 });
+
+
+// Edit Review Form
+function checkEditForm() {
+    const title = document.getElementById('editReviewTitle').value;
+    const review = document.getElementById('editReviewText').value;
+    const submitBtn = document.getElementById('submitBtn');
+
+    var isTitleValid = title.trim() !== "";
+    var isReviewValid = review.trim() !== "";
+
+    if (isTitleValid) {
+        document.getElementById('editReviewTitle').classList.remove('invalid-input');
+    } else {
+        document.getElementById('editReviewTitle').classList.add('invalid-input');
+    }
+
+    if (isReviewValid) {
+        document.getElementById('editReviewText').classList.remove('invalid-input');
+    } else {
+        document.getElementById('editReviewText').classList.add('invalid-input');
+    }
+
+    if (isTitleValid && isReviewValid) {
+        submitBtn.removeAttribute('disabled');
+    } else {
+        submitBtn.setAttribute('disabled', 'disabled');
+    }
+}
+
+function clearEditForm() {
+    document.getElementById('editReviewTitle').value = '';
+    document.getElementById('editReviewText').value = '';
+    document.getElementById('submitBtn').setAttribute('disabled', 'disabled');
+    document.getElementById('editReviewTitle').classList.remove('invalid-input');
+    document.getElementById('editReviewText').classList.remove('invalid-input');
+}
+
+document.querySelector('#editReviewModal .close').addEventListener('click', clearEditForm);
+document.getElementById('editReviewModal').addEventListener('hidden.bs.modal', clearEditForm);
+document.getElementById('submitBtn').addEventListener('click', function (event) {
+    event.preventDefault();
+    clearEditForm();
+    $('#editReviewModal').modal('hide');
+});
