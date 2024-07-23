@@ -135,4 +135,19 @@ app.MapControllerRoute(
     pattern: "actor/{name?}",
     defaults: new { controller = "Actor", action = "Show" });
 
+app.MapControllerRoute(
+    name: "store_review",
+    pattern: "movies/{movieId?}/review",
+    defaults: new { controller = "Review", action = "Store" });
+
+app.MapControllerRoute(
+    name: "update_review",
+    pattern: "movies/{movieId?}/update-review",
+    defaults: new { controller = "Review", action = "Update" });
+
+app.MapControllerRoute(
+    name: "delete_review",
+    pattern: "movies/{movieId?}/delete-review",
+    defaults: new { controller = "Review", action = "Delete" });
+
 app.Run();

@@ -1,0 +1,46 @@
+@model Tuple<string, string>
+
+@{
+    var movieId = Model.Item1;
+    var formAction = Model.Item2;
+}
+
+@await Html.PartialAsync("_PrimaryButton", Tuple.Create(
+    "Delete",
+    "",
+    "btn btn-danger btn-sm",
+    "type=button data-toggle=modal data-target=#deleteConfirmationModal",
+    "button")
+)
+
+<div class="modal" id="deleteConfirmationModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h6 class="text-dark">Are you sure you want to delete your review?</h6>
+                <form action="@formAction" method="post">
+                    <input type="hidden" name="movieId" value="@movieId" />
+                    <div class="modal-footer">
+                        @await Html.PartialAsync("_PrimaryButton",
+                            Tuple.Create(
+                                "Close",
+                                "",
+                                "btn btn-secondary",
+                                "type=button data-dismiss=modal",
+                                "button")
+                            )
+
+                        @await Html.PartialAsync("_PrimaryButton",
+                            Tuple.Create(
+                                "Delete",
+                                "",
+                                "btn btn-danger",
+                                "type=submit",
+                                "button")
+                            )
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
