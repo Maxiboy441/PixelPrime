@@ -6,9 +6,9 @@ namespace Project.Services
 {
     public class MovieApiService
     {
-        private readonly HttpClient _httpClient;
-        private readonly string _baseApiUrl;
-        private readonly string? _apiKey;
+        private static HttpClient _httpClient;
+        private static string _baseApiUrl;
+        private static string? _apiKey;
 
         public MovieApiService(HttpClient httpClient, IConfiguration configuration)
         {
@@ -17,7 +17,7 @@ namespace Project.Services
             _apiKey = configuration.GetValue<string>("Api:MovieApi");
         }
 
-        public async Task<Movie> GetMovieById(string id)
+        public async Task<Movie?> GetMovieById(string id)
         {
             var url = $"{_baseApiUrl}?i={id}&apikey={_apiKey}";
 
@@ -32,14 +32,14 @@ namespace Project.Services
 
             if (IsErrorResponse(content, out string? errorMessage))
             {
-                throw new Exception(errorMessage);
+                return null;
             }
 
             Movie movie = MappJsonToMovie(content);
             return movie;
         }
 
-        public async Task<Movie> GetMovieByName(string name)
+        public async Task<Movie?> GetMovieByName(string name)
         {
             var url = $"{_baseApiUrl}?t={name}&apikey={_apiKey}";
 
@@ -54,7 +54,7 @@ namespace Project.Services
 
             if (IsErrorResponse(content, out string? errorMessage))
             {
-                throw new Exception(errorMessage);
+                return null;
             }
 
             Movie movie = MappJsonToMovie(content);

@@ -1,0 +1,108 @@
+<div class="container-fluid py-4 container mb-5">
+    <div class="row d-flex justify-content-start mb-5">
+        <div class="col-md-3" id="actor-image">
+            <div class="image-container">
+                @if (Model.Image == "No image found")
+                {
+                    <img src="~/images/img_not_found.png" alt="pixel prime logo" class="img-fluid rounded-3 shadow-lg mb-3"/>
+                }
+                else
+                {
+                    <img src="@Model.Image" alt="@Model.Name" class="img-fluid rounded-3 shadow-lg mb-3"/>
+                }
+            </div>
+        </div>
+        <div class="col-md-8" id="actor-info">
+            <h1 class="display-4 text-white mb-4 mt-4 mt-md-0">
+                @Model.Name
+                @if (@Model.NetWorth.ToString("N0") != "0") //cant check it on the bool value
+                {
+                    <span class="badge m-1 @(Model.IsAlive ? "bg-success" : "bg-danger") status-badge">
+                        @(Model.IsAlive ? "Alive" : "Deceased")
+                    </span>   
+                }
+                else {
+                    <span class="badge m-1 @(Model.IsAlive ? "bg-success" : "bg-danger") status-badge">
+                        Not found
+                    </span>
+                }
+            </h1>
+            <div class="row g-3 h-100">
+                <div class="col-sm-6 col-lg-4">
+                    <div class="actor-card card bg-dark-gray text-light h-100">
+                        <div class="actor-card-body card-body">
+                            <h5 class="card-title text-purple">Net Worth</h5>
+                            @if (@Model.NetWorth.ToString("N0") != "0")
+                            {
+                                <p class="card-text fs-4">$@Model.NetWorth.ToString("N0")</p>
+                            }
+                            else
+                            {
+                                <p class="card-text fs-4">Not Found</p>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-4">
+                    <div class="actor-card card bg-dark-gray text-light h-100">
+                        <div class="actor-card-body card-body">
+                            <h5 class="card-title text-purple">Gender</h5>
+                            <p class="card-text fs-4">@Model.Gender</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-4">
+                    <div class="actor-card card bg-dark-gray text-light h-100">
+                        <div class="actor-card-body card-body">
+                            <h5 class="card-title text-purple">Nationality</h5>
+                            <p class="card-text fs-4">@Model.Nationality</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-4">
+                    <div class="actor-card card bg-dark-gray text-light h-100">
+                        <div class="actor-card-body card-body">
+                            <h5 class="card-title text-purple">Height</h5>
+                            @if (@Model.Height.ToString("F2") != "0,00")
+                            {
+                                <p class="card-text fs-4">@Model.Height.ToString("F2") m</p>
+                            }
+                            else
+                            {
+                                <p class="card-text fs-4">Not Found</p>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-4">
+                    <div class="actor-card card bg-dark-gray text-light h-100">
+                        <div class="actor-card-body card-body">
+                            <h5 class="card-title text-purple">Birthday</h5>
+                            @if (@Model.Birthday.ToShortDateString() != "01.01.1001")
+                            {
+                                <p class="card-text fs-4">@Model.Birthday.ToShortDateString()</p>
+                            }
+                            else
+                            {
+                                <p class="card-text fs-4">Not Found</p>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-4">
+                    <div class="actor-card card bg-dark-gray text-light h-100">
+                        <div class="actor-card-body card-body d-flex flex-column">
+                            <h5 class="card-title text-purple">Occupations</h5>
+                            <div class="card-text fs-5 occupation-list flex-grow-1 overflow-auto">
+                                @foreach (var occupation in Model.Occupations.Split(','))
+                                {
+                                    <div>@occupation.Replace("_", " ")</div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

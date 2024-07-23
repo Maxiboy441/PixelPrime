@@ -1,20 +1,22 @@
-<!--
-Usage: *at* await Html.PartialAsync("_ReviewPopUpForm", Tuple.Create( "Movie_Id", "Movie_Title", "Movie_Poster", "Form_Action"))
--->
+@*Usage: @await Html.PartialAsync("_ReviewPopUpForm", Tuple.Create( "Movie_Id", "Movie_Title", "Movie_Poster", "Form_Action"))*@
 
 @model Tuple<string, string, string, string>
+
+@{
+    var returnUrl = Url.Action("Login", "Auth", new { returnUrl = Context.Request.Path });
+}
 
 @await Html.PartialAsync("_PrimaryButton",
 Tuple.Create(
     "Add Review",
     "style-1",
-    "",
+    "rounded-pill px-5",
     "type=button data-toggle=modal data-target=#myModal",
     "button")
 )
 
 <div class="modal" id="myModal">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
 
             <div class="modal-header">
@@ -43,6 +45,11 @@ Tuple.Create(
                         </div>
                         <div class="form-group">
                             <label class="text-black pb-2" for="review">Review</label>
+                            <label class="text-black p-2" for="title">Title</label>
+                            <input type="text" class="form-control" name="reviewTitle" id="reviewTitle" placeholder="Give it a Title" style="max-width: 95%" oninput="checkForm()">
+                        </div>
+                        <div class="form-group">
+                            <label class="text-black p-2" for="review">Review</label>
                             <textarea class="form-control" name="reviewText" id="reviewText" placeholder="How did you like the Movie?" style="max-width: 95%; height: 150px;" oninput="checkForm()"></textarea>
                         </div>
 
@@ -77,54 +84,9 @@ Tuple.Create(
                             "type=button data-dismiss=modal",
                             "button")
                         )
-                    @await Html.PartialAsync("_PrimaryButton", Tuple.Create("Sign in", "style-1", "", "href=/Auth/Login", "a"))
+                    @await Html.PartialAsync("_PrimaryButton", Tuple.Create("Sign in", "style-1", "", $"href={returnUrl}", "a"))
                 }
             </div>
         </div>
     </div>
 </div>
-
-<script>
-    function checkForm() {
-        const title = document.getElementById('reviewTitle').value;
-        const review = document.getElementById('reviewText').value;
-        const submitBtn = document.getElementById('submitBtn');
-
-        var isTitleValid = title.trim() !== "";
-        var isReviewValid = review.trim() !== "";
-
-        if (isTitleValid) {
-            document.getElementById('reviewTitle').classList.remove('invalid-input');
-        } else {
-            document.getElementById('reviewTitle').classList.add('invalid-input');
-        }
-
-        if (isReviewValid) {
-            document.getElementById('reviewText').classList.remove('invalid-input');
-        } else {
-            document.getElementById('reviewText').classList.add('invalid-input');
-        }
-
-        if (isTitleValid && isReviewValid) {
-            submitBtn.removeAttribute('disabled');
-        } else {
-            submitBtn.setAttribute('disabled', 'disabled');
-        }
-    }
-
-    function clearForm() {
-        document.getElementById('reviewTitle').value = '';
-        document.getElementById('reviewText').value = '';
-        document.getElementById('submitBtn').setAttribute('disabled', 'disabled');
-        document.getElementById('reviewTitle').classList.remove('invalid-input');
-        document.getElementById('reviewText').classList.remove('invalid-input');
-    }
-
-    document.querySelector('#myModal .close').addEventListener('click', clearForm);
-    document.getElementById('myModal').addEventListener('hidden.bs.modal', clearForm);
-    document.getElementById('submitBtn').addEventListener('click', function (event) {
-        event.preventDefault();
-        clearForm();
-        $('#myModal').modal('hide');
-    });
-</script>

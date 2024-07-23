@@ -15,6 +15,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="Polly" Version="8.4.1" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="7.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.20" />
     <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
@@ -24,16 +25,27 @@
   <ItemGroup>
     <None Remove="DummyData\" />
     <None Remove="Views\Auth\" />
+    <None Remove="Views\Movies\" />
+    <None Remove="HostedServices\" />
+    <None Remove="Views\Profile\" />
+    <None Remove="Views\User\" />
+    <None Remove="Models\ViewModels\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Migrations\" />
     <Folder Include="wwwroot\lib\fontawesome\" />
     <Folder Include="wwwroot\images\" />
     <Folder Include="Views\Auth\" />
+    <Folder Include="Views\Movies\" />
+    <Folder Include="HostedServices\" />
+    <Folder Include="Views\Profile\" />
+    <Folder Include="Views\User\" />
+    <Folder Include="Models\ViewModels\" />
   </ItemGroup>
   <ItemGroup>
     <Content Remove="wwwroot\lib\fontawesome\" />
     <Content Remove="wwwroot\images\" />
+    <Content Remove="User\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="wwwroot\js\swiper-element-bundle.min.js" />

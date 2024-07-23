@@ -19,6 +19,52 @@ namespace Project.Migrations
                 .HasAnnotation("ProductVersion", "7.0.20")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
+            modelBuilder.Entity("Project.Models.Actor", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Birthday")
+                        .HasColumnType("date");
+
+                    b.Property<string>("Gender")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("varchar(10)");
+
+                    b.Property<decimal>("Height")
+                        .HasColumnType("decimal(3, 2)");
+
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<bool>("IsAlive")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("Nationality")
+                        .IsRequired()
+                        .HasMaxLength(3)
+                        .HasColumnType("varchar(3)");
+
+                    b.Property<long>("NetWorth")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Occupations")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Actors");
+                });
+
             modelBuilder.Entity("Project.Models.Favorite", b =>
                 {
                     b.Property<int>("Id")
@@ -96,15 +142,12 @@ namespace Project.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("Movie_id")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("Movie_poster")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("Movie_title")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<DateTime>("Updated_at")
@@ -178,6 +221,7 @@ namespace Project.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("Password")

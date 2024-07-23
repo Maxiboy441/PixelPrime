@@ -19,6 +19,7 @@ namespace Project.Database.Seeders
             SeedWatchlists();
             SeedFavorites();
             SeedRecommendations();
+            SeedActors();
         }
 
         private void SeedUsers()
@@ -55,6 +56,12 @@ namespace Project.Database.Seeders
         {
             var recommendationSeeder = new RecommendationSeeder(_context);
             recommendationSeeder.Seed();
+        }
+        
+        private void SeedActors()
+        {
+            var actorSeeder = new ActorSeeder(_context);
+            actorSeeder.Seed();
         }
     }
 }

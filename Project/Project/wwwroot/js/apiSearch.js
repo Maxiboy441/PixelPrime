@@ -21,7 +21,7 @@ const createAutoComplete = ({
         <div class="dropdown w-100">
             <input class="input me-2 form-control" type="text" placeholder="Search for a movie" id="searchInput" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
-            <div class="dropdown-menu" aria-labelledby="searchInput">
+            <div class="dropdown-menu w-100" aria-labelledby="searchInput">
                 <div class="results"></div>
             </div>
         </div> 
@@ -33,12 +33,27 @@ const createAutoComplete = ({
     const dropdownMenu = root.querySelector(".dropdown-menu");
 
     const onInput = async event => {
+        const searchTerm = event.target.value;
+
+        resultsWrapper.innerHTML = "";
+
+        if (!searchTerm) {
+            // Hide the dropdown if input is empty
+            dropdown.classList.remove("is-active");
+            dropdownMenu.style.visibility = "hidden";
+            return;
+        }
+
         const items = await fetchData(event.target.value);
 
         if (!items.length) {
-            dropdownMenu.style.visibility = "hidden";
-            dropdown.classList.remove("is-active");
             resultsWrapper.innerHTML = "";
+            const notFoundMessage = document.createElement("div");
+            notFoundMessage.classList.add("dropdown-item");
+            notFoundMessage.textContent = "No results found.";
+            resultsWrapper.appendChild(notFoundMessage);
+            dropdown.classList.add("is-active");
+            dropdownMenu.style.visibility = "visible";
             return;
         }
 
