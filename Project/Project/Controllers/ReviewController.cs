@@ -5,7 +5,6 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
 using Project.Data;
-//using Xunit;
 
 namespace Reviews.Controllers
 {
@@ -29,10 +28,23 @@ namespace Reviews.Controllers
             if (userJson != null)
             {
                 var currentUser = JsonConvert.DeserializeObject<User>(userJson);
+                var userId = currentUser.Id;
 
+                // Check if the user has already submitted a review for the same movie
+                var existingReview = await _context.Reviews
+                    .FirstOrDefaultAsync(r => r.User_id == userId && r.Movie_id == movieId);
+
+                if (existingReview != null)
+                {
+                    // User has already submitted a review for this movie
+                    TempData["ErrorMessage"] = "You have already submitted a review for this movie.";
+                    return Redirect(Request.Headers["Referer"].ToString());
+                }
+
+                // User has not submitted a review for this movie, proceed to add the new review
                 review.Title = reviewTitle;
                 review.Text = reviewText;
-                review.User_id = currentUser.Id;
+                review.User_id = userId;
                 review.Movie_id = movieId;
                 review.Movie_title = movieTitle;
                 review.Movie_poster = moviePoster;
@@ -42,7 +54,6 @@ namespace Reviews.Controllers
                 await _context.SaveChangesAsync();
 
                 TempData["SuccessMessage"] = "Review successfully added!";
-
                 return Redirect(Request.Headers["Referer"].ToString());
             }
             else
@@ -123,11 +134,16 @@ namespace Reviews.Controllers
         // POST: Reviews/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public IActionResult DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var review = _context.Reviews.Find(id);
+            var review = await _context.Reviews.FindAsync(id);
+            if (review == null)
+            {
+                return NotFound();
+            }
+
             _context.Reviews.Remove(review);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
@@ -135,7 +151,17 @@ namespace Reviews.Controllers
         {
             return _context.Reviews.Any(e => e.Id == id);
         }
+
+        // Assuming you have an Index action method to list reviews
+        public IActionResult Index()
+        {
+            var reviews = _context.Reviews.ToList();
+            return View(reviews);
+        }
     }
+
+
+
     /// <summary>
     /// TEST
     /// </summary>
