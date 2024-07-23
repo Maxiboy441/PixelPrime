@@ -33,15 +33,13 @@ Tuple.Create(
                         @Html.AntiForgeryToken()
 
                         <input type="hidden" name="movieId" value="@Model.Item1" />
-                        <input type="hidden" name="movieTitle" value="@Model.Item2" />
-                        <input type="hidden" name="moviePoster" value="@Model.Item3" />
                         <div class="form-group">
                             <label class="text-black p-2" for="title">Title</label>
-                            <input value="@Model.Item4" type="text" class="form-control" name="reviewTitle" id="editReviewTitle" placeholder="Edit Title" style="max-width: 95%" oninput="checkForm()">
+                            <input value="@Model.Item4" type="text" class="form-control" name="reviewTitle" id="editReviewTitle" placeholder="Edit Title" style="max-width: 95%" oninput="checkEditForm()">
                         </div>
                         <div class="form-group">
                             <label class="text-black p-2" for="review">Review</label>
-                            <textarea class="form-control" name="reviewText" id="editReviewText" placeholder="Edit your review" style="max-width: 95%; height: 150px;" oninput="checkForm()">@Model.Item5</textarea>
+                            <textarea class="form-control" name="reviewText" id="editReviewText" placeholder="Edit your review" style="max-width: 95%; height: 150px;" oninput="checkEditForm()">@Model.Item5</textarea>
                         </div>
 
                         <div class="modal-footer">
@@ -81,48 +79,3 @@ Tuple.Create(
         </div>
     </div>
 </div>
-
-<script>
-    function checkForm() {
-        const title = document.getElementById('editReviewTitle').value;
-        const review = document.getElementById('editReviewText').value;
-        const submitBtn = document.getElementById('submitBtn');
-
-        var isTitleValid = title.trim() !== "";
-        var isReviewValid = review.trim() !== "";
-
-        if (isTitleValid) {
-            document.getElementById('editReviewTitle').classList.remove('invalid-input');
-        } else {
-            document.getElementById('editReviewTitle').classList.add('invalid-input');
-        }
-
-        if (isReviewValid) {
-            document.getElementById('editReviewText').classList.remove('invalid-input');
-        } else {
-            document.getElementById('editReviewText').classList.add('invalid-input');
-        }
-
-        if (isTitleValid && isReviewValid) {
-            submitBtn.removeAttribute('disabled');
-        } else {
-            submitBtn.setAttribute('disabled', 'disabled');
-        }
-    }
-
-    function clearForm() {
-        document.getElementById('editReviewTitle').value = '';
-        document.getElementById('editReviewText').value = '';
-        document.getElementById('submitBtn').setAttribute('disabled', 'disabled');
-        document.getElementById('editReviewTitle').classList.remove('invalid-input');
-        document.getElementById('editReviewText').classList.remove('invalid-input');
-    }
-
-    document.querySelector('#editReviewModal .close').addEventListener('click', clearForm);
-    document.getElementById('editReviewModal').addEventListener('hidden.bs.modal', clearForm);
-    document.getElementById('submitBtn').addEventListener('click', function (event) {
-        event.preventDefault();
-        clearForm();
-        $('#editReviewModal').modal('hide');
-    });
-</script>
