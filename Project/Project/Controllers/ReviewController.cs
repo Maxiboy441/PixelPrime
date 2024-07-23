@@ -6,12 +6,12 @@ using Project.Data;
 
 namespace Reviews.Controllers
 {
-    public class ReviewsController : Controller
+    public class ReviewController : Controller
     {
         private readonly DataContext _context;
-        private readonly ILogger<ReviewsController> _logger;
+        private readonly ILogger<ReviewController> _logger;
 
-        public ReviewsController(ILogger<ReviewsController> logger, DataContext context)
+        public ReviewController(ILogger<ReviewController> logger, DataContext context)
         {
             _logger = logger;
             _context = context;
