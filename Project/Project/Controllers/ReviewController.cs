@@ -2,8 +2,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Project.Models;
 using Newtonsoft.Json;
-using System.Collections.Generic;
-using System.Linq;
 using Project.Data;
 
 namespace Reviews.Controllers
