@@ -41,7 +41,7 @@ namespace Project.Controllers
                 _context.Favorites.Add(favorite);
                 await _context.SaveChangesAsync();
 
-                TempData["SuccessMessage"] = $"{title} successfully added to your favorites!";
+                TempData["SuccessMessage"] = $"{title} has been successfully added to your favorites!";
 
                 return Redirect(Request.Headers["Referer"].ToString());
             }
@@ -76,7 +76,7 @@ namespace Project.Controllers
 
                 if (favorite == null)
                 {
-                    TempData["FailMessage"] = "The movie you are trying to remove does not exist in your favorites.";
+                    TempData["FailMessage"] = "The content you are trying to remove does not exist in your favorites.";
                     return Redirect(Request.Headers["Referer"].ToString());
                 }
 
@@ -125,7 +125,7 @@ namespace Project.Controllers
                 _context.Watchlists.Add(watchlist);
                 await _context.SaveChangesAsync();
 
-                TempData["SuccessMessage"] = $"{title} successfully added to your watchlist!";
+                TempData["SuccessMessage"] = $"{title} has been successfully added to your watchlist!";
 
                 return Redirect(Request.Headers["Referer"].ToString());
             }
@@ -161,7 +161,7 @@ namespace Project.Controllers
 
                 if (movie == null)
                 {
-                    TempData["FailMessage"] = "The movie you are trying to remove does not exist in your watchlist.";
+                    TempData["FailMessage"] = "The content you are trying to remove does not exist in your watchlist.";
                     return Redirect(Request.Headers["Referer"].ToString());
                 }
 
@@ -223,7 +223,7 @@ namespace Project.Controllers
 
                 movieJson = JsonConvert.SerializeObject(movie);
                 HttpContext.Session.SetString($"movie_{id}", movieJson);
-                Console.WriteLine($"Movie fetched from API and saved to session: {movie.Title}");
+                Console.WriteLine($"Content fetched from API and saved to session: {movie.Title}");
             }
 
             var userJson = HttpContext.Session.GetString("CurrentUser");
@@ -320,7 +320,7 @@ namespace Project.Controllers
 
                 await _context.SaveChangesAsync();
 
-                TempData["SuccessMessage"] = "Movie rated successfully!";
+                TempData["SuccessMessage"] = $"You've successfully rated {title}!";
                 return Redirect(Request.Headers["Referer"].ToString());
             }
             else

@@ -132,7 +132,7 @@
                 <h3 class="fw-bold mb-0">User Reviews </h3>
                 @if (!Model.UserHasReview)
                 {
-                    @await Html.PartialAsync("_ReviewPopUpForm", Tuple.Create(Model.Movie.Id, Model.Movie.Title, Model.Movie.Poster, $"/movies/{Model.Movie.Id}/review", Model.Movie.Type))
+                    @await Html.PartialAsync("_ReviewPopUpForm", Tuple.Create(Model.Movie.Id, Model.Movie.Title, Model.Movie.Poster, $"/content/{Model.Movie.Id}/review", Model.Movie.Type))
                 }
             </div>
 
@@ -164,9 +164,9 @@
                                        Model.Movie.Poster,
                                        review.Title,
                                        review.Text,
-                                       $"/movies/{Model.Movie.Id}/update-review"))
+                                       $"/content/{Model.Movie.Id}/update-review"))
 
-                                    @await Html.PartialAsync("_DeleteConfirmationModal", Tuple.Create(@Model.Movie.Id, "/movies/@Model.Movie.Id/delete-review"))
+                                    @await Html.PartialAsync("_DeleteConfirmationModal", Tuple.Create(@Model.Movie.Id, "/content/@Model.Movie.Id/delete-review"))
                                 </div>
                             }
                         </div>

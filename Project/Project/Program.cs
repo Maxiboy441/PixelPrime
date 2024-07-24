@@ -72,38 +72,38 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.MapControllerRoute(
-    name: "movies_storefavorite",
-    pattern: "Movies/StoreFavoriteMovie/{id?}",
+    name: "content_storefavorite",
+    pattern: "Content/StoreFavoriteMovie/{id?}",
     defaults: new { controller = "Movies", action = "StoreFavoriteMovie" });
 
 app.MapControllerRoute(
-    name: "movies_destroyfavorite",
-    pattern: "Movies/DestroyFavoriteMovie/{id?}",
+    name: "content_destroyfavorite",
+    pattern: "Content/DestroyFavoriteMovie/{id?}",
     defaults: new { controller = "Movies", action = "DestroyFavoriteMovie" });
 
 app.MapControllerRoute(
-    name: "movies_destroyfavoritefromprofile",
-    pattern: "Movies/DestroyFavoriteMovieFromProfile/{id?}",
+    name: "content_destroyfavoritefromprofile",
+    pattern: "Content/DestroyFavoriteMovieFromProfile/{id?}",
     defaults: new { controller = "Movies", action = "DestroyFavoriteMovieFromProfile" });
 
 app.MapControllerRoute(
-    name: "movies_storetowatchlist",
-    pattern: "Movies/StoreWatchlistMovie/{id?}",
+    name: "content_storetowatchlist",
+    pattern: "Content/StoreWatchlistMovie/{id?}",
     defaults: new { controller = "Movies", action = "StoreWatchlistMovie" });
 
 app.MapControllerRoute(
-    name: "movies_destroyfromwatchlist",
-    pattern: "Movies/DestroyWatchlistMovie/{id?}",
+    name: "content_destroyfromwatchlist",
+    pattern: "Content/DestroyWatchlistMovie/{id?}",
     defaults: new { controller = "Movies", action = "DestroyWatchlistMovie" });
 
 app.MapControllerRoute(
-    name: "movies_destroyfromwatchlistfromprofile",
-    pattern: "Movies/DestroyWatchlistMovieFromProfile/{id?}",
+    name: "content_destroyfromwatchlistfromprofile",
+    pattern: "Content/DestroyWatchlistMovieFromProfile/{id?}",
     defaults: new { controller = "Movies", action = "DestroyWatchlistMovieFromProfile" });
 
 app.MapControllerRoute(
-    name: "movies",
-    pattern: "Movies/{id?}",
+    name: "content",
+    pattern: "content/{id?}",
     defaults: new { controller = "Movies", action = "Show" });
 
 app.MapControllerRoute(
@@ -137,17 +137,17 @@ app.MapControllerRoute(
 
 app.MapControllerRoute(
     name: "store_review",
-    pattern: "movies/{movieId?}/review",
+    pattern: "content/{movieId?}/review",
     defaults: new { controller = "Review", action = "Store" });
 
 app.MapControllerRoute(
     name: "update_review",
-    pattern: "movies/{movieId?}/update-review",
+    pattern: "content/{movieId?}/update-review",
     defaults: new { controller = "Review", action = "Update" });
 
 app.MapControllerRoute(
     name: "delete_review",
-    pattern: "movies/{movieId?}/delete-review",
+    pattern: "content/{movieId?}/delete-review",
     defaults: new { controller = "Review", action = "Delete" });
 
 app.Run();
