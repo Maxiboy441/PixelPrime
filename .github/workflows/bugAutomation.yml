@@ -24,7 +24,7 @@ jobs:
       with:
         github-token: ${{ secrets.ACCESS_TOKEN }}
         script: |
-          const projectNumber = 19;
+          const projectNumber = 21;
           const columnName = 'Backlog';
 
           async function getProjectColumnId(projectNumber, columnName) {
