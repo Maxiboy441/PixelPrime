@@ -36,6 +36,11 @@ namespace Project.Services
             }
 
             Movie movie = MappJsonToMovie(content);
+            
+            if (movie.Type != "Movie" && movie.Type != "Series")
+            {
+                return null;
+            }
             return movie;
         }
 
@@ -58,11 +63,6 @@ namespace Project.Services
             }
 
             Movie movie = MappJsonToMovie(content);
-
-            if (movie.Type != "Movie" && movie.Type != "Series")
-            {
-                return null;
-            }
             
             return movie;
         }
