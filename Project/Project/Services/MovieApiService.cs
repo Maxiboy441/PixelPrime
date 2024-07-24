@@ -71,9 +71,7 @@ namespace Project.Services
         {
             using JsonDocument doc = JsonDocument.Parse(jsonString);
             JsonElement root = doc.RootElement;
-
-            string type = root.GetProperty("Type").GetString();
-
+            
             Movie movie = new Movie
             {
                 Id = root.GetProperty("imdbID").GetString(), 
@@ -91,7 +89,7 @@ namespace Project.Services
                 Poster = root.GetProperty("Poster").GetString(),
                 /*TODO: Replace the PixelRating from the DB if it exists*/
                 PixelRating = root.GetProperty("imdbRating").GetString(),
-                Type = char.ToUpper(type[0]) + type.Substring(1)
+                Type = root.GetProperty("Type").GetString()
             };
 
             return movie;
