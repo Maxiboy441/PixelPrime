@@ -22,7 +22,7 @@ jobs:
       if: steps.check_issue.outputs.isBug == 'true'
       uses: actions/github-script@v6
       with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
+        github-token: ${{ secrets.ACCESS_TOKEN }}
         script: |
           const projectNumber = 19;
           const columnName = 'Backlog';
