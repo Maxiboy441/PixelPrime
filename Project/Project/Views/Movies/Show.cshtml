@@ -55,7 +55,7 @@
                             }
                             else
                             {
-                                <h6>This movie has not yet been rated</h6>
+                                <h6>This @Model.Movie.Type has not yet been rated</h6>
                             }
                         </div>
                     </div>
@@ -63,7 +63,7 @@
                     <div class="d-flex flex-column">
                         <div>
                             @await Html.PartialAsync("_RateMovieModal",
-                            Tuple.Create(Model.Movie.Id, Model.Movie.Title, Model.Movie.Poster, Model.IsRated ? "Your Rating" : "Rate Movie", Model.IsRated ? "fa-solid fa-pen-to-square" : "fas fa-plus", "btn-without text-light"))
+                            Tuple.Create(Model.Movie.Id, Model.Movie.Title, Model.Movie.Poster, Model.IsRated ? "Your Rating" : "Rate " + @Model.Movie.Type, Model.IsRated ? "fa-solid fa-pen-to-square" : "fas fa-plus", "btn-without text-light"))
                             <h6 style="margin: 0">
                                 @if (Model.UserHasRating)
                                 {
@@ -132,7 +132,7 @@
                 <h3 class="fw-bold mb-0">User Reviews </h3>
                 @if (!Model.UserHasReview)
                 {
-                    @await Html.PartialAsync("_ReviewPopUpForm", Tuple.Create(Model.Movie.Id, Model.Movie.Title, Model.Movie.Poster, $"/movies/{Model.Movie.Id}/review"))
+                    @await Html.PartialAsync("_ReviewPopUpForm", Tuple.Create(Model.Movie.Id, Model.Movie.Title, Model.Movie.Poster, $"/movies/{Model.Movie.Id}/review", Model.Movie.Type))
                 }
             </div>
 

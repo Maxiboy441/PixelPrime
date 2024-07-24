@@ -58,6 +58,12 @@ namespace Project.Services
             }
 
             Movie movie = MappJsonToMovie(content);
+
+            if (movie.Type != "Movie" && movie.Type != "Series")
+            {
+                return null;
+            }
+            
             return movie;
         }
 
@@ -65,6 +71,8 @@ namespace Project.Services
         {
             using JsonDocument doc = JsonDocument.Parse(jsonString);
             JsonElement root = doc.RootElement;
+
+            string type = root.GetProperty("Type").GetString();
 
             Movie movie = new Movie
             {
@@ -82,7 +90,8 @@ namespace Project.Services
                 Awards = root.GetProperty("Awards").GetString(),
                 Poster = root.GetProperty("Poster").GetString(),
                 /*TODO: Replace the PixelRating from the DB if it exists*/
-                PixelRating = root.GetProperty("imdbRating").GetString()
+                PixelRating = root.GetProperty("imdbRating").GetString(),
+                Type = char.ToUpper(type[0]) + type.Substring(1)
             };
 
             return movie;

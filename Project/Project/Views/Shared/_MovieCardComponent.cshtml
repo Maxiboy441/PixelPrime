@@ -26,7 +26,7 @@
         <p class="card-text"><i class="fa-solid fa-star" style="color: #FFD43B;"></i><span class="rate">@Model.Item2</span></p>
         <h6 class="card-title mb-3"><a href="#">@Model.Item3</a></h6>
         <div class="mt-auto text-center">
-            @await Html.PartialAsync("_PrimaryButton", Tuple.Create("See Movie", "style-2", "", $"href=/movies/{@Model.Item4}", "a"))
+            @await Html.PartialAsync("_PrimaryButton", Tuple.Create("See More", "style-2", "", $"href=/movies/{@Model.Item4}", "a"))
         </div>
     </div>
 </div>
