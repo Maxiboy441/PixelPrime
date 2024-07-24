@@ -37,7 +37,7 @@ namespace Project.Services
 
             Movie movie = MappJsonToMovie(content);
             
-            if (movie.Type != "movie" && movie.Type != "meries")
+            if (movie.Type != "movie" && movie.Type != "movies")
             {
                 return null;
             }
