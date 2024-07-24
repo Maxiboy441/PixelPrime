@@ -1,0 +1,95 @@
+name: Auto Add Bug Issues to Project Backlog
+
+on:
+  issues:
+    types:
+      - opened
+
+jobs:
+  add_to_project:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check if the issue is a bug
+      id: check_issue
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const issueLabel = context.payload.issue.labels.map(label => label.name);
+          core.setOutput('isBug', issueLabel.includes('bug') ? 'true' : 'false');
+
+    - name: Add to project
+      if: steps.check_issue.outputs.isBug == 'true'
+      uses: actions/github-script@v6
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          const projectNumber = 19;
+          const columnName = 'Backlog';
+
+          async function getProjectColumnId(projectNumber, columnName) {
+            const { organization } = await github.graphql(`
+              query($login: String!) {
+                organization(login: $login) {
+                  projectsV2(first: 100) {
+                    nodes {
+                      number
+                      id
+                      fields(first: 100) {
+                        nodes {
+                          name
+                          id
+                          settings
+                          type
+                          options {
+                            id
+                            name
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            `, {
+              login: context.repo.owner,
+            });
+
+            const project = organization.projectsV2.nodes.find(p => p.number === projectNumber);
+
+            if (!project) {
+              throw new Error(`Project #${projectNumber} not found`);
+            }
+
+            const columnField = project.fields.nodes.find(field => field.name === 'Status' && field.type === 'SINGLE_SELECT');
+            const columnOption = columnField.options.find(option => option.name === columnName);
+
+            if (!columnField || !columnOption) {
+              throw new Error(`Column ${columnName} not found`);
+            }
+
+            return {
+              projectId: project.id,
+              columnId: columnOption.id
+            };
+          }
+
+          const { projectId, columnId } = await getProjectColumnId(projectNumber, columnName);
+
+          await github.graphql(`
+            mutation($projectId: ID!, $issueId: ID!, $fieldId: ID!, $value: String!) {
+              updateProjectV2ItemFieldValue(input: {
+                projectId: $projectId,
+                itemId: $issueId,
+                fieldId: $fieldId,
+                value: $value
+              }) {
+                clientMutationId
+              }
+            }
+          `, {
+            projectId: projectId,
+            issueId: context.payload.issue.node_id,
+            fieldId: columnId,
+            value: columnId
+          });
