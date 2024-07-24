@@ -18,6 +18,9 @@
         
         /* TODO: Change string to double when using our own rating*/
         public string? PixelRating { get; set; }
+        
+        public string? Type { get; set; }
+
     }
 }
 
