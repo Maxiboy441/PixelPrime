@@ -11,12 +11,12 @@
 };
 
 const createAutoComplete = ({
-                                root,
-                                renderOption,
-                                onOptionSelect,
-                                inputValue,
-                                fetchData
-                            }) => {
+    root,
+    renderOption,
+    onOptionSelect,
+    inputValue,
+    fetchData
+    }) => {
     root.innerHTML = `
         <div class="dropdown w-100">
             <input class="input me-2 form-control" type="text" placeholder="Search for a movie or series" id="searchInput" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -63,7 +63,7 @@ const createAutoComplete = ({
         for (let item of items) {
             const option = document.createElement("a")
 
-            option.href = `/movies/${item.imdbID}`;
+            option.href = `/content/${item.imdbID}`;
 
             option.classList.add("dropdown-item")
             option.innerHTML = renderOption(item);
