@@ -1,0 +1,87 @@
+@*Usage: @await Html.PartialAsync("_ReviewPopUpForm", Tuple.Create( "Movie_Id", "Movie_Title", "Movie_Poster", "Form_Action"))*@
+
+@model Tuple<string, string, string, string>
+
+@{
+    var returnUrl = Url.Action("Login", "Auth", new { returnUrl = Context.Request.Path });
+}
+
+@await Html.PartialAsync("_PrimaryButton",
+Tuple.Create(
+    "Add Review",
+    "style-1",
+    "rounded-pill px-5",
+    "type=button data-toggle=modal data-target=#myModal",
+    "button")
+)
+
+<div class="modal" id="myModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                @if (!string.IsNullOrEmpty(Context.Session.GetString("CurrentUser")))
+                {
+                    <h4 class="modal-title text-black">Review for @Model.Item2</h4>
+                }
+                else
+                {
+                    <h4 class="modal-title text-black">Sign in to leave a review</h4>
+                }
+            </div>
+
+            <div class="modal-body">
+                @if (!string.IsNullOrEmpty(Context.Session.GetString("CurrentUser")))
+                {
+                    <form id="reviewForm" action="@Model.Item4" method="post">
+                        @Html.AntiForgeryToken()
+
+                        <input type="hidden" name="movieId" value="@Model.Item1" />
+                        <input type="hidden" name="movieTitle" value="@Model.Item2" />
+                        <input type="hidden" name="moviePoster" value="@Model.Item3" />
+                        <div class="form-group">
+                            <label class="text-black pb-2" for="title">Title</label>
+                            <input type="text" class="form-control" name="reviewTitle" id="reviewTitle" placeholder="Give it a Title" style="max-width: 95%" oninput="checkForm()">
+                        </div>
+                        <div class="form-group">
+                            <label class="text-black pb-2" for="review">Review</label>
+                            <textarea class="form-control" name="reviewText" id="reviewText" placeholder="How did you like the Movie?" style="max-width: 95%; height: 150px;" oninput="checkForm()"></textarea>
+                        </div>
+
+                        <div class="modal-footer">
+                            @await Html.PartialAsync("_PrimaryButton",
+                                Tuple.Create(
+                                    "Close",
+                                    "",
+                                    "btn btn-secondary",
+                                    "type=button data-dismiss=modal",
+                                    "button")
+                                )
+
+                            @await Html.PartialAsync("_PrimaryButton",
+                                Tuple.Create(
+                                    "Submit",
+                                    "style-1",
+                                    "",
+                                    "type=submit id=submitBtn disabled",
+                                    "button")
+                                )
+                        </div>
+                    </form>
+                }
+                else
+                {
+                    @await Html.PartialAsync("_PrimaryButton",
+                        Tuple.Create(
+                            "Close",
+                            "",
+                            "btn btn-secondary",
+                            "type=button data-dismiss=modal",
+                            "button")
+                        )
+                    @await Html.PartialAsync("_PrimaryButton", Tuple.Create("Sign in", "style-1", "", $"href={returnUrl}", "a"))
+                }
+            </div>
+        </div>
+    </div>
+</div>
