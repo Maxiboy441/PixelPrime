@@ -33,9 +33,10 @@ public class ActorAPIService
         var imageUrl = await service.GetFirstImageUrlAsync(actorName);
 
         if (celebrities == null || !celebrities.Any())
+        {
             return new Actor
             {
-                Name = "Error",
+                Name = actorName,
                 NetWorth = 0,
                 Gender = "Not found",
                 Nationality = "Not found",
@@ -45,6 +46,7 @@ public class ActorAPIService
                 Occupations = "Not found",
                 Image = imageUrl
             };
+        }
 
         var celebrity = celebrities.FirstOrDefault(c => c.occupation.Contains("actor")) ?? celebrities.First();
 
