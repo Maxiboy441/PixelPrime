@@ -38,7 +38,7 @@
                                 <img class="card-img-top" src="@Url.Content("~/images/poster_not_found.png")" alt="@movie.Movie_title">
                             }
                         </div>
-                        <div class="card-body-movie d-flex flex-column" id="movie-details-@movie.Movie_id">
+                        <div class="card-body-movie d-flex flex-column" id="movie-details-@movieDataId">
                         </div>
                         @await Html.PartialAsync("_PrimaryButton", Tuple.Create("See More", "style-1", "", $"href=/content/{movie.Movie_id}", "a"))
                     </div>

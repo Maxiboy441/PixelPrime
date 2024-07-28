@@ -10,7 +10,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
     mySpaceMovies.forEach(movie => {
         movie.addEventListener("click", async (e) => {
             const movieId = movie.getAttribute("data-imdb-id");
-            const detailsContainer = document.getElementById(`movie-details-${movieId}`);
+            const movieDetailsId = movie.getAttribute('data-movie-id');
+            const detailsContainer = document.getElementById(`movie-details-${movieDetailsId}`);
 
             // Check if the movie details are in session storage
             const storedMovie = sessionStorage.getItem(`movie_${movieId}`);
