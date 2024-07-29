@@ -4,48 +4,101 @@
 
 <div class="container mt-5">
     <div class="impress mb-5">
-        <div class="impress-card">
-            <div class='impressum'><h1>Impressum</h1><p>Angaben gemäß § 5 DDG</p><p>Maximilian Huber <br>
-                    Rümpflestr. 14/1<br>
-                    71665 Horrheim <br>
-                </p><p> <strong>Vertreten durch: </strong><br>
-                    Maximilian Huber<br>
-                </p><p><strong>Kontakt:</strong> <br>
-                    Telefon: 07042-8176775<br>
-                    E-Mail: <a href='mailto:Maxiboy44YT@gmail.com'>Maxiboy44YT@gmail.com</a><br></p><p><strong>Haftungsausschluss: </strong><br><br><strong>Haftung für Inhalte</strong><br><br>
-                    Die Inhalte unserer Seiten wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte können wir jedoch keine Gewähr übernehmen. Als Diensteanbieter sind wir gemäß § 7 Abs.1 DDG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 DDG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen. Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den allgemeinen Gesetzen bleiben hiervon unberührt. Eine diesbezügliche Haftung ist jedoch erst ab dem Zeitpunkt der Kenntnis einer konkreten Rechtsverletzung möglich. Bei Bekanntwerden von entsprechenden Rechtsverletzungen werden wir diese Inhalte umgehend entfernen.<br><br><strong>Haftung für Links</strong><br><br>
-                    Unser Angebot enthält Links zu externen Webseiten Dritter, auf deren Inhalte wir keinen Einfluss haben. Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich. Die verlinkten Seiten wurden zum Zeitpunkt der Verlinkung auf mögliche Rechtsverstöße überprüft. Rechtswidrige Inhalte waren zum Zeitpunkt der Verlinkung nicht erkennbar. Eine permanente inhaltliche Kontrolle der verlinkten Seiten ist jedoch ohne konkrete Anhaltspunkte einer Rechtsverletzung nicht zumutbar. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Links umgehend entfernen.<br><br><strong>Datenschutz</strong><br><br>
-                    Die Nutzung unserer Webseite ist in der Regel ohne Angabe personenbezogener Daten möglich. Soweit auf unseren Seiten personenbezogene Daten (beispielsweise Name, Anschrift oder eMail-Adressen) erhoben werden, erfolgt dies, soweit möglich, stets auf freiwilliger Basis. Diese Daten werden ohne Ihre ausdrückliche Zustimmung nicht an Dritte weitergegeben. <br>
-                    Wir weisen darauf hin, dass die Datenübertragung im Internet (z.B. bei der Kommunikation per E-Mail) Sicherheitslücken aufweisen kann. Ein lückenloser Schutz der Daten vor dem Zugriff durch Dritte ist nicht möglich. <br>
-                    Der Nutzung von im Rahmen der Impressumspflicht veröffentlichten Kontaktdaten durch Dritte zur Übersendung von nicht ausdrücklich angeforderter Werbung und Informationsmaterialien wird hiermit ausdrücklich widersprochen. Die Betreiber der Seiten behalten sich ausdrücklich rechtliche Schritte im Falle der unverlangten Zusendung von Werbeinformationen, etwa durch Spam-Mails, vor.<br><br><br>
-                    Website Impressum von <a href="https://www.impressum-generator.de">impressum-generator.de</a>
+        
+        <div class="information mb-5">
+            <h1 class="mb-4">Information</h1>
+            <p class="lead mb-5">This project was developed as part of the software engineering apprenticeship program at ITS Stuttgart. It represents the culmination of our second-year studies, showcasing the skills and knowledge we've acquired throughout our training.</p>
+        </div>
+
+        <div class="repo-card mb-5">
+            <div class="card bg-dark text-white">
+                <div class="card-body impress-card-body d-flex flex-column flex-sm-row align-items-center">
+                    <div class="mb-3 mb-sm-0 me-sm-4">
+                        <img src="~/images/pixel_prime_logo.png" alt="PixelPrime Logo" class="img-fluid" style="max-width: 100px;">
+                    </div>
+                    <div>
+                        <h5 class="card-title impress-card-title">PixelPrime</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">GitHub Repository</h6>
+                        <p class="card-text impress-card-text">Check out our project repository on GitHub for more details and source code.</p>
+                        @await Html.PartialAsync("_PrimaryButton",
+                        Tuple.Create(
+                        "View on GitHub",
+                        "style-1",
+                        "",
+                        "href=https://github.com/Maxiboy441/PixelPrime target=_blank",
+                        "a"))
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-
-    <div class="information mb-5">
-        <h1 class="mb-4">Information</h1>
-        <p class="lead mb-5">This project was developed as part of the software engineering apprenticeship program at ITS Stuttgart. It represents the culmination of our second-year studies, showcasing the skills and knowledge we've acquired throughout our training.</p>
-    </div>
-
-    <div class="repo-card mb-5">
-        <div class="card bg-dark text-white">
-            <div class="card-body impress-card-body d-flex flex-column flex-sm-row align-items-center">
-                <div class="mb-3 mb-sm-0 me-sm-4">
-                    <img src="~/images/pixel_prime_logo.png" alt="PixelPrime Logo" class="img-fluid" style="max-width: 100px;">
-                </div>
-                <div>
-                    <h5 class="card-title impress-card-title">PixelPrime</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">GitHub Repository</h6>
-                    <p class="card-text impress-card-text">Check out our project repository on GitHub for more details and source code.</p>
-                    @await Html.PartialAsync("_PrimaryButton",
-                    Tuple.Create(
-                    "View on GitHub",
-                    "style-1",
-                    "",
-                    "href=https://github.com/Maxiboy441/PixelPrime target=_blank",
-                    "a"))
-                </div>
+        
+        <div class="impress-card">
+            <div class='impressum'>
+                <h1>Impressum</h1>
+                <p>Angaben gemäß § 5 DDG</p>
+                <p>Maximilian Huber <br>
+                    Rümpflestr. 14/1<br>
+                    71665 Horrheim <br>
+                </p>
+                <p> <strong>Vertreten durch: </strong><br>
+                    Maximilian Huber<br>
+                </p>
+                <p><strong>Kontakt:</strong> <br>
+                    Telefon: 07042-8176775<br>
+                    E-Mail: <a href='mailto:Maxiboy44YT@gmail.com'>Maxiboy44YT@gmail.com</a><br></p>
+                <p><strong>Haftungsausschluss: </strong><br><br><strong>Haftung für Inhalte</strong><br><br>
+                Die Inhalte unserer Seiten wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte können wir jedoch keine Gewähr übernehmen. Als Diensteanbieter sind wir gemäß § 7 Abs.1 DDG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 DDG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen. Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den allgemeinen Gesetzen bleiben hiervon unberührt. Eine diesbezügliche Haftung ist jedoch erst ab dem Zeitpunkt der Kenntnis einer konkreten Rechtsverletzung möglich. Bei Bekanntwerden von entsprechenden Rechtsverletzungen werden wir diese Inhalte umgehend entfernen.<br><br><strong>Haftung für Links</strong><br><br>
+                Unser Angebot enthält Links zu externen Webseiten Dritter, auf deren Inhalte wir keinen Einfluss haben. Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich. Die verlinkten Seiten wurden zum Zeitpunkt der Verlinkung auf mögliche Rechtsverstöße überprüft. Rechtswidrige Inhalte waren zum Zeitpunkt der Verlinkung nicht erkennbar. Eine permanente inhaltliche Kontrolle der verlinkten Seiten ist jedoch ohne konkrete Anhaltspunkte einer Rechtsverletzung nicht zumutbar. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Links umgehend entfernen.<br><br><strong>Datenschutz</strong><br><br>
+                Die Nutzung unserer Webseite ist in der Regel ohne Angabe personenbezogener Daten möglich. Soweit auf unseren Seiten personenbezogene Daten (beispielsweise Name, Anschrift oder eMail-Adressen) erhoben werden, erfolgt dies, soweit möglich, stets auf freiwilliger Basis. Diese Daten werden ohne Ihre ausdrückliche Zustimmung nicht an Dritte weitergegeben. <br>
+                Wir weisen darauf hin, dass die Datenübertragung im Internet (z.B. bei der Kommunikation per E-Mail) Sicherheitslücken aufweisen kann. Ein lückenloser Schutz der Daten vor dem Zugriff durch Dritte ist nicht möglich. <br>
+                Der Nutzung von im Rahmen der Impressumspflicht veröffentlichten Kontaktdaten durch Dritte zur Übersendung von nicht ausdrücklich angeforderter Werbung und Informationsmaterialien wird hiermit ausdrücklich widersprochen. Die Betreiber der Seiten behalten sich ausdrücklich rechtliche Schritte im Falle der unverlangten Zusendung von Werbeinformationen, etwa durch Spam-Mails, vor.<br><br><br>
+                Website Impressum von <a href="https://www.impressum-generator.de">impressum-generator.de</a>
+            </div>
+        </div>
+        <br><br><br><br>
+        <div class="impress-card">
+            <div class='impressum'>
+                <h1>DSE</h1>
+                <br><br>
+                <strong>Erhobene Daten</strong>
+                <p>Wir erheben und verarbeiten die folgende personenbezogene Daten:</p>
+                <ul>
+                    <li>E-Mail-Adresse</li>
+                </ul>
+                <br>
+                <strong>Zweck der Datenverarbeitung</strong>
+                <p>Die Erhebung und Verarbeitung der E-Mail-Adresse erfolgt zum Zweck des Logins und der Nutzung der Plattform.</p>
+                <br>
+                <strong>Rechtsgrundlage der Verarbeitung</strong>
+                <p>Die Verarbeitung der Daten erfolgt auf Grundlage Ihrer Einwilligung (Art. 6 Abs. 1 lit. a DSGVO) und zur Erfüllung des Vertrags über die Nutzung der Plattform (Art. 6 Abs. 1 lit. b DSGVO).</p>
+                <br>
+                <strong>Weitergabe der Daten</strong>
+                <p>Ihre Daten werden nicht an Dritte weitergegeben.</p>
+                <br>
+                <strong>Datenübermittlung in Drittländer</strong>
+                <p>Es erfolgt keine Übermittlung Ihrer Daten in Länder außerhalb der Europäischen Union (EU) oder des Europäischen Wirtschaftsraums (EWR).</p>
+                <br>
+                <strong>Speicherdauer</strong>
+                <p>Ihre Daten werden gespeichert, solange die Plattform betrieben wird oder bis Sie die Löschung Ihrer Daten verlangen.</p>
+                <br>
+                <strong>Betroffenenrechte</strong>
+                <p>Sie haben das Recht:</p>
+                <ul>
+                    <li>Auskunft über die von uns verarbeiteten personenbezogenen Daten zu verlangen (Art. 15 DSGVO),</li>
+                    <li>unverzüglich die Berichtigung unrichtiger oder Vervollständigung Ihrer bei uns gespeicherten personenbezogenen Daten zu verlangen (Art. 16 DSGVO),</li>
+                    <li>die Löschung Ihrer bei uns gespeicherten personenbezogenen Daten zu verlangen (Art. 17 DSGVO),</li>
+                    <li>die Einschränkung der Verarbeitung Ihrer personenbezogenen Daten zu verlangen (Art. 18 DSGVO),</li>
+                    <li>die Übertragung Ihrer personenbezogenen Daten zu verlangen (Art. 20 DSGVO).</li>
+                </ul>
+                <br>
+                <strong>Automatisierte Entscheidungsfindung</strong>
+                <p>Es erfolgt keine automatisierte Entscheidungsfindung oder Profiling.</p>
+                <br><br>
+                <strong>Änderungen der Datenschutzerklärung</strong>
+                <p>Diese Datenschutzerklärung wird nicht geändert. Falls Änderungen erforderlich werden, werden wir diese hier veröffentlichen.</p>
+                <br>
+                <strong>Datensicherheit</strong>
+                <p>Wir setzen technische und organisatorische Sicherheitsmaßnahmen ein, um Ihre Daten vor Manipulation, Verlust, Zerstörung oder unbefugtem Zugriff zu schützen.</p>
             </div>
         </div>
     </div>
