@@ -294,7 +294,7 @@ html .swiper-button-next, html .swiper-button-prev {
 }
 
 .singUp-advert {
-    height: 30px;
+    height: auto;
     width: 100px;
     font-weight: bold;
 }
@@ -410,6 +410,15 @@ html .swiper-button-next, html .swiper-button-prev {
 }
 
 @media (max-width: 576px) {
+    html {
+        font-size: .8rem;
+    }
+
+    swiper-slide {
+        display: flex;
+        justify-content: center;
+    }
+
     #advert-carousel {
         width: 100vw;
     }
@@ -421,6 +430,7 @@ html .swiper-button-next, html .swiper-button-prev {
 
     .carousel-caption {
         display: block !important;
+        padding: 5px;
     }
 
     .singUp-advert {
@@ -480,11 +490,13 @@ html .swiper-button-next, html .swiper-button-prev {
     }
 }
 
-@media (min-width: 768px) {
+@media (min-width: 600px) {
     html {
         font-size: 1rem;
     }
+}
 
+@media (min-width: 768px) {
     #advert-carousel {
         width: 100vw;
     }

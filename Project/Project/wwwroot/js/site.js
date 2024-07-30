@@ -10,7 +10,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
     mySpaceMovies.forEach(movie => {
         movie.addEventListener("click", async (e) => {
             const movieId = movie.getAttribute("data-imdb-id");
-            const detailsContainer = document.getElementById(`movie-details-${movieId}`);
+            const movieDetailsId = movie.getAttribute('data-movie-id');
+            const detailsContainer = document.getElementById(`movie-details-${movieDetailsId}`);
 
             // Check if the movie details are in session storage
             const storedMovie = sessionStorage.getItem(`movie_${movieId}`);
@@ -108,8 +109,17 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
+                        const movieCard = form.closest('.movie-card');
+                        const movieId = movieCard.getAttribute('data-movie-id');
+                        const sideCard = document.querySelector(`.side-card[data-movie-id="${movieId}"]`);
+
                         displayFlashMessage('alert-success', data.message);
-                        form.closest('.movie-card').remove();
+                        movieCard.remove();
+
+                        if (sideCard && !sideCard.classList.contains('d-none')) {
+                            sideCard.classList.add('hide');
+                            sideCard.addEventListener('animationend', () => sideCard.classList.add('d-none'), { once: true });
+                        }
                     } else {
                         if (data.redirectToLogin) {
                             window.location.href = '/Auth/Login';
@@ -138,7 +148,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             flashMessageContainer.classList.remove('show');
             flashMessageContainer.classList.add('fade');
             setTimeout(() => flashMessageContainer.remove(), 150);
-        }, 5000);
+        }, 3500);
     }
 });
 
@@ -147,23 +157,23 @@ const swiperEl = document.querySelector('swiper-container')
 Object.assign(swiperEl, {
     breakpoints: {
         345: {
-            slidesPerView: 2,
-            spaceBetween: 15,
+            slidesPerView: 1,
+            spaceBetween: 150,
             centeredSlides: true,
         },
-        640: {
+        577: {
+            slidesPerView: 3,
+            spaceBetween: 150,
+            centeredSlides: false,
+        },
+        600: {
             slidesPerView: 2,
-            spaceBetween: 10,
+            spaceBetween: 150,
             centeredSlides: false,
         },
         768: {
-            slidesPerView: 2,
-            spaceBetween: 10,
-            centeredSlides: false,
-        },
-        769: {
-            slidesPerView: 2,
-            spaceBetween: 10,
+            slidesPerView: 3,
+            spaceBetween: 250,
             centeredSlides: false,
         },
         992: {
