@@ -410,6 +410,10 @@ html .swiper-button-next, html .swiper-button-prev {
 }
 
 @media (max-width: 576px) {
+    html {
+        font-size: .8rem;
+    }
+
     #advert-carousel {
         width: 100vw;
     }
@@ -480,11 +484,13 @@ html .swiper-button-next, html .swiper-button-prev {
     }
 }
 
-@media (min-width: 768px) {
+@media (min-width: 600px) {
     html {
         font-size: 1rem;
     }
+}
 
+@media (min-width: 768px) {
     #advert-carousel {
         width: 100vw;
     }
