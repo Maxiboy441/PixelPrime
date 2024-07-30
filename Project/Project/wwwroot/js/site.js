@@ -109,8 +109,17 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
+                        const movieCard = form.closest('.movie-card');
+                        const movieId = movieCard.getAttribute('data-movie-id');
+                        const sideCard = document.querySelector(`.side-card[data-movie-id="${movieId}"]`);
+
                         displayFlashMessage('alert-success', data.message);
-                        form.closest('.movie-card').remove();
+                        movieCard.remove();
+
+                        if (sideCard && !sideCard.classList.contains('d-none')) {
+                            sideCard.classList.add('hide');
+                            sideCard.addEventListener('animationend', () => sideCard.classList.add('d-none'), { once: true });
+                        }
                     } else {
                         if (data.redirectToLogin) {
                             window.location.href = '/Auth/Login';
@@ -139,7 +148,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             flashMessageContainer.classList.remove('show');
             flashMessageContainer.classList.add('fade');
             setTimeout(() => flashMessageContainer.remove(), 150);
-        }, 5000);
+        }, 3500);
     }
 });
 
