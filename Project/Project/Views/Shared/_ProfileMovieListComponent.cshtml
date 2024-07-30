@@ -12,7 +12,6 @@
 <div class="d-flex profile-movie-container">
     @await Html.PartialAsync("_ProfileMovieCardComponent", Tuple.Create(Model.Item1, Model.Item2, Model.Item3))
 
-
     @*SIDE CARD*@
 
     @if (Model.Item1 != null && Model.Item1.Any())
