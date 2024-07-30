@@ -166,7 +166,11 @@
                                        review.Text,
                                        $"/content/{Model.Movie.Id}/update-review"))
 
-                                    @await Html.PartialAsync("_DeleteConfirmationModal", Tuple.Create(@Model.Movie.Id, "/content/@Model.Movie.Id/delete-review"))
+                                    @await Html.PartialAsync("_DeleteConfirmationModal",Tuple.Create(
+                                        @Model.Movie.Id,
+                                        "/content/@Model.Movie.Id/delete-review",
+                                        "Are you sure you want to delete your review?",
+                                        "Delete"))
                                 </div>
                             }
                         </div>
