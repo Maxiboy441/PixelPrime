@@ -25,7 +25,14 @@
             <div class="d-flex justify-content-between flex-column">
                 <div class="modal-header">
                     <div>
-                        <h5 class="modal-title text-dark" id="exampleModalLongTitle">@movieTitle</h5>
+                        @if (!string.IsNullOrEmpty(Context.Session.GetString("CurrentUser")))
+                        {
+                            <h5 class="modal-title text-dark" id="exampleModalLongTitle">@movieTitle</h5>
+                        }
+                        else
+                        {
+                            <h5 class="modal-title text-dark" id="exampleModalLongTitle">Sign in  in to leave your rating</h5>
+                        }
                     </div>
                     <div>
                         @await Html.PartialAsync("_PrimaryButton", Tuple.Create("X", "", "btn-without pe-auto", "type=button data-dismiss=modal", "button"))
