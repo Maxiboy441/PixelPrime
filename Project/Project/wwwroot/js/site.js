@@ -157,23 +157,23 @@ const swiperEl = document.querySelector('swiper-container')
 Object.assign(swiperEl, {
     breakpoints: {
         345: {
-            slidesPerView: 2,
-            spaceBetween: 15,
+            slidesPerView: 1,
+            spaceBetween: 150,
             centeredSlides: true,
         },
-        640: {
+        577: {
+            slidesPerView: 3,
+            spaceBetween: 150,
+            centeredSlides: false,
+        },
+        600: {
             slidesPerView: 2,
-            spaceBetween: 10,
+            spaceBetween: 150,
             centeredSlides: false,
         },
         768: {
-            slidesPerView: 2,
-            spaceBetween: 10,
-            centeredSlides: false,
-        },
-        769: {
-            slidesPerView: 2,
-            spaceBetween: 10,
+            slidesPerView: 3,
+            spaceBetween: 250,
             centeredSlides: false,
         },
         992: {
