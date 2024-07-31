@@ -78,6 +78,17 @@ a:hover {
     color: var(--purple-color)
 }
 
+.error-msg-link {
+    color: #831F29;
+    text-decoration: underline;
+    transition: all .2s;
+}
+
+.error-msg-link:hover {
+    color: #FF6F61;
+    text-decoration: underline;
+}
+
 .nav-link:hover {
     color: var(--purple-color) !important;
 }

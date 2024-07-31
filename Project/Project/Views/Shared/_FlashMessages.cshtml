@@ -9,7 +9,7 @@
     else if (TempData["FailMessage"] != null)
     {
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            @TempData["FailMessage"]
+            @Html.Raw(TempData["FailMessage"])
             <button type="button" class="btn btn-close" data-dismiss="alert" aria-label="Close" />
         </div>
     }

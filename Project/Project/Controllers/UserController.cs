@@ -125,7 +125,6 @@ public class UserController : Controller
             return View("NotFound");
         }
 
-        // Start a transaction
         using (var transaction = await _context.Database.BeginTransactionAsync())
         {
             try
@@ -137,17 +136,13 @@ public class UserController : Controller
                     return View("NotFound");
                 }
 
-                // Remove user-related data
                 _context.Users.Remove(user);
 
-                // Commit transaction
                 await _context.SaveChangesAsync();
                 await transaction.CommitAsync();
 
-                // Clear session
                 HttpContext.Session.Clear();
 
-                // Log the successful deletion
                 _logger.LogInformation($"User {currentUser.Id} deleted successfully.");
 
                 TempData["SuccessMessage"] = "Account successfully deleted!";
@@ -155,14 +150,13 @@ public class UserController : Controller
             }
             catch (Exception ex)
             {
-                // Rollback transaction in case of error
                 await transaction.RollbackAsync();
 
-                // Log the error
                 _logger.LogError(ex, $"Error deleting user {currentUser.Id}.");
 
-                // Return an error view or message
-                TempData["ErrorMessage"] = "An error occurred while deleting the account.";
+                TempData["FailMessage"] =
+                "An error occurred while deleting the account. " +
+                "Please try again later or reach out to us <a href='/home/info' class='error-msg-link'>here</a>.";
                 return RedirectToAction("Index", "Home");
             }
         }
