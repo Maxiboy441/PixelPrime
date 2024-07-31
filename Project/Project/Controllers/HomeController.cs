@@ -43,7 +43,7 @@ public class HomeController : Controller
         return View();
     }
 
-    public IActionResult Info()
+    public IActionResult Impressum()
     {
         return View();
     }
