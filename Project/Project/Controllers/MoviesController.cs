@@ -11,16 +11,14 @@ namespace Project.Controllers
     public class MoviesController : Controller
     {
         private readonly DataContext _context;
-        private readonly MovieApiService _movieApiService;
         private readonly ILogger<MoviesController> _logger;
         private readonly CacheService _cache;
 
-        public MoviesController(CacheService cache, ILogger<MoviesController> logger, DataContext context, MovieApiService movieApiService)
+        public MoviesController(CacheService cache, ILogger<MoviesController> logger, DataContext context)
         {
             _cache = cache;
             _logger = logger;
             _context = context;
-            _movieApiService = movieApiService;
         }
 
         [HttpPost]
