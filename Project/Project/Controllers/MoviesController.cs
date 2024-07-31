@@ -203,6 +203,11 @@ namespace Project.Controllers
         {
             var movie = await _cache.GetContentAsync(id);
 
+            if (movie == null)
+            {
+                return View("NotFound");
+            }
+
             var reviews = await _context.Reviews
                 .Where(review => review.Movie_id == id)
                 .Include(review => review.User)
