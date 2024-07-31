@@ -1,14 +1,14 @@
-﻿<div class="container">
+﻿<div class="container flash-container">
     @if (TempData["SuccessMessage"] != null)
     {
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <div class="alert alert-success alert-dismissible fade show custom-alert" role="alert">
             @TempData["SuccessMessage"]
             <button type="button" class="btn btn-close" data-dismiss="alert" aria-label="Close" />
         </div>
     }
     else if (TempData["FailMessage"] != null)
     {
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <div class="alert alert-danger alert-dismissible fade show custom-alert" role="alert">
             @Html.Raw(TempData["FailMessage"])
             <button type="button" class="btn btn-close" data-dismiss="alert" aria-label="Close" />
         </div>
