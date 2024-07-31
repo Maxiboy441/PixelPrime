@@ -1,17 +1,15 @@
-﻿using System.Web;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Project.Services;
 
 namespace Project.Controllers
 {
     public class ApiController : ControllerBase
     {
-        private readonly HttpClient _httpClient;
-        private readonly string? _apiKey;
+        private readonly CacheService _cache;
 
-        public ApiController(IConfiguration configuration, HttpClient httpClient)
+        public ApiController(CacheService cache)
         {
-            _httpClient = httpClient;
-            _apiKey = configuration["Api:MovieApi"];
+            _cache = cache;
         }
 
         [HttpGet]
@@ -19,10 +17,7 @@ namespace Project.Controllers
         {
             try
             {
-                var encodedSearchTerm = HttpUtility.UrlEncode(s);
-                var apiUrl = $"https://www.omdbapi.com/?apikey={_apiKey}&s={encodedSearchTerm}";
-
-                var response = await _httpClient.GetStringAsync(apiUrl);
+                var response = await _cache.GetJsonAsyncByName(s);
 
                 return Content(response, "application/json");
             }
@@ -39,11 +34,7 @@ namespace Project.Controllers
         {
             try
             {
-                var encodedSearchTerm = HttpUtility.UrlEncode(id);
-                Console.WriteLine($"id{encodedSearchTerm}");
-                var apiUrl = $"https://www.omdbapi.com/?apikey={_apiKey}&i={id}";
-
-                var response = await _httpClient.GetStringAsync(apiUrl);
+                var response = await _cache.GetJsonAsyncById(id);
 
                 return Content(response, "application/json");
             }
