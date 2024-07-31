@@ -131,6 +131,11 @@ app.MapControllerRoute(
     defaults: new { controller = "User", action = "Update" });
 
 app.MapControllerRoute(
+    name: "account",
+    pattern: "user/account/",
+    defaults: new { controller = "User", action = "Delete" });
+
+app.MapControllerRoute(
     name: "actor",
     pattern: "actor/{name?}",
     defaults: new { controller = "Actor", action = "Show" });
