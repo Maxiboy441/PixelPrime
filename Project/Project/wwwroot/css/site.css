@@ -231,7 +231,7 @@ html .swiper-button-next, html .swiper-button-prev {
     position: relative;
 }
 
-.profile-alert {
+.custom-alert {
     position: absolute;
     width: 30%;
     right: 0;

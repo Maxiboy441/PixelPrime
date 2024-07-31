@@ -137,7 +137,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     function displayFlashMessage(alertType, message) {
         const flashMessageContainer = document.createElement('div');
-        flashMessageContainer.className = `alert ${alertType} alert-dismissible fade show profile-alert`;
+        flashMessageContainer.className = `alert ${alertType} alert-dismissible fade show custom-alert`;
         flashMessageContainer.role = 'alert';
         flashMessageContainer.innerHTML = `${message}<button type="button" class="btn btn-close" data-dismiss="alert" aria-label="Close" />`;
 
@@ -150,56 +150,70 @@ document.addEventListener('DOMContentLoaded', (event) => {
             setTimeout(() => flashMessageContainer.remove(), 150);
         }, 3500);
     }
+
+
+    // General flash messages
+    const flashContainer = document.querySelector(".flash-container");
+    const flashMessage = flashContainer.querySelector('.alert');
+
+    if (flashContainer) {
+        setTimeout(() => {
+            flashContainer.classList.remove('show');
+            flashContainer.classList.add('fade');
+        }, 3500);
+    }
 });
 
 // Movies Slider
 const swiperEl = document.querySelector('swiper-container')
-Object.assign(swiperEl, {
-    breakpoints: {
-        345: {
-            slidesPerView: 1,
-            spaceBetween: 150,
-            centeredSlides: true,
-        },
-        577: {
-            slidesPerView: 3,
-            spaceBetween: 150,
-            centeredSlides: false,
-        },
-        600: {
-            slidesPerView: 2,
-            spaceBetween: 150,
-            centeredSlides: false,
-        },
-        768: {
-            slidesPerView: 3,
-            spaceBetween: 250,
-            centeredSlides: false,
-        },
-        992: {
-            slidesPerView: 3,
-            spaceBetween: 10,
-            centeredSlides: false
-        },
-        1024: {
-            slidesPerView: 3,
-            spaceBetween: 10,
-            centeredSlides: false
-        },
-        1245: {
-            slidesPerView: 3,
-            spaceBetween: 10,
-            centeredSlides: false
-        },
-        1399: {
-            slidesPerView: 4,
-            spaceBetween: 10,
-            centeredSlides: false
-        },
-    },
-});
-swiperEl.initialize();
 
+if (swiperEl) {
+    Object.assign(swiperEl, {
+        breakpoints: {
+            345: {
+                slidesPerView: 1,
+                spaceBetween: 150,
+                centeredSlides: true,
+            },
+            577: {
+                slidesPerView: 3,
+                spaceBetween: 150,
+                centeredSlides: false,
+            },
+            600: {
+                slidesPerView: 2,
+                spaceBetween: 150,
+                centeredSlides: false,
+            },
+            768: {
+                slidesPerView: 3,
+                spaceBetween: 250,
+                centeredSlides: false,
+            },
+            992: {
+                slidesPerView: 3,
+                spaceBetween: 10,
+                centeredSlides: false
+            },
+            1024: {
+                slidesPerView: 3,
+                spaceBetween: 10,
+                centeredSlides: false
+            },
+            1245: {
+                slidesPerView: 3,
+                spaceBetween: 10,
+                centeredSlides: false
+            },
+            1399: {
+                slidesPerView: 4,
+                spaceBetween: 10,
+                centeredSlides: false
+            },
+        },
+    });
+    swiperEl.initialize();
+}
 
 // Movie Rating Star
 const stars = document.querySelectorAll('.star');
