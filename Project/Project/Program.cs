@@ -15,7 +15,7 @@ builder.Services.AddScoped<BackgroundRecommendationService>();
 builder.Services.AddHostedService<BackgroundRecommendationService>();
 builder.Services.AddScoped<ActorAPIService>();
 builder.Services.AddScoped<WikipediaMediaAPIService>();
-
+builder.Services.AddScoped<CacheService>();
 
 builder.Services.AddControllersWithViews();
 
@@ -30,6 +30,7 @@ builder.Services.AddDbContext<DataContext>(
 );
 
 builder.Services.AddDistributedMemoryCache();
+builder.Services.AddMemoryCache();
 
 builder.Services.AddSession(options =>
 {

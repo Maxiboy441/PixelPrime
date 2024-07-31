@@ -13,9 +13,11 @@ namespace Project.Controllers
         private readonly DataContext _context;
         private readonly MovieApiService _movieApiService;
         private readonly ILogger<MoviesController> _logger;
+        private readonly CacheService _cache;
 
-        public MoviesController(ILogger<MoviesController> logger, DataContext context, MovieApiService movieApiService)
+        public MoviesController(CacheService cache, ILogger<MoviesController> logger, DataContext context, MovieApiService movieApiService)
         {
+            _cache = cache;
             _logger = logger;
             _context = context;
             _movieApiService = movieApiService;
@@ -199,32 +201,12 @@ namespace Project.Controllers
         [HttpGet]
         public async Task<IActionResult> Show(string id)
         {
-            var movieJson = HttpContext.Session.GetString($"movie_{id}");
+            var movie = await _cache.GetContentAsync(id);
+
             var reviews = await _context.Reviews
                 .Where(review => review.Movie_id == id)
                 .Include(review => review.User)
                 .ToListAsync();
-
-            Movie movie = null;
-
-            if (!string.IsNullOrEmpty(movieJson))
-            {
-                movie = JsonConvert.DeserializeObject<Movie>(movieJson);
-                Console.WriteLine($"Movie fetched from session: {movie.Title}");
-            }
-            else
-            {
-                movie = await _movieApiService.GetMovieById(id);
-
-                if (movie == null)
-                {
-                    return View("NotFound");
-                }
-
-                movieJson = JsonConvert.SerializeObject(movie);
-                HttpContext.Session.SetString($"movie_{id}", movieJson);
-                Console.WriteLine($"Content fetched from API and saved to session: {movie.Title}");
-            }
 
             var userJson = HttpContext.Session.GetString("CurrentUser");
             int userId = 0;
