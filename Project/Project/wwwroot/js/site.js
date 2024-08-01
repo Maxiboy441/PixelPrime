@@ -13,25 +13,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
             const movieDetailsId = movie.getAttribute('data-movie-id');
             const detailsContainer = document.getElementById(`movie-details-${movieDetailsId}`);
 
-            // Check if the movie details are in session storage
-            const storedMovie = sessionStorage.getItem(`movie_${movieId}`);
-            if (storedMovie) {
-                // If found in session storage, use the stored data
-                const movieData = JSON.parse(storedMovie);
-                displayMovieDetails(detailsContainer, movieData);
-            } else {
-                // If not found, fetch from API
-                try {
-                    const response = await axios.get(`/SearchById?id=${movieId}`);
-                    const { Genre, Plot, imdbID } = response.data;
+            try {
+                const response = await axios.get(`/SearchById?id=${movieId}`);
+                const { Genre, Plot, imdbID } = response.data;
 
-                    // Store the fetched movie details in session storage
-                    sessionStorage.setItem(`movie_${movieId}`, JSON.stringify(response.data));
-
-                    displayMovieDetails(detailsContainer, response.data);
-                } catch (error) {
-                    console.error(error);
-                }
+                displayMovieDetails(detailsContainer, response.data);
+            } catch (error) {
+                console.error(error);
             }
         });
     });
