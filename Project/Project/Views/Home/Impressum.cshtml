@@ -1,10 +1,10 @@
 ﻿@{
-    ViewData["Title"] = "Impressum";
+ViewData["Title"] = "Legal Notice";
 }
 
 <div class="container mt-5">
-    <div class="impress mb-5">
-        
+    <div class="legal-notice mb-5">
+
         <div class="information mb-5">
             <h1 class="mb-4">Information</h1>
             <p class="lead mb-5">This project was developed as part of the software engineering apprenticeship program at ITS Stuttgart. It represents the culmination of our second-year studies, showcasing the skills and knowledge we've acquired throughout our training.</p>
@@ -12,88 +12,96 @@
 
         <div class="repo-card mb-5">
             <div class="card bg-dark text-white">
-                <div class="card-body impress-card-body d-flex flex-column flex-sm-row align-items-center">
+                <div class="card-body legal-notice-card-body d-flex flex-column flex-sm-row align-items-center">
                     <div class="mb-3 mb-sm-0 me-sm-4">
                         <img src="~/images/pixel_prime_logo.png" alt="PixelPrime Logo" class="img-fluid" style="max-width: 100px;">
                     </div>
                     <div>
-                        <h5 class="card-title impress-card-title">PixelPrime</h5>
+                        <h5 class="card-title legal-notice-card-title">PixelPrime</h5>
                         <h6 class="card-subtitle mb-2 text-muted">GitHub Repository</h6>
-                        <p class="card-text impress-card-text">Check out our project repository on GitHub for more details and source code.</p>
+                        <p class="card-text legal-notice-card-text">Check out our project repository on GitHub for more details and source code.</p>
                         @await Html.PartialAsync("_PrimaryButton",
-                        Tuple.Create(
-                        "View on GitHub",
-                        "style-1",
-                        "",
-                        "href=https://github.com/Maxiboy441/PixelPrime target=_blank",
-                        "a"))
+                            Tuple.Create(
+                                "View on GitHub",
+                                "style-1",
+                                "",
+                                "href=https://github.com/Maxiboy441/PixelPrime target=_blank",
+                                "a"))
                     </div>
                 </div>
             </div>
         </div>
-        
+
         <div class="impress-card">
-            <div class='impressum'>
-                <h1>Impressum</h1>
-                <p>Angaben gemäß § 5 DDG</p>
+        <div class="legal-notice-card">
+            <div class='legal-notice'>
+                <h1>Legal Notice</h1>
+                <p>Information according to § 5 TMG</p>
                 <p>Maximilian Huber <br>
                     Rümpflestr. 14/1<br>
                     71665 Horrheim <br>
                     <a href='mailto:Maxiboy44YT@gmail.com'>Maxiboy44YT@gmail.com</a><br><br>
                 </p>
-                <p><strong>Haftungsausschluss: </strong><br><br><strong>Haftung für Inhalte</strong><br><br>
-                Die Inhalte unserer Seiten wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte können wir jedoch keine Gewähr übernehmen. Als Diensteanbieter sind wir gemäß § 7 Abs.1 DDG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 DDG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen. Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den allgemeinen Gesetzen bleiben hiervon unberührt. Eine diesbezügliche Haftung ist jedoch erst ab dem Zeitpunkt der Kenntnis einer konkreten Rechtsverletzung möglich. Bei Bekanntwerden von entsprechenden Rechtsverletzungen werden wir diese Inhalte umgehend entfernen.<br><br><strong>Haftung für Links</strong><br><br>
-                Unser Angebot enthält Links zu externen Webseiten Dritter, auf deren Inhalte wir keinen Einfluss haben. Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich. Die verlinkten Seiten wurden zum Zeitpunkt der Verlinkung auf mögliche Rechtsverstöße überprüft. Rechtswidrige Inhalte waren zum Zeitpunkt der Verlinkung nicht erkennbar. Eine permanente inhaltliche Kontrolle der verlinkten Seiten ist jedoch ohne konkrete Anhaltspunkte einer Rechtsverletzung nicht zumutbar. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Links umgehend entfernen.<br><br><strong>Datenschutz</strong><br><br>
-                Die Nutzung unserer Webseite ist in der Regel ohne Angabe personenbezogener Daten möglich. Soweit auf unseren Seiten personenbezogene Daten (beispielsweise Name, Anschrift oder eMail-Adressen) erhoben werden, erfolgt dies, soweit möglich, stets auf freiwilliger Basis. Diese Daten werden ohne Ihre ausdrückliche Zustimmung nicht an Dritte weitergegeben. <br>
-                Wir weisen darauf hin, dass die Datenübertragung im Internet (z.B. bei der Kommunikation per E-Mail) Sicherheitslücken aufweisen kann. Ein lückenloser Schutz der Daten vor dem Zugriff durch Dritte ist nicht möglich. <br>
-                Der Nutzung von im Rahmen der Impressumspflicht veröffentlichten Kontaktdaten durch Dritte zur Übersendung von nicht ausdrücklich angeforderter Werbung und Informationsmaterialien wird hiermit ausdrücklich widersprochen. Die Betreiber der Seiten behalten sich ausdrücklich rechtliche Schritte im Falle der unverlangten Zusendung von Werbeinformationen, etwa durch Spam-Mails, vor.
+                <p><strong>Disclaimer: </strong><br><br><strong>Liability for content</strong><br><br>
+                    The contents of our pages were created with the utmost care. However, we cannot guarantee the accuracy, completeness, and timeliness of the contents. As a service provider, we are responsible for our own content on these pages according to general laws per § 7 paragraph 1 TMG. However, according to §§ 8 to 10 TMG, we are not obligated as a service provider to monitor transmitted or stored third-party information or to investigate circumstances that indicate illegal activity. Obligations to remove or block the use of information under general laws remain unaffected. Liability in this regard is, however, only possible from the time of knowledge of a specific infringement. Upon notification of such violations, we will remove this content immediately.<br><br><strong>Liability for links</strong><br><br>
+                    Our offer contains links to external websites of third parties over whose contents we have no influence. Therefore, we cannot assume any liability for these external contents. The respective provider or operator of the pages is always responsible for the contents of the linked pages. The linked pages were checked for possible legal violations at the time of linking. Illegal contents were not recognizable at the time of linking. However, permanent control of the content of the linked pages is not reasonable without concrete evidence of a violation. Upon notification of violations, we will remove such links immediately.<br><br><strong>Data protection</strong><br><br>
+                    The use of our website is generally possible without providing personal data. As far as personal data (such as name, address, or email addresses) are collected on our pages, this is always done on a voluntary basis as much as possible. This data will not be passed on to third parties without your express consent. <br>
+                    We point out that data transmission over the Internet (e.g., communication by email) can have security vulnerabilities. Complete protection of data from access by third parties is not possible. <br>
+                    The use of contact data published within the scope of the imprint obligation by third parties for sending unsolicited advertising and information materials is hereby expressly contradicted. The operators of the pages expressly reserve the right to take legal action in the event of unsolicited sending of advertising information, such as spam emails.
             </div>
         </div>
         <br><br><br><br>
-        <div class="impress-card">
-            <div class='impressum'>
-                <h1>DSE</h1>
+        <div class="legal-notice-card">
+            <div class='legal-notice'>
+                <h1>Privacy Policy</h1>
                 <br><br>
-                <strong>Erhobene Daten</strong>
-                <p>Wir erheben und verarbeiten die folgende personenbezogene Daten:</p>
+                <strong>Data Collected</strong>
+                <p>We collect and process the following personal data:</p>
                 <ul>
-                    <li>E-Mail-Adresse</li>
+                    <li><strong>Login Data</strong></li>
+                    <li>Email address</li>
+                    <li>Username</li>
+                    <li>IP address</li>
+                    <li>Date of last login</li>
+                    <li><strong>Usage Data</strong></li>
+                    <li>Movie/TV show preferences</li>
                 </ul>
                 <br>
-                <strong>Zweck der Datenverarbeitung</strong>
-                <p>Die Erhebung und Verarbeitung der E-Mail-Adresse erfolgt zum Zweck des Logins und der Nutzung der Plattform.</p>
+                <strong>Purpose of Data Processing</strong>
+                <p>The collection and processing of the email address is for the purpose of logging in and using the platform.</p>
                 <br>
-                <strong>Rechtsgrundlage der Verarbeitung</strong>
-                <p>Die Verarbeitung der Daten erfolgt auf Grundlage Ihrer Einwilligung (Art. 6 Abs. 1 lit. a DSGVO) und zur Erfüllung des Vertrags über die Nutzung der Plattform (Art. 6 Abs. 1 lit. b DSGVO).</p>
+                <strong>Legal Basis for Processing</strong>
+                <p>The processing of data is based on your consent (Art. 6 para. 1 lit. a GDPR) and to fulfill the contract for the use of the platform (Art. 6 para. 1 lit. b GDPR).</p>
                 <br>
-                <strong>Weitergabe der Daten</strong>
-                <p>Ihre Daten werden nicht an Dritte weitergegeben.</p>
+                <strong>Data Sharing</strong>
+                <p>Your data will not be shared with third parties.</p>
                 <br>
-                <strong>Datenübermittlung in Drittländer</strong>
-                <p>Es erfolgt keine Übermittlung Ihrer Daten in Länder außerhalb der Europäischen Union (EU) oder des Europäischen Wirtschaftsraums (EWR).</p>
+                <strong>Data Transfer to Third Countries</strong>
+                <p>There is no transfer of your data to countries outside the European Union (EU) or the European Economic Area (EEA).</p>
                 <br>
-                <strong>Speicherdauer</strong>
-                <p>Ihre Daten werden gespeichert, solange die Plattform betrieben wird oder bis Sie die Löschung Ihrer Daten verlangen.</p>
+                <strong>Data Retention</strong>
+                <p>Your data will be stored as long as the platform is operated or until you request the deletion of your data.</p>
                 <br>
-                <strong>Betroffenenrechte</strong>
-                <p>Sie haben das Recht:</p>
+                <strong>Rights of the Data Subject</strong>
+                <p>You have the right to:</p>
                 <ul>
-                    <li>Auskunft über die von uns verarbeiteten personenbezogenen Daten zu verlangen (Art. 15 DSGVO),</li>
-                    <li>unverzüglich die Berichtigung unrichtiger oder Vervollständigung Ihrer bei uns gespeicherten personenbezogenen Daten zu verlangen (Art. 16 DSGVO),</li>
-                    <li>die Löschung Ihrer bei uns gespeicherten personenbezogenen Daten zu verlangen (Art. 17 DSGVO),</li>
-                    <li>die Einschränkung der Verarbeitung Ihrer personenbezogenen Daten zu verlangen (Art. 18 DSGVO),</li>
-                    <li>die Übertragung Ihrer personenbezogenen Daten zu verlangen (Art. 20 DSGVO).</li>
+                    <li>Request information about the personal data we process (Art. 15 GDPR),</li>
+                    <li>Request the correction of incorrect or completion of your personal data stored by us (Art. 16 GDPR),</li>
+                    <li>Request the deletion of your personal data stored by us (Art. 17 GDPR),</li>
+                    <li>Request the restriction of the processing of your personal data (Art. 18 GDPR),</li>
+                    <li>Request the transfer of your personal data (Art. 20 GDPR).</li>
                 </ul>
                 <br>
-                <strong>Automatisierte Entscheidungsfindung</strong>
-                <p>Es erfolgt keine automatisierte Entscheidungsfindung oder Profiling.</p>
+                <strong>Automated Decision Making</strong>
+                <p>There is no automated decision making or profiling.</p>
                 <br><br>
-                <strong>Änderungen der Datenschutzerklärung</strong>
-                <p>Diese Datenschutzerklärung wird nicht geändert. Falls Änderungen erforderlich werden, werden wir diese hier veröffentlichen.</p>
+                <strong>Changes to the Privacy Policy</strong>
+                <p>This privacy policy will not be changed. If changes become necessary, we will publish them here.</p>
                 <br>
-                <strong>Datensicherheit</strong>
-                <p>Wir setzen technische und organisatorische Sicherheitsmaßnahmen ein, um Ihre Daten vor Manipulation, Verlust, Zerstörung oder unbefugtem Zugriff zu schützen.</p>
+                <strong>Data Security</strong>
+                <p>We use technical and organizational security measures to protect your data from manipulation, loss, destruction, or unauthorized access.</p>
             </div>
         </div>
     </div>
+</div>
 </div>
