@@ -28,7 +28,7 @@ public class ActorAPIService
 
         var content = await response.Content.ReadAsStringAsync();
         var celebrities = JsonConvert.DeserializeObject<List<CelebrityResponse>>(content);
-        
+    
         var service = new WikipediaMediaAPIService();
         var imageUrl = await service.GetFirstImageUrlAsync(actorName);
 
@@ -48,14 +48,19 @@ public class ActorAPIService
             };
         }
 
-        var celebrity = celebrities.FirstOrDefault(c => c.occupation.Contains("actor")) ?? celebrities.First();
+        var celebrity = celebrities.FirstOrDefault(c => string.Equals(c.name, actorName, StringComparison.OrdinalIgnoreCase));
+
+        if (celebrity == null)
+        {
+            celebrity = celebrities.First();
+        }
 
         var newActor = new Actor
         {
             Name = ToTitleCase(celebrity.name),
             NetWorth = celebrity.net_worth,
             Gender = CapitalizeFirstLetter(celebrity.gender),
-            Nationality = celebrity.nationality.ToUpper(),
+            Nationality = string.IsNullOrEmpty(celebrity.nationality) ? "NoN" : celebrity.nationality.ToUpper(),
             Height = (decimal)celebrity.height,
             Birthday = ParseBirthday(celebrity.birthday),
             IsAlive = celebrity.is_alive,
@@ -68,6 +73,7 @@ public class ActorAPIService
 
         return newActor;
     }
+
 
     private DateTime ParseBirthday(string birthday)
     {
