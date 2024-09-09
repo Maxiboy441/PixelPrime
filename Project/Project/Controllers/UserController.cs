@@ -22,12 +22,17 @@ public class UserController : Controller
     [HttpGet]
     public IActionResult Update()
     {
-        if (!string.IsNullOrEmpty(HttpContext.Session.GetString("CurrentUser")))
+        var userJson = HttpContext.Session.GetString("CurrentUser");
+
+        if (!string.IsNullOrEmpty(userJson))
         {
+            var currentUser = JsonConvert.DeserializeObject<User>(userJson);
+            ViewBag.UserName = currentUser.Name;
+            ViewBag.UserEmail = currentUser.Email;
             return View();
         }
-        return RedirectToAction("Login", "Auth");
 
+        return RedirectToAction("Login", "Auth");
     }
 
     [HttpPost]
@@ -43,6 +48,8 @@ public class UserController : Controller
 
             if (!ModelState.IsValid)
             {
+                ViewBag.UserName = currentUser.Name;
+                ViewBag.UserEmail = currentUser.Email;
                 return View(model);
             }
 
@@ -58,6 +65,8 @@ public class UserController : Controller
                 if (userExists)
                 {
                     ModelState.AddModelError("Email", "A user with this email already exists.");
+                    ViewBag.UserName = currentUser.Name;
+                    ViewBag.UserEmail = currentUser.Email;
                     return View(model);
                 }
 
@@ -69,6 +78,8 @@ public class UserController : Controller
                 if (model.Password != model.PasswordConfirmation)
                 {
                     ModelState.AddModelError("PasswordConfirmation", "The password and confirmation password do not match.");
+                    ViewBag.UserName = currentUser.Name;
+                    ViewBag.UserEmail = currentUser.Email;
                     return View(model);
                 }
 
@@ -79,12 +90,76 @@ public class UserController : Controller
             _context.Users.Update(user);
             await _context.SaveChangesAsync();
 
+            var userWithoutPassword = new User
+            {
+                Id = user.Id,
+                Name = user.Name,
+                Email = user.Email,
+            };
+
+            HttpContext.Session.SetString("CurrentUser", JsonConvert.SerializeObject(userWithoutPassword));
+
             TempData["SuccessMessage"] = "Account updated successfully";
 
             return RedirectToAction("Update", "User");
 
         }
         return RedirectToAction("Login", "Auth");
+    }
+
+    [HttpPost]
+    [HttpPost]
+    public async Task<IActionResult> Delete()
+    {
+        var userJson = HttpContext.Session.GetString("CurrentUser");
+
+        if (userJson == null)
+        {
+            var originalUrl = Request.Headers["Referer"].ToString();
+            return RedirectToAction("Login", "Auth", new { returnUrl = originalUrl });
+        }
+
+        var currentUser = JsonConvert.DeserializeObject<User>(userJson);
+        if (currentUser == null)
+        {
+            return View("NotFound");
+        }
+
+        using (var transaction = await _context.Database.BeginTransactionAsync())
+        {
+            try
+            {
+                var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == currentUser.Id);
+
+                if (user == null)
+                {
+                    return View("NotFound");
+                }
+
+                _context.Users.Remove(user);
+
+                await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
+
+                HttpContext.Session.Clear();
+
+                _logger.LogInformation($"User {currentUser.Id} deleted successfully.");
+
+                TempData["SuccessMessage"] = "Account successfully deleted!";
+                return RedirectToAction("Index", "Home");
+            }
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync();
+
+                _logger.LogError(ex, $"Error deleting user {currentUser.Id}.");
+
+                TempData["FailMessage"] =
+                "An error occurred while deleting the account. " +
+                "Please try again later or reach out to us <a href='/home/info' class='error-msg-link'>here</a>.";
+                return RedirectToAction("Index", "Home");
+            }
+        }
     }
 }
 

@@ -33,7 +33,7 @@ namespace Reviews.Controllers
 
                 if (existingReview != null)
                 {
-                    TempData["FailMessage"] = "You have already submitted a review for this movie.";
+                    TempData["FailMessage"] = $"You have already submitted a review for {movieTitle}.";
                     return Redirect(Request.Headers["Referer"].ToString());
                 }
 

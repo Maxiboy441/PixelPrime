@@ -16,10 +16,10 @@ const createAutoComplete = ({
     onOptionSelect,
     inputValue,
     fetchData
-}) => {
+    }) => {
     root.innerHTML = `
         <div class="dropdown w-100">
-            <input class="input me-2 form-control" type="text" placeholder="Search for a movie" id="searchInput" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <input class="input me-2 form-control" type="text" placeholder="Search for a movie or series" id="searchInput" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
             <div class="dropdown-menu w-100" aria-labelledby="searchInput">
                 <div class="results"></div>
@@ -63,7 +63,7 @@ const createAutoComplete = ({
         for (let item of items) {
             const option = document.createElement("a")
 
-            option.href = `/movies/${item.imdbID}`;
+            option.href = `/content/${item.imdbID}`;
 
             option.classList.add("dropdown-item")
             option.innerHTML = renderOption(item);
@@ -77,9 +77,7 @@ const createAutoComplete = ({
         }
     };
 
-
     input.addEventListener("input", debounce(onInput, 800)); //here it can be added how much delay
-
 
     document.addEventListener("click", (event) => {
         if (!root.contains(event.target)) {
@@ -110,10 +108,12 @@ const autoCompleteConfig = {
             return [];
         }
 
-        return response.data.Search
+        // Filter the results to only include movies and series
+        return response.data.Search.filter(item =>
+            item.Type === "movie" || item.Type === "series"
+        );
     }
 }
-
 
 createAutoComplete({
     ...autoCompleteConfig,

@@ -1,6 +1,6 @@
 @*Usage: @await Html.PartialAsync("_ReviewPopUpForm", Tuple.Create( "Movie_Id", "Movie_Title", "Movie_Poster", "Form_Action"))*@
 
-@model Tuple<string, string, string, string>
+@model Tuple<string, string, string, string, string>
 
 @{
     var returnUrl = Url.Action("Login", "Auth", new { returnUrl = Context.Request.Path });
@@ -45,7 +45,7 @@ Tuple.Create(
                         </div>
                         <div class="form-group">
                             <label class="text-black pb-2" for="review">Review</label>
-                            <textarea class="form-control" name="reviewText" id="reviewText" placeholder="How did you like the Movie?" style="max-width: 95%; height: 150px;" oninput="checkForm()"></textarea>
+                            <textarea class="form-control" name="reviewText" id="reviewText" placeholder="How did you like the @Model.Item5?" style="max-width: 95%; height: 150px;" oninput="checkForm()"></textarea>
                         </div>
 
                         <div class="modal-footer">

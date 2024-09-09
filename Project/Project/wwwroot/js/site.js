@@ -10,27 +10,16 @@ document.addEventListener('DOMContentLoaded', (event) => {
     mySpaceMovies.forEach(movie => {
         movie.addEventListener("click", async (e) => {
             const movieId = movie.getAttribute("data-imdb-id");
-            const detailsContainer = document.getElementById(`movie-details-${movieId}`);
+            const movieDetailsId = movie.getAttribute('data-movie-id');
+            const detailsContainer = document.getElementById(`movie-details-${movieDetailsId}`);
 
-            // Check if the movie details are in session storage
-            const storedMovie = sessionStorage.getItem(`movie_${movieId}`);
-            if (storedMovie) {
-                // If found in session storage, use the stored data
-                const movieData = JSON.parse(storedMovie);
-                displayMovieDetails(detailsContainer, movieData);
-            } else {
-                // If not found, fetch from API
-                try {
-                    const response = await axios.get(`/SearchById?id=${movieId}`);
-                    const { Genre, Plot, imdbID } = response.data;
+            try {
+                const response = await axios.get(`/SearchById?id=${movieId}`);
+                const { Genre, Plot, imdbID } = response.data;
 
-                    // Store the fetched movie details in session storage
-                    sessionStorage.setItem(`movie_${movieId}`, JSON.stringify(response.data));
-
-                    displayMovieDetails(detailsContainer, response.data);
-                } catch (error) {
-                    console.error(error);
-                }
+                displayMovieDetails(detailsContainer, response.data);
+            } catch (error) {
+                console.error(error);
             }
         });
     });
@@ -108,8 +97,17 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
+                        const movieCard = form.closest('.movie-card');
+                        const movieId = movieCard.getAttribute('data-movie-id');
+                        const sideCard = document.querySelector(`.side-card[data-movie-id="${movieId}"]`);
+
                         displayFlashMessage('alert-success', data.message);
-                        form.closest('.movie-card').remove();
+                        movieCard.remove();
+
+                        if (sideCard && !sideCard.classList.contains('d-none')) {
+                            sideCard.classList.add('hide');
+                            sideCard.addEventListener('animationend', () => sideCard.classList.add('d-none'), { once: true });
+                        }
                     } else {
                         if (data.redirectToLogin) {
                             window.location.href = '/Auth/Login';
@@ -127,7 +125,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     function displayFlashMessage(alertType, message) {
         const flashMessageContainer = document.createElement('div');
-        flashMessageContainer.className = `alert ${alertType} alert-dismissible fade show profile-alert`;
+        flashMessageContainer.className = `alert ${alertType} alert-dismissible fade show custom-alert`;
         flashMessageContainer.role = 'alert';
         flashMessageContainer.innerHTML = `${message}<button type="button" class="btn btn-close" data-dismiss="alert" aria-label="Close" />`;
 
@@ -138,58 +136,72 @@ document.addEventListener('DOMContentLoaded', (event) => {
             flashMessageContainer.classList.remove('show');
             flashMessageContainer.classList.add('fade');
             setTimeout(() => flashMessageContainer.remove(), 150);
-        }, 5000);
+        }, 3500);
+    }
+
+
+    // General flash messages
+    const flashContainer = document.querySelector(".flash-container");
+    const flashMessage = flashContainer.querySelector('.alert');
+
+    if (flashContainer) {
+        setTimeout(() => {
+            flashContainer.classList.remove('show');
+            flashContainer.classList.add('fade');
+        }, 3500);
     }
 });
 
 // Movies Slider
 const swiperEl = document.querySelector('swiper-container')
-Object.assign(swiperEl, {
-    breakpoints: {
-        345: {
-            slidesPerView: 2,
-            spaceBetween: 15,
-            centeredSlides: true,
-        },
-        640: {
-            slidesPerView: 2,
-            spaceBetween: 10,
-            centeredSlides: false,
-        },
-        768: {
-            slidesPerView: 2,
-            spaceBetween: 10,
-            centeredSlides: false,
-        },
-        769: {
-            slidesPerView: 2,
-            spaceBetween: 10,
-            centeredSlides: false,
-        },
-        992: {
-            slidesPerView: 3,
-            spaceBetween: 10,
-            centeredSlides: false
-        },
-        1024: {
-            slidesPerView: 3,
-            spaceBetween: 10,
-            centeredSlides: false
-        },
-        1245: {
-            slidesPerView: 3,
-            spaceBetween: 10,
-            centeredSlides: false
-        },
-        1399: {
-            slidesPerView: 4,
-            spaceBetween: 10,
-            centeredSlides: false
-        },
-    },
-});
-swiperEl.initialize();
 
+if (swiperEl) {
+    Object.assign(swiperEl, {
+        breakpoints: {
+            345: {
+                slidesPerView: 1,
+                spaceBetween: 150,
+                centeredSlides: true,
+            },
+            577: {
+                slidesPerView: 3,
+                spaceBetween: 150,
+                centeredSlides: false,
+            },
+            600: {
+                slidesPerView: 2,
+                spaceBetween: 150,
+                centeredSlides: false,
+            },
+            768: {
+                slidesPerView: 3,
+                spaceBetween: 250,
+                centeredSlides: false,
+            },
+            992: {
+                slidesPerView: 3,
+                spaceBetween: 10,
+                centeredSlides: false
+            },
+            1024: {
+                slidesPerView: 3,
+                spaceBetween: 10,
+                centeredSlides: false
+            },
+            1245: {
+                slidesPerView: 3,
+                spaceBetween: 10,
+                centeredSlides: false
+            },
+            1399: {
+                slidesPerView: 4,
+                spaceBetween: 10,
+                centeredSlides: false
+            },
+        },
+    });
+    swiperEl.initialize();
+}
 
 // Movie Rating Star
 const stars = document.querySelectorAll('.star');

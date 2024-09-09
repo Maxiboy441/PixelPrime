@@ -1,0 +1,107 @@
+﻿@{
+ViewData["Title"] = "Legal Notice";
+}
+
+<div class="container mt-5">
+    <div class="legal-notice mb-5">
+
+        <div class="information mb-5">
+            <h1 class="mb-4">Information</h1>
+            <p class="lead mb-5">This project was developed as part of the software engineering apprenticeship program at ITS Stuttgart. It represents the culmination of our second-year studies, showcasing the skills and knowledge we've acquired throughout our training.</p>
+        </div>
+
+        <div class="repo-card mb-5">
+            <div class="card bg-dark text-white">
+                <div class="card-body legal-notice-card-body d-flex flex-column flex-sm-row align-items-center">
+                    <div class="mb-3 mb-sm-0 me-sm-4">
+                        <img src="~/images/pixel_prime_logo.png" alt="PixelPrime Logo" class="img-fluid" style="max-width: 100px;">
+                    </div>
+                    <div>
+                        <h5 class="card-title legal-notice-card-title">PixelPrime</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">GitHub Repository</h6>
+                        <p class="card-text legal-notice-card-text">Check out our project repository on GitHub for more details and source code.</p>
+                        @await Html.PartialAsync("_PrimaryButton",
+                            Tuple.Create(
+                                "View on GitHub",
+                                "style-1",
+                                "",
+                                "href=https://github.com/Maxiboy441/PixelPrime target=_blank",
+                                "a"))
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="impress-card">
+        <div class="legal-notice-card">
+            <div class='legal-notice'>
+                <h1>Legal Notice</h1>
+                <p>Information according to § 5 TMG</p>
+                <p>Maximilian Huber <br>
+                    Rümpflestr. 14/1<br>
+                    71665 Horrheim <br>
+                    <a href='mailto:Maxiboy44YT@gmail.com'>Maxiboy44YT@gmail.com</a><br><br>
+                </p>
+                <p><strong>Disclaimer: </strong><br><br><strong>Liability for content</strong><br><br>
+                    The contents of our pages were created with the utmost care. However, we cannot guarantee the accuracy, completeness, and timeliness of the contents. As a service provider, we are responsible for our own content on these pages according to general laws per § 7 paragraph 1 TMG. However, according to §§ 8 to 10 TMG, we are not obligated as a service provider to monitor transmitted or stored third-party information or to investigate circumstances that indicate illegal activity. Obligations to remove or block the use of information under general laws remain unaffected. Liability in this regard is, however, only possible from the time of knowledge of a specific infringement. Upon notification of such violations, we will remove this content immediately.<br><br><strong>Liability for links</strong><br><br>
+                    Our offer contains links to external websites of third parties over whose contents we have no influence. Therefore, we cannot assume any liability for these external contents. The respective provider or operator of the pages is always responsible for the contents of the linked pages. The linked pages were checked for possible legal violations at the time of linking. Illegal contents were not recognizable at the time of linking. However, permanent control of the content of the linked pages is not reasonable without concrete evidence of a violation. Upon notification of violations, we will remove such links immediately.<br><br><strong>Data protection</strong><br><br>
+                    The use of our website is generally possible without providing personal data. As far as personal data (such as name, address, or email addresses) are collected on our pages, this is always done on a voluntary basis as much as possible. This data will not be passed on to third parties without your express consent. <br>
+                    We point out that data transmission over the Internet (e.g., communication by email) can have security vulnerabilities. Complete protection of data from access by third parties is not possible. <br>
+                    The use of contact data published within the scope of the imprint obligation by third parties for sending unsolicited advertising and information materials is hereby expressly contradicted. The operators of the pages expressly reserve the right to take legal action in the event of unsolicited sending of advertising information, such as spam emails.
+            </div>
+        </div>
+        <br><br><br><br>
+        <div class="legal-notice-card">
+            <div class='legal-notice'>
+                <h1>Privacy Policy</h1>
+                <br><br>
+                <strong>Data Collected</strong>
+                <p>We collect and process the following personal data:</p>
+                <ul>
+                    <li><strong>Login Data</strong></li>
+                    <li>Email address</li>
+                    <li>Username</li>
+                    <li>IP address</li>
+                    <li>Date of last login</li>
+                    <li><strong>Usage Data</strong></li>
+                    <li>Movie/TV show preferences</li>
+                </ul>
+                <br>
+                <strong>Purpose of Data Processing</strong>
+                <p>The collection and processing of the email address is for the purpose of logging in and using the platform.</p>
+                <br>
+                <strong>Legal Basis for Processing</strong>
+                <p>The processing of data is based on your consent (Art. 6 para. 1 lit. a GDPR) and to fulfill the contract for the use of the platform (Art. 6 para. 1 lit. b GDPR).</p>
+                <br>
+                <strong>Data Sharing</strong>
+                <p>Your data will not be shared with third parties.</p>
+                <br>
+                <strong>Data Transfer to Third Countries</strong>
+                <p>There is no transfer of your data to countries outside the European Union (EU) or the European Economic Area (EEA).</p>
+                <br>
+                <strong>Data Retention</strong>
+                <p>Your data will be stored as long as the platform is operated or until you request the deletion of your data.</p>
+                <br>
+                <strong>Rights of the Data Subject</strong>
+                <p>You have the right to:</p>
+                <ul>
+                    <li>Request information about the personal data we process (Art. 15 GDPR),</li>
+                    <li>Request the correction of incorrect or completion of your personal data stored by us (Art. 16 GDPR),</li>
+                    <li>Request the deletion of your personal data stored by us (Art. 17 GDPR),</li>
+                    <li>Request the restriction of the processing of your personal data (Art. 18 GDPR),</li>
+                    <li>Request the transfer of your personal data (Art. 20 GDPR).</li>
+                </ul>
+                <br>
+                <strong>Automated Decision Making</strong>
+                <p>There is no automated decision making or profiling.</p>
+                <br><br>
+                <strong>Changes to the Privacy Policy</strong>
+                <p>This privacy policy will not be changed. If changes become necessary, we will publish them here.</p>
+                <br>
+                <strong>Data Security</strong>
+                <p>We use technical and organizational security measures to protect your data from manipulation, loss, destruction, or unauthorized access.</p>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
