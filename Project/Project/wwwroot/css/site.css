@@ -420,6 +420,19 @@ html .swiper-button-next, html .swiper-button-prev {
     object-fit: cover;
 }
 
+/*Sign Up Page*/
+
+.blue-link {
+    color: #007BFF;
+    transition: 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+.blue-link:hover {
+    color: #007BFF;
+    text-decoration: underline;
+}
+
 @media (max-width: 576px) {
     html {
         font-size: .8rem;
