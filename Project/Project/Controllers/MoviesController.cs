@@ -13,12 +13,14 @@ namespace Project.Controllers
         private readonly DataContext _context;
         private readonly ILogger<MoviesController> _logger;
         private readonly CacheService _cache;
+        private readonly MovieApiService _movieApiService;
 
-        public MoviesController(CacheService cache, ILogger<MoviesController> logger, DataContext context)
+        public MoviesController(CacheService cache, ILogger<MoviesController> logger, DataContext context, MovieApiService movieApiService)
         {
             _cache = cache;
             _logger = logger;
             _context = context;
+            _movieApiService = movieApiService;
         }
 
         [HttpPost]
@@ -245,7 +247,8 @@ namespace Project.Controllers
                 UserHasRating = currentUserRating != 0.0,
                 CurrentUserRating = currentUserRating == 0.0 ? string.Empty : currentUserRating.ToString("0.0"),
                 CurrentUserId = userId,
-                UserHasReview = userHasReview
+                UserHasReview = userHasReview,
+                MovieTrailer = await _movieApiService.GetTrailerByImdb(movie.Id)
             };
 
             return View(viewModel);

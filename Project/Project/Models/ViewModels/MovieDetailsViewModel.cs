@@ -13,5 +13,7 @@
         public string? CurrentUserRating { get; set; }
         public int? CurrentUserId { get; set; }
         public bool UserHasReview { get; set; }
+        
+        public string? MovieTrailer { get; set; }
     }
 }

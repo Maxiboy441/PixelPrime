@@ -1,7 +1,7 @@
 ﻿@model Project.Models.ViewModels.MovieDetailsViewModel
 
 @{
-    ViewData["Title"] = Model.Movie != null ? Model.Movie.Title : "Not found";
+ViewData["Title"] = Model.Movie != null ? Model.Movie.Title : "Not found";
 }
 
 <div class="container">
@@ -52,14 +52,14 @@
 
                             @if (Model.HasAverageRating)
                             {
-                                <h6 style="margin: 0">
-                                    <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
-                                    <span class="rate">@Model.AverageRating</span>
-                                </h6>
+                            <h6 style="margin: 0">
+                                <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
+                                <span class="rate">@Model.AverageRating</span>
+                            </h6>
                             }
                             else
                             {
-                                <h6>This @Model.Movie.Type has not yet been rated</h6>
+                            <h6>This @Model.Movie.Type has not yet been rated</h6>
                             }
                         </div>
                     </div>
@@ -71,8 +71,8 @@
                             <h6 style="margin: 0">
                                 @if (Model.UserHasRating)
                                 {
-                                    <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
-                                    <span class="rate">@Model.CurrentUserRating /10</span>
+                                <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
+                                <span class="rate">@Model.CurrentUserRating /10</span>
                                 }
                             </h6>
                         </div>
@@ -81,50 +81,50 @@
                     <div class="d-flex flex-column">
                         @if (Model.IsFavorite)
                         {
-                            <form asp-action="DestroyFavoriteMovie" asp-controller="Movies" method="post" class="mb-2">
-                                @Html.AntiForgeryToken()
-                                @Html.Hidden("id", Model.Movie.Id)
-                                <button type="submit" class="btn-without text-light">
-                                    Delete from Favorites <i class="fas fa-minus"></i>
-                                </button>
-                            </form>
+                        <form asp-action="DestroyFavoriteMovie" asp-controller="Movies" method="post" class="mb-2">
+                            @Html.AntiForgeryToken()
+                            @Html.Hidden("id", Model.Movie.Id)
+                            <button type="submit" class="btn-without text-light">
+                                Delete from Favorites <i class="fas fa-minus"></i>
+                            </button>
+                        </form>
                         }
                         else
                         {
-                            <form asp-action="StoreFavoriteMovie" asp-controller="Movies" method="post" class="mb-2">
-                                @Html.AntiForgeryToken()
-                                <input type="hidden" name="movieId" value="@Model.Movie.Id" />
-                                <input type="hidden" name="title" value="@Model.Movie.Title" />
-                                <input type="hidden" name="poster" value="@Model.Movie.Poster" />
-                                <button type="submit" class="btn-without text-light">
-                                    Add to Favorites <i class="fas fa-plus"></i>
-                                </button>
-                            </form>
+                        <form asp-action="StoreFavoriteMovie" asp-controller="Movies" method="post" class="mb-2">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="movieId" value="@Model.Movie.Id" />
+                            <input type="hidden" name="title" value="@Model.Movie.Title" />
+                            <input type="hidden" name="poster" value="@Model.Movie.Poster" />
+                            <button type="submit" class="btn-without text-light">
+                                Add to Favorites <i class="fas fa-plus"></i>
+                            </button>
+                        </form>
                         }
                     </div>
 
                     <div class="d-flex flex-column">
                         @if (Model.IsWatchlist)
                         {
-                            <form asp-action="DestroyWatchlistMovie" asp-controller="Movies" method="post" class="mb-2">
-                                @Html.AntiForgeryToken()
-                                @Html.Hidden("id", Model.Movie.Id)
-                                <button type="submit" class="btn-without text-light">
-                                    Delete from Watchlist <i class="fas fa-minus"></i>
-                                </button>
-                            </form>
+                        <form asp-action="DestroyWatchlistMovie" asp-controller="Movies" method="post" class="mb-2">
+                            @Html.AntiForgeryToken()
+                            @Html.Hidden("id", Model.Movie.Id)
+                            <button type="submit" class="btn-without text-light">
+                                Delete from Watchlist <i class="fas fa-minus"></i>
+                            </button>
+                        </form>
                         }
                         else
                         {
-                            <form asp-action="StoreWatchlistMovie" asp-controller="Movies" method="post" class="mb-2">
-                                @Html.AntiForgeryToken()
-                                <input type="hidden" name="movieId" value="@Model.Movie.Id" />
-                                <input type="hidden" name="title" value="@Model.Movie.Title" />
-                                <input type="hidden" name="poster" value="@Model.Movie.Poster" />
-                                <button type="submit" class="btn-without text-light">
-                                    Add to Watchlist <i class="fas fa-plus"></i>
-                                </button>
-                            </form>
+                        <form asp-action="StoreWatchlistMovie" asp-controller="Movies" method="post" class="mb-2">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="movieId" value="@Model.Movie.Id" />
+                            <input type="hidden" name="title" value="@Model.Movie.Title" />
+                            <input type="hidden" name="poster" value="@Model.Movie.Poster" />
+                            <button type="submit" class="btn-without text-light">
+                                Add to Watchlist <i class="fas fa-plus"></i>
+                            </button>
+                        </form>
                         }
                     </div>
                 </div>
@@ -136,55 +136,68 @@
                 <h5 class="fw-bold mb-0">User Reviews </h5>
                 @if (!Model.UserHasReview)
                 {
-                    @await Html.PartialAsync("_ReviewPopUpForm", Tuple.Create(Model.Movie.Id, Model.Movie.Title, Model.Movie.Poster, $"/content/{Model.Movie.Id}/review", Model.Movie.Type))
+                @await Html.PartialAsync("_ReviewPopUpForm", Tuple.Create(Model.Movie.Id, Model.Movie.Title, Model.Movie.Poster, $"/content/{Model.Movie.Id}/review", Model.Movie.Type))
                 }
             </div>
 
             @if (Model.Reviews == null || !Model.Reviews.Any())
             {
-                <p>No reviews available.</p>
+            <p>No reviews available.</p>
             }
             else
             {
-                foreach (var review in Model.Reviews)
-                {
-                    <div class="bg-secondary-color w-100 vh-20 mb-3 p-3 rounded-3">
-                        <div class="d-flex flex-row gap-3 mb-3">
-                            <div>
-                                <i class="fa-regular fa-user user-icon"></i>
-                            </div>
-
-                            <div class="d-flex flex-column gap-2">
-                                <h3 class="fw-bold mb-0">@review.Title</h3>
-                                <p class="mb-0">Written by: @review.User.Name on @review.Updated_at.ToString("MMMM dd, yyyy")</p>
-                            </div>
-
-                            @if (Model.CurrentUserId == review.User_id)
-                            {
-                                <div class="d-flex align-items-start gap-3 ms-auto">
-                                    @await Html.PartialAsync("_EditReviewPopUpForm", Tuple.Create(
-                                       Model.Movie.Id,
-                                       Model.Movie.Title,
-                                       Model.Movie.Poster,
-                                       review.Title,
-                                       review.Text,
-                                       $"/content/{Model.Movie.Id}/update-review"))
-
-                                    @await Html.PartialAsync("_DeleteConfirmationModal", Tuple.Create(
-                                        @Model.Movie.Id,
-                                        "/content/@Model.Movie.Id/delete-review",
-                                        "Are you sure you want to delete your review?",
-                                        "Delete"))
-                                </div>
-                            }
-                        </div>
-
-                        <div id="review-view-@review.Id" class="review-view p-3">
-                            <p>@review.Text</p>
-                        </div>
+            foreach (var review in Model.Reviews)
+            {
+            <div class="bg-secondary-color w-100 vh-20 mb-3 p-3 rounded-3">
+                <div class="d-flex flex-row gap-3 mb-3">
+                    <div>
+                        <i class="fa-regular fa-user user-icon"></i>
                     </div>
-                }
+
+                    <div class="d-flex flex-column gap-2">
+                        <h3 class="fw-bold mb-0">@review.Title</h3>
+                        <p class="mb-0">Written by: @review.User.Name on @review.Updated_at.ToString("MMMM dd, yyyy")</p>
+                    </div>
+
+                    @if (Model.CurrentUserId == review.User_id)
+                    {
+                    <div class="d-flex align-items-start gap-3 ms-auto">
+                        @await Html.PartialAsync("_EditReviewPopUpForm", Tuple.Create(
+                        Model.Movie.Id,
+                        Model.Movie.Title,
+                        Model.Movie.Poster,
+                        review.Title,
+                        review.Text,
+                        $"/content/{Model.Movie.Id}/update-review"))
+
+                        @await Html.PartialAsync("_DeleteConfirmationModal", Tuple.Create(
+                        @Model.Movie.Id,
+                        "/content/@Model.Movie.Id/delete-review",
+                        "Are you sure you want to delete your review?",
+                        "Delete"))
+                    </div>
+                    }
+                </div>
+
+                <div id="review-view-@review.Id" class="review-view p-3">
+                    <p>@review.Text</p>
+                </div>
+            </div>
+            }
             }
         </div>
     </div>
+</div>
+
+<div class="trailer">
+    @if (!string.IsNullOrEmpty(Model.MovieTrailer))
+    {
+        <div class="w-100 h-100">
+            <iframe width="100%" height="500px" src="https://www.youtube.com/embed/@Model.MovieTrailer?autoplay=1&mute=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+    }
+    else
+    {
+        <p>Trailer not available.</p>
+    }
 </div>

@@ -1,6 +1,6 @@
 using System.Text.Json;
+using Newtonsoft.Json;
 using Project.Models;
-using Microsoft.Extensions.Configuration;
 
 namespace Project.Services
 {
@@ -16,7 +16,59 @@ namespace Project.Services
             _baseApiUrl = "http://www.omdbapi.com/";
             _apiKey = configuration.GetValue<string>("Api:MovieApi");
         }
-
+        
+        public async Task<string?> GetTrailerByImdb(string id)
+        {
+            var url = $"https://api.kinocheck.de/movies?imdb_id={id}&language=de&categories=Trailer";
+            Console.WriteLine(url);
+            HttpResponseMessage response;
+        
+            try 
+            {
+                response = await _httpClient.GetAsync(url);
+                response.EnsureSuccessStatusCode();
+            } 
+            catch (HttpRequestException e) 
+            {
+                Console.WriteLine($"Request to KinoCheck API failed: {e.Message}");
+                return null;
+            }
+        
+            string content = await response.Content.ReadAsStringAsync();
+            Console.WriteLine($"API Response: {content}");
+        
+            using JsonDocument doc = JsonDocument.Parse(content);
+            JsonElement root = doc.RootElement;
+        
+            if (root.TryGetProperty("trailer", out JsonElement trailerElement) &&
+                trailerElement.TryGetProperty("youtube_video_id", out JsonElement trailerYoutubeIdElement))
+            {
+                string? trailerYoutubeId = trailerYoutubeIdElement.GetString();
+                if (!string.IsNullOrEmpty(trailerYoutubeId))
+                {
+                    return trailerYoutubeId;
+                }
+            }
+        
+            if (root.TryGetProperty("videos", out JsonElement videosElement) && videosElement.ValueKind == JsonValueKind.Array)
+            {
+                foreach (var video in videosElement.EnumerateArray())
+                {
+                    if (video.TryGetProperty("youtube_video_id", out JsonElement videoYoutubeIdElement))
+                    {
+                        string? videoYoutubeId = videoYoutubeIdElement.GetString();
+                        if (!string.IsNullOrEmpty(videoYoutubeId))
+                        {
+                            return videoYoutubeId;
+                        }
+                    }
+                }
+            }
+        
+            return null;
+        }
+        
+        
         public async Task<Movie?> GetMovieById(string id)
         {
             var url = $"{_baseApiUrl}?i={id}&apikey={_apiKey}";
