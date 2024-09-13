@@ -55,7 +55,14 @@
                     <div class="actor-card card bg-dark-gray text-light h-100">
                         <div class="actor-card-body card-body">
                             <h5 class="card-title text-purple">Nationality</h5>
-                            <p class="card-text fs-4">@Model.Nationality</p>
+                            @if (@Model.Nationality != "NoN")
+                            {
+                                <p class="card-text fs-4">@Model.Nationality</p>
+                            }
+                            else
+                            {
+                                <p class="card-text fs-4">Not found</p>  
+                            }
                         </div>
                     </div>
                 </div>
