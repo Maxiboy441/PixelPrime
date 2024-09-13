@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Project.Models;
 using Newtonsoft.Json;
 using Project.Data;
+using System.Web;
 
 namespace Reviews.Controllers
 {
@@ -115,14 +116,61 @@ namespace Reviews.Controllers
                 await _context.SaveChangesAsync();
 
                 TempData["SuccessMessage"] = "Review successfully deleted!";
-                return Redirect(Request.Headers["Referer"].ToString());
+
+                var refererUrl = Request.Headers["Referer"].ToString();
+
+                if (IsValidRedirectUrl(refererUrl))
+                {
+                    return Redirect(refererUrl); // Safe redirect
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home"); // Fallback if the URL is invalid
+                }
             }
             else
             {
                 var originalUrl = Request.Headers["Referer"].ToString();
-                return RedirectToAction("Login", "Auth", new { returnUrl = originalUrl });
+
+                if (IsValidRedirectUrl(originalUrl))
+                {
+                    return RedirectToAction("Login", "Auth", new { returnUrl = originalUrl });
+                }
+                else
+                {
+                    return RedirectToAction("Login", "Auth", new { returnUrl = "/Home/Index" }); // Fallback to home if invalid
+                }
             }
         }
+
+        // Helper method to validate the URL
+        private bool IsValidRedirectUrl(string urlString)
+        {
+            if (string.IsNullOrEmpty(urlString))
+            {
+                return false;
+            }
+
+            Uri url;
+            bool isUriValid = Uri.TryCreate(urlString, UriKind.RelativeOrAbsolute, out url);
+
+            if (!isUriValid)
+            {
+                return false; // Invalid URL
+            }
+
+            // Check if the URL is relative (internal to the application)
+            if (!url.IsAbsoluteUri)
+            {
+                return true; // Safe, as it's relative
+            }
+
+            // If the URL is absolute, ensure it's pointing to a trusted host
+            var trustedHosts = new List<string> { "example.org", "trustedsite.com" }; // Add your trusted hosts here
+            return trustedHosts.Contains(url.Host);
+        }
+
+
     }
 }
 
