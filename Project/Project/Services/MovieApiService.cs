@@ -35,24 +35,22 @@ namespace Project.Services
             }
 
             string content = await response.Content.ReadAsStringAsync();
-            Console.WriteLine($"API Response: {content}");
 
             using JsonDocument doc = JsonDocument.Parse(content);
             JsonElement root = doc.RootElement;
-
-            // Check if the 'trailer' property exists and is not null
+            
             if (root.TryGetProperty("trailer", out JsonElement trailerElement) &&
                 trailerElement.ValueKind == JsonValueKind.Object &&
                 trailerElement.TryGetProperty("youtube_video_id", out JsonElement trailerYoutubeIdElement))
             {
                 string? trailerYoutubeId = trailerYoutubeIdElement.GetString();
+                
                 if (!string.IsNullOrEmpty(trailerYoutubeId))
                 {
                     return trailerYoutubeId;
                 }
             }
-
-            // Check if the 'videos' array exists and has elements
+            
             if (root.TryGetProperty("videos", out JsonElement videosElement) &&
                 videosElement.ValueKind == JsonValueKind.Array)
             {
@@ -70,8 +68,7 @@ namespace Project.Services
             }
             return "No trailer available";
         }
-
-
+        
         public async Task<Movie?> GetMovieById(string id)
         {
             var url = $"{_baseApiUrl}?i={id}&apikey={_apiKey}";

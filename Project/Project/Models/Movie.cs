@@ -20,7 +20,6 @@
         public string? PixelRating { get; set; }
         
         public string? Type { get; set; }
-
     }
 }
 
