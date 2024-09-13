@@ -15,35 +15,19 @@ ViewData["Title"] = Model.Movie != null ? Model.Movie.Title : "Not found";
             </div>
         </div>
 
-        <div class="d-flex h-75 mt-3 mb-3 flex-column flex-md-row gap-3">
-            <div class="col-12 col-md-3">
+        <div class="d-flex h-75 mt-3 mb-1 flex-column flex-md-row">
+            <div class="h-100 col-3">
                 <img src="@(!string.IsNullOrEmpty(Model.Movie.Poster) && Model.Movie.Poster != "N/A" ? Model.Movie.Poster : Url.Content("~/images/poster_not_found.png"))"
                      alt="@Model.Movie.Title"
-                     class="img-fluid mx-auto mx-md-0 d-block d-md-inline-block" />
+                     class="img-fluid mx-auto mx-md-0 d-block d-md-inline-block"/>
             </div>
 
-            <div class="d-flex flex-column mt-3 mt-md-0 overview-container flex-wrap">
-                @await Html.PartialAsync("_MovieOverview",
-                Tuple.Create("Overview", @Model.Movie.Plot, "d-flex flex-column gap-2 mb-3"))
-
-                @await Html.PartialAsync("_MovieActorOverview",
-                Tuple.Create("Director", @Model.Movie.Director, "d-flex flex-row gap-2"))
-
-                @await Html.PartialAsync("_MovieActorOverview",
-                Tuple.Create("Writers", @Model.Movie.Writer, "d-flex flex-row gap-2"))
-
-                @await Html.PartialAsync("_MovieActorOverview",
-                Tuple.Create("Actors", @Model.Movie.Actors, "d-flex flex-row gap-2"))
-
-                @await Html.PartialAsync("_MovieOverview",
-                Tuple.Create("Language", @Model.Movie.Language, "d-flex flex-row gap-2"))
-
-                @await Html.PartialAsync("_MovieOverview",
-                Tuple.Create("Genres", @Model.Movie.Genre, "d-flex flex-row gap-2"))
+            <div class="col-9">
+                <iframe width="100%" height="445px" src="https://www.youtube.com/embed/@Model.MovieTrailer?autoplay=1&mute=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
         </div>
-
-        <div class="w-100 d-flex justify-content-between">
+        
+        <div class="w-100 d-flex justify-content-between mb-3">
             <div class="d-flex flex-row gap-4">
                 <div class="d-flex gap-4 flex-wrap gap-4 align-items-start">
                     <div class="d-flex flex-column">
@@ -52,14 +36,14 @@ ViewData["Title"] = Model.Movie != null ? Model.Movie.Title : "Not found";
 
                             @if (Model.HasAverageRating)
                             {
-                            <h6 style="margin: 0">
-                                <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
-                                <span class="rate">@Model.AverageRating</span>
-                            </h6>
+                                <h6 style="margin: 0">
+                                    <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
+                                    <span class="rate">@Model.AverageRating</span>
+                                </h6>
                             }
                             else
                             {
-                            <h6>This @Model.Movie.Type has not yet been rated</h6>
+                                <h6>This @Model.Movie.Type has not yet been rated</h6>
                             }
                         </div>
                     </div>
@@ -67,12 +51,12 @@ ViewData["Title"] = Model.Movie != null ? Model.Movie.Title : "Not found";
                     <div class="d-flex flex-column">
                         <div>
                             @await Html.PartialAsync("_RateMovieModal",
-                            Tuple.Create(Model.Movie.Id, Model.Movie.Title, Model.Movie.Poster, Model.IsRated ? "Your Rating" : "Rate " + @Model.Movie.Type, Model.IsRated ? "fa-solid fa-pen-to-square" : "fas fa-plus", "btn-without text-light"))
+                                Tuple.Create(Model.Movie.Id, Model.Movie.Title, Model.Movie.Poster, Model.IsRated ? "Your Rating" : "Rate " + @Model.Movie.Type, Model.IsRated ? "fa-solid fa-pen-to-square" : "fas fa-plus", "btn-without text-light"))
                             <h6 style="margin: 0">
                                 @if (Model.UserHasRating)
                                 {
-                                <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
-                                <span class="rate">@Model.CurrentUserRating /10</span>
+                                    <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
+                                    <span class="rate">@Model.CurrentUserRating /10</span>
                                 }
                             </h6>
                         </div>
@@ -81,54 +65,74 @@ ViewData["Title"] = Model.Movie != null ? Model.Movie.Title : "Not found";
                     <div class="d-flex flex-column">
                         @if (Model.IsFavorite)
                         {
-                        <form asp-action="DestroyFavoriteMovie" asp-controller="Movies" method="post" class="mb-2">
-                            @Html.AntiForgeryToken()
-                            @Html.Hidden("id", Model.Movie.Id)
-                            <button type="submit" class="btn-without text-light">
-                                Delete from Favorites <i class="fas fa-minus"></i>
-                            </button>
-                        </form>
+                            <form asp-action="DestroyFavoriteMovie" asp-controller="Movies" method="post" class="mb-2">
+                                @Html.AntiForgeryToken()
+                                @Html.Hidden("id", Model.Movie.Id)
+                                <button type="submit" class="btn-without text-light">
+                                    Delete from Favorites <i class="fas fa-minus"></i>
+                                </button>
+                            </form>
                         }
                         else
                         {
-                        <form asp-action="StoreFavoriteMovie" asp-controller="Movies" method="post" class="mb-2">
-                            @Html.AntiForgeryToken()
-                            <input type="hidden" name="movieId" value="@Model.Movie.Id" />
-                            <input type="hidden" name="title" value="@Model.Movie.Title" />
-                            <input type="hidden" name="poster" value="@Model.Movie.Poster" />
-                            <button type="submit" class="btn-without text-light">
-                                Add to Favorites <i class="fas fa-plus"></i>
-                            </button>
-                        </form>
+                            <form asp-action="StoreFavoriteMovie" asp-controller="Movies" method="post" class="mb-2">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="movieId" value="@Model.Movie.Id" />
+                                <input type="hidden" name="title" value="@Model.Movie.Title" />
+                                <input type="hidden" name="poster" value="@Model.Movie.Poster" />
+                                <button type="submit" class="btn-without text-light">
+                                    Add to Favorites <i class="fas fa-plus"></i>
+                                </button>
+                            </form>
                         }
                     </div>
 
                     <div class="d-flex flex-column">
                         @if (Model.IsWatchlist)
                         {
-                        <form asp-action="DestroyWatchlistMovie" asp-controller="Movies" method="post" class="mb-2">
-                            @Html.AntiForgeryToken()
-                            @Html.Hidden("id", Model.Movie.Id)
-                            <button type="submit" class="btn-without text-light">
-                                Delete from Watchlist <i class="fas fa-minus"></i>
-                            </button>
-                        </form>
+                            <form asp-action="DestroyWatchlistMovie" asp-controller="Movies" method="post" class="mb-2">
+                                @Html.AntiForgeryToken()
+                                @Html.Hidden("id", Model.Movie.Id)
+                                <button type="submit" class="btn-without text-light">
+                                    Delete from Watchlist <i class="fas fa-minus"></i>
+                                </button>
+                            </form>
                         }
                         else
                         {
-                        <form asp-action="StoreWatchlistMovie" asp-controller="Movies" method="post" class="mb-2">
-                            @Html.AntiForgeryToken()
-                            <input type="hidden" name="movieId" value="@Model.Movie.Id" />
-                            <input type="hidden" name="title" value="@Model.Movie.Title" />
-                            <input type="hidden" name="poster" value="@Model.Movie.Poster" />
-                            <button type="submit" class="btn-without text-light">
-                                Add to Watchlist <i class="fas fa-plus"></i>
-                            </button>
-                        </form>
+                            <form asp-action="StoreWatchlistMovie" asp-controller="Movies" method="post" class="mb-2">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="movieId" value="@Model.Movie.Id" />
+                                <input type="hidden" name="title" value="@Model.Movie.Title" />
+                                <input type="hidden" name="poster" value="@Model.Movie.Poster" />
+                                <button type="submit" class="btn-without text-light">
+                                    Add to Watchlist <i class="fas fa-plus"></i>
+                                </button>
+                            </form>
                         }
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div class="d-flex flex-column mt-3 mt-md-0 overview-container flex-wrap">
+            @await Html.PartialAsync("_MovieOverview",
+            Tuple.Create("Overview", @Model.Movie.Plot, "d-flex flex-column gap-2 mb-3"))
+
+            @await Html.PartialAsync("_MovieActorOverview",
+            Tuple.Create("Director", @Model.Movie.Director, "d-flex flex-row gap-2"))
+
+            @await Html.PartialAsync("_MovieActorOverview",
+            Tuple.Create("Writers", @Model.Movie.Writer, "d-flex flex-row gap-2"))
+
+            @await Html.PartialAsync("_MovieActorOverview",
+            Tuple.Create("Actors", @Model.Movie.Actors, "d-flex flex-row gap-2"))
+
+            @await Html.PartialAsync("_MovieOverview",
+            Tuple.Create("Language", @Model.Movie.Language, "d-flex flex-row gap-2"))
+
+            @await Html.PartialAsync("_MovieOverview",
+            Tuple.Create("Genres", @Model.Movie.Genre, "d-flex flex-row gap-2"))
         </div>
 
         <div class="d-flex flex-column gap-4">
@@ -187,17 +191,4 @@ ViewData["Title"] = Model.Movie != null ? Model.Movie.Title : "Not found";
             }
         </div>
     </div>
-</div>
-
-<div class="trailer">
-    @if (!string.IsNullOrEmpty(Model.MovieTrailer))
-    {
-        <div class="w-100 h-100">
-            <iframe width="100%" height="500px" src="https://www.youtube.com/embed/@Model.MovieTrailer?autoplay=1&mute=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
-    }
-    else
-    {
-        <p>Trailer not available.</p>
-    }
 </div>

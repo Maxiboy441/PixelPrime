@@ -49,7 +49,7 @@ public class ActorAPIService
         }
 
         var celebrity = celebrities.FirstOrDefault(c => c.occupation.Contains("actor")) ?? celebrities.First();
-
+        
         var newActor = new Actor
         {
             Name = ToTitleCase(celebrity.name),

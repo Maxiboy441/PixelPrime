@@ -16,31 +16,33 @@ namespace Project.Services
             _baseApiUrl = "http://www.omdbapi.com/";
             _apiKey = configuration.GetValue<string>("Api:MovieApi");
         }
-        
-        public async Task<string?> GetTrailerByImdb(string id)
+
+        public async Task<string> GetTrailerByImdb(string id)
         {
             var url = $"https://api.kinocheck.de/movies?imdb_id={id}&language=de&categories=Trailer";
             Console.WriteLine(url);
             HttpResponseMessage response;
-        
-            try 
+
+            try
             {
                 response = await _httpClient.GetAsync(url);
                 response.EnsureSuccessStatusCode();
-            } 
-            catch (HttpRequestException e) 
+            }
+            catch (HttpRequestException e)
             {
                 Console.WriteLine($"Request to KinoCheck API failed: {e.Message}");
-                return null;
+                return "No trailer available";
             }
-        
+
             string content = await response.Content.ReadAsStringAsync();
             Console.WriteLine($"API Response: {content}");
-        
+
             using JsonDocument doc = JsonDocument.Parse(content);
             JsonElement root = doc.RootElement;
-        
+
+            // Check if the 'trailer' property exists and is not null
             if (root.TryGetProperty("trailer", out JsonElement trailerElement) &&
+                trailerElement.ValueKind == JsonValueKind.Object &&
                 trailerElement.TryGetProperty("youtube_video_id", out JsonElement trailerYoutubeIdElement))
             {
                 string? trailerYoutubeId = trailerYoutubeIdElement.GetString();
@@ -49,8 +51,10 @@ namespace Project.Services
                     return trailerYoutubeId;
                 }
             }
-        
-            if (root.TryGetProperty("videos", out JsonElement videosElement) && videosElement.ValueKind == JsonValueKind.Array)
+
+            // Check if the 'videos' array exists and has elements
+            if (root.TryGetProperty("videos", out JsonElement videosElement) &&
+                videosElement.ValueKind == JsonValueKind.Array)
             {
                 foreach (var video in videosElement.EnumerateArray())
                 {
@@ -64,11 +68,10 @@ namespace Project.Services
                     }
                 }
             }
-        
-            return null;
+            return "No trailer available";
         }
-        
-        
+
+
         public async Task<Movie?> GetMovieById(string id)
         {
             var url = $"{_baseApiUrl}?i={id}&apikey={_apiKey}";
@@ -88,11 +91,12 @@ namespace Project.Services
             }
 
             Movie movie = MappJsonToMovie(content);
-            
+
             if (movie.Type != "movie" && movie.Type != "series")
             {
                 return null;
             }
+
             return movie;
         }
 
@@ -115,7 +119,7 @@ namespace Project.Services
             }
 
             Movie movie = MappJsonToMovie(content);
-            
+
             return movie;
         }
 
@@ -123,10 +127,10 @@ namespace Project.Services
         {
             using JsonDocument doc = JsonDocument.Parse(jsonString);
             JsonElement root = doc.RootElement;
-            
+
             Movie movie = new Movie
             {
-                Id = root.GetProperty("imdbID").GetString(), 
+                Id = root.GetProperty("imdbID").GetString(),
                 Title = root.GetProperty("Title").GetString(),
                 Year = root.GetProperty("Year").GetString(),
                 Runtime = root.GetProperty("Runtime").GetString(),
@@ -152,7 +156,8 @@ namespace Project.Services
             using JsonDocument doc = JsonDocument.Parse(jsonString);
             JsonElement root = doc.RootElement;
 
-            if (root.TryGetProperty("Response", out JsonElement responseElement) && responseElement.GetString() == "False")
+            if (root.TryGetProperty("Response", out JsonElement responseElement) &&
+                responseElement.GetString() == "False")
             {
                 errorMessage = root.GetProperty("Error").GetString();
                 return true;
