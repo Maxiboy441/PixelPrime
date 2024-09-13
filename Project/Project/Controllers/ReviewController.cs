@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Project.Models;
 using Newtonsoft.Json;
 using Project.Data;
+using System.Collections.Generic;
 using System.Web;
 
 namespace Reviews.Controllers
@@ -100,7 +101,7 @@ namespace Reviews.Controllers
             {
                 var currentUser = JsonConvert.DeserializeObject<User>(userJson);
 
-                if (movieId == null)
+                if (string.IsNullOrEmpty(movieId))
                 {
                     return View("NotFound");
                 }
@@ -118,28 +119,16 @@ namespace Reviews.Controllers
                 TempData["SuccessMessage"] = "Review successfully deleted!";
 
                 var refererUrl = Request.Headers["Referer"].ToString();
+                var returnUrl = IsValidRedirectUrl(refererUrl) ? refererUrl : Url.Action("Index", "Home");
 
-                if (IsValidRedirectUrl(refererUrl))
-                {
-                    return Redirect(refererUrl); // Safe redirect
-                }
-                else
-                {
-                    return RedirectToAction("Index", "Home"); // Fallback if the URL is invalid
-                }
+                return Redirect(returnUrl);
             }
             else
             {
                 var originalUrl = Request.Headers["Referer"].ToString();
+                var safeUrl = IsValidRedirectUrl(originalUrl) ? originalUrl : Url.Action("Index", "Home");
 
-                if (IsValidRedirectUrl(originalUrl))
-                {
-                    return RedirectToAction("Login", "Auth", new { returnUrl = originalUrl });
-                }
-                else
-                {
-                    return RedirectToAction("Login", "Auth", new { returnUrl = "/Home/Index" }); // Fallback to home if invalid
-                }
+                return RedirectToAction("Login", "Auth", new { returnUrl = safeUrl });
             }
         }
 
@@ -151,25 +140,26 @@ namespace Reviews.Controllers
                 return false;
             }
 
-            Uri url;
-            bool isUriValid = Uri.TryCreate(urlString, UriKind.RelativeOrAbsolute, out url);
-
-            if (!isUriValid)
+            if (!Uri.TryCreate(urlString, UriKind.RelativeOrAbsolute, out Uri url))
             {
-                return false; // Invalid URL
+                return false;
             }
 
-            // Check if the URL is relative (internal to the application)
-            if (!url.IsAbsoluteUri)
+            // Allow only relative URLs or URLs pointing to your domain
+            if (url.IsAbsoluteUri)
             {
-                return true; // Safe, as it's relative
+                // Ensure the URL is from the same domain
+                if (url.Host.Equals("pixelprime.de", StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
+
+                return false; // Disallow external redirects by default
             }
 
-            // If the URL is absolute, ensure it's pointing to a trusted host
-            var trustedHosts = new List<string> { "example.org", "trustedsite.com" }; // Add your trusted hosts here
-            return trustedHosts.Contains(url.Host);
+            // Allow relative URLs
+            return true;
         }
-
 
     }
 }
