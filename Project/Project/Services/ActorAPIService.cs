@@ -1,4 +1,5 @@
 using System.Globalization;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Project.Data;
 using Project.Models;
@@ -69,7 +70,11 @@ public class ActorAPIService
         };
 
         _context.Actors.Add(newActor);
-        await _context.SaveChangesAsync();
+
+        if((await _context.Actors.FirstOrDefaultAsync(a => a.Name == newActor.Name)) == null)
+        {
+            await _context.SaveChangesAsync();
+        }
 
         return newActor;
     }
