@@ -246,6 +246,7 @@ html .swiper-button-next, html .swiper-button-prev {
     position: absolute;
     width: 30%;
     right: 0;
+    z-index: 99;
 }
 
 @keyframes slideIn {
