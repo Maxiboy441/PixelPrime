@@ -15,8 +15,8 @@ ViewData["Title"] = Model.Movie != null ? Model.Movie.Title : "Not found";
             </div>
         </div>
 
-        <div class="d-flex h-75 mt-3 mb-1 flex-column flex-md-row gap-3">
-            <div class="col-12 col-md-3">
+        <div class="d-flex h-75 mt-3 mb-1 flex-column flex-md-row">
+            <div>
                 <img src="@(!string.IsNullOrEmpty(Model.Movie.Poster) && Model.Movie.Poster != "N/A" ? Model.Movie.Poster : Url.Content("~/images/poster_not_found.png"))"
                      alt="@Model.Movie.Title"
                      class="img-fluid mx-auto mx-md-0 d-block d-md-inline-block" />
