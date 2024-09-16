@@ -2,18 +2,17 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark container">
     <div class="container-fluid">
-        <a class="navbar-brand text-light" asp-controller="Home" asp-action="Index">
-            <img src="~/images/pixel_prime_logo.png" alt="pixel prime logo" />
-            <span>PixelPrime</span>
-        </a>
+        <div class="d-flex align-items-center">
+            <a class="navbar-brand text-light" asp-controller="Home" asp-action="Index">
+                <img src="~/images/pixel_prime_logo.png" alt="pixel prime logo" />
+                <span>PixelPrime</span>
+            </a>
+        </div>
         <div class="d-flex search">
 
         </div>
-        <button class="navbar-toggler bg-purple" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
 
-        <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+        <div class="justify-content-end" id="navbarSupportedContent">
             <ul class="navbar-nav justify-content-end w-100 mb-lg-0 gap-1 gap-md-3 align-items-md-center">
                 @* <li class="nav-item"> *@
                 @*     <a class="nav-link text-light" asp-controller="Profile" asp-action="Index">My Space</a> *@
@@ -21,7 +20,7 @@
                 <li class="nav-item position-relative">
                     @if (string.IsNullOrEmpty(Context.Session.GetString("CurrentUser")))
                     {
-                    <a class="nav-link text-light" asp-controller="Auth" asp-action="Login" tabindex="-1">Sign In</a>
+                        <a class="nav-link text-light" asp-controller="Auth" asp-action="Login" tabindex="-1">Sign In</a>
                     }
                     else
                     {

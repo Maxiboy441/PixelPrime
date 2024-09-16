@@ -568,6 +568,7 @@ html .swiper-button-next, html .swiper-button-prev {
     padding: 15px;
     width: 200px;
     border-radius: 5px;
+    right: 0;
 }
 
 .dropdownMenu.show {
@@ -579,6 +580,11 @@ html .swiper-button-next, html .swiper-button-prev {
     width: 3rem;
     height: 3rem;
     background-color: var(--secondary-color);
+    transition: 0.3s ease-in-out;
+}
+
+.dropdown-image:hover {
+    border: 2px solid var(--purple-color);
 }
 
 .nav-item {
