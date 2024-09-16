@@ -2,6 +2,7 @@ using System.Globalization;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Project.Data;
+using Project.Enums.Occupation;
 using Project.Models;
 
 namespace Project.Services;
@@ -20,7 +21,7 @@ public class ActorAPIService
         _httpClient.DefaultRequestHeaders.Add("X-Api-Key", _apiKey);
     }
 
-    public async Task<Actor> GetAndSaveActorAsync(string actorName)
+    public async Task<Actor?> GetAndSaveActorAsync(string actorName)
     {
         var response =
             await _httpClient.GetAsync(
@@ -35,22 +36,32 @@ public class ActorAPIService
 
         if (celebrities == null || !celebrities.Any())
         {
-            return new Actor
+            return null;
+        }
+        
+        var celebrity = celebrities.FirstOrDefault(c => string.Equals(c.name, actorName, StringComparison.OrdinalIgnoreCase));
+
+        if (celebrity == null)
+        {
+            celebrity = celebrities.First();
+        }
+        
+        bool isOccupationInEnum = false;
+
+        foreach (var occupation in celebrity.occupation)
+        {
+            if (OccupationEnumExtensions.GetOccupation(occupation) != null)
             {
-                Name = actorName,
-                NetWorth = 0,
-                Gender = "Not found",
-                Nationality = "Not found",
-                Height = 0,
-                Birthday = new DateTime(1001, 1, 1),
-                IsAlive = false,
-                Occupations = "Not found",
-                Image = imageUrl
-            };
+                isOccupationInEnum = true;
+                break;
+            }
         }
 
-        var celebrity = celebrities.FirstOrDefault(c => c.occupation.Contains("actor")) ?? celebrities.First();
-        
+        if (!isOccupationInEnum)
+        {
+            return null;
+        }
+
         var newActor = new Actor
         {
             Name = ToTitleCase(celebrity.name),
@@ -73,7 +84,6 @@ public class ActorAPIService
 
         return newActor;
     }
-
 
     private DateTime ParseBirthday(string birthday)
     {
