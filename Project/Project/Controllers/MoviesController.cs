@@ -212,7 +212,7 @@ namespace Project.Controllers
                 .Where(review => review.Movie_id == id)
                 .Include(review => review.User)
                 .ToListAsync();
-
+            
             var userJson = HttpContext.Session.GetString("CurrentUser");
             int userId = 0;
             bool isFavorite = false;
@@ -248,7 +248,7 @@ namespace Project.Controllers
                 CurrentUserRating = currentUserRating == 0.0 ? string.Empty : currentUserRating.ToString("0.0"),
                 CurrentUserId = userId,
                 UserHasReview = userHasReview,
-                MovieTrailer = await _movieApiService.GetTrailerByImdb(movie.Id)
+                MovieTrailer = await _movieApiService.GetTrailerByImdb(movie.Id),
             };
 
             return View(viewModel);
@@ -283,8 +283,6 @@ namespace Project.Controllers
                 .Where(r => r.Movie_id == movieId)
                 .AverageAsync(r => (double?)r.Rating_value);
         }
-
-        
         
         [HttpPost]
         public async Task<IActionResult> AddRating(string movieId, string poster, string title, int ratingValue)

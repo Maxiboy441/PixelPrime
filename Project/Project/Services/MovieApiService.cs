@@ -16,57 +16,61 @@ namespace Project.Services
             _baseApiUrl = "http://www.omdbapi.com/";
             _apiKey = configuration.GetValue<string>("Api:MovieApi");
         }
-
+        
         public async Task<string> GetTrailerByImdb(string id)
         {
             var url = $"https://api.kinocheck.de/movies?imdb_id={id}&language=de&categories=Trailer";
-            Console.WriteLine(url);
-            HttpResponseMessage response;
 
             try
             {
-                response = await _httpClient.GetAsync(url);
+                var response = await _httpClient.GetAsync(url);
                 response.EnsureSuccessStatusCode();
+
+                var content = await response.Content.ReadAsStringAsync();
+                using var doc = JsonDocument.Parse(content);
+                var root = doc.RootElement;
+                
+                var youtubeId = GetYoutubeIdFromElement(root, "trailer") 
+                                ?? GetYoutubeIdFromArray(root, "videos");
+
+                return !string.IsNullOrEmpty(youtubeId) ? youtubeId : "No trailer available";
             }
             catch (HttpRequestException e)
             {
                 Console.WriteLine($"Request to KinoCheck API failed: {e.Message}");
                 return "No trailer available";
             }
-
-            string content = await response.Content.ReadAsStringAsync();
-
-            using JsonDocument doc = JsonDocument.Parse(content);
-            JsonElement root = doc.RootElement;
-            
-            if (root.TryGetProperty("trailer", out JsonElement trailerElement) &&
-                trailerElement.ValueKind == JsonValueKind.Object &&
-                trailerElement.TryGetProperty("youtube_video_id", out JsonElement trailerYoutubeIdElement))
+        }
+        
+        private string? GetYoutubeIdFromElement(JsonElement root, string propertyName)
+        {
+            if (root.TryGetProperty(propertyName, out JsonElement element) &&
+                element.ValueKind == JsonValueKind.Object &&
+                element.TryGetProperty("youtube_video_id", out JsonElement youtubeIdElement))
             {
-                string? trailerYoutubeId = trailerYoutubeIdElement.GetString();
-                
-                if (!string.IsNullOrEmpty(trailerYoutubeId))
-                {
-                    return trailerYoutubeId;
-                }
+                return youtubeIdElement.GetString();
             }
-            
-            if (root.TryGetProperty("videos", out JsonElement videosElement) &&
-                videosElement.ValueKind == JsonValueKind.Array)
+            return null;
+        }
+        
+        private string? GetYoutubeIdFromArray(JsonElement root, string propertyName)
+        {
+            if (root.TryGetProperty(propertyName, out JsonElement arrayElement) &&
+                arrayElement.ValueKind == JsonValueKind.Array)
             {
-                foreach (var video in videosElement.EnumerateArray())
+                foreach (var item in arrayElement.EnumerateArray())
                 {
-                    if (video.TryGetProperty("youtube_video_id", out JsonElement videoYoutubeIdElement))
+                    if (item.TryGetProperty("youtube_video_id", out JsonElement youtubeIdElement))
                     {
-                        string? videoYoutubeId = videoYoutubeIdElement.GetString();
-                        if (!string.IsNullOrEmpty(videoYoutubeId))
+                        var youtubeId = youtubeIdElement.GetString();
+                        if (!string.IsNullOrEmpty(youtubeId))
                         {
-                            return videoYoutubeId;
+                            return youtubeId;
                         }
                     }
                 }
             }
-            return "No trailer available";
+            return null;
         }
         
         public async Task<Movie?> GetMovieById(string id)
@@ -165,3 +169,4 @@ namespace Project.Services
         }
     }
 }
+
