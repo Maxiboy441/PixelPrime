@@ -520,6 +520,12 @@ html .swiper-button-next, html .swiper-button-prev {
     }
 }
 
+@media (max-width: 768px) {
+    .movie-trailer-container {
+        height: 300px;
+    }
+}
+
 @media (min-width: 768px) {
     #advert-carousel {
         width: 100vw;
