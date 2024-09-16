@@ -157,8 +157,10 @@
                             <div class="d-flex flex-column gap-2">
                                 <h3 class="fw-bold mb-0">@reviewWithRating.Review.Title</h3>
                                 <div class="d-flex flex-row align-items-center">
-                                    @for (int i = 0; i < reviewWithRating.Rating.Value; i++) {
-                                        <i class="fa-solid fa-star" style="color: #FFD43B;"></i> 
+                                    @if (reviewWithRating.Rating.HasValue) {
+                                        for (int i = 0; i < reviewWithRating.Rating.Value; i++) {
+                                            <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
+                                        }
                                     }
                                 </div>
                                 <p class="mb-0">Written by: @reviewWithRating.Review.User.Name on @reviewWithRating.Review.Updated_at.ToString("MMMM dd, yyyy")</p>
