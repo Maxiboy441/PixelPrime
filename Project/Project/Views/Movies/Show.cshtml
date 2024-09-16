@@ -157,18 +157,22 @@
                             <div class="d-flex flex-column gap-2">
                                 <h3 class="fw-bold mb-0">@reviewWithRating.Review.Title</h3>
                                 <div class="d-flex flex-row align-items-center">
-                                    @if (reviewWithRating.Rating.HasValue) {
-                                        for (int i = 0; i < reviewWithRating.Rating.Value; i++) {
-                                            <i class="fa-solid fa-star" style="color: #FFD43B;"></i> 
-                                        } 
+                                    @for (int i = 0; i < reviewWithRating.Rating.Value; i++) {
+                                        <i class="fa-solid fa-star" style="color: #FFD43B;"></i> 
                                     }
                                 </div>
                                 <p class="mb-0">Written by: @reviewWithRating.Review.User.Name on @reviewWithRating.Review.Updated_at.ToString("MMMM dd, yyyy")</p>
                             </div>
+                        </div>
+
+                        <div id="review-view-@reviewWithRating.Review.Id" class="review-view d-flex flex-column flex-md-row  align-items-end gap-1 gap-md-0">
+                            <div class="d-flex w-75">
+                                <p class="mb-0">@reviewWithRating.Review.Text</p>
+                            </div>
 
                             @if (Model.CurrentUserId == reviewWithRating.Review.User_id)
                             {
-                                <div class="d-flex align-items-start gap-3 ms-auto">
+                                <div class="d-flex gap-3 ms-auto justify-content-start justify-content-md-end">
                                     @await Html.PartialAsync("_EditReviewPopUpForm", Tuple.Create(
                                         Model.Movie.Id,
                                         Model.Movie.Title,
@@ -184,10 +188,6 @@
                                         "Delete"))
                                 </div>
                             }
-                        </div>
-
-                        <div id="review-view-@reviewWithRating.Review.Id" class="review-view p-3">
-                            <p>@reviewWithRating.Review.Text</p>
                         </div>
                     </div>
                 }
