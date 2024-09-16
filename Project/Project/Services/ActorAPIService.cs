@@ -38,7 +38,7 @@ public class ActorAPIService
         {
             return null;
         }
-
+        
         var celebrity = celebrities.FirstOrDefault(c => string.Equals(c.name, actorName, StringComparison.OrdinalIgnoreCase));
 
         if (celebrity == null)

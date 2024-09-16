@@ -1,6 +1,6 @@
 using System.Text.Json;
+using Newtonsoft.Json;
 using Project.Models;
-using Microsoft.Extensions.Configuration;
 
 namespace Project.Services
 {
@@ -16,7 +16,54 @@ namespace Project.Services
             _baseApiUrl = "http://www.omdbapi.com/";
             _apiKey = configuration.GetValue<string>("Api:MovieApi");
         }
-
+        
+        public async Task<string> GetTrailerByImdb(string id)
+        {
+            var url = $"https://api.kinocheck.de/movies?imdb_id={id}&language=de&categories=Trailer";
+        
+            try
+            {
+                var response = await _httpClient.GetAsync(url);
+                response.EnsureSuccessStatusCode();
+        
+                var content = await response.Content.ReadAsStringAsync();
+                using var doc = JsonDocument.Parse(content);
+                var root = doc.RootElement;
+                
+                var youtubeId = GetYoutubeIdFromElement(root, "trailer") 
+                                ?? GetYoutubeIdFromArray(root, "videos");
+        
+                return !string.IsNullOrEmpty(youtubeId) ? youtubeId : "No trailer available";
+            }
+            catch (HttpRequestException e)
+            {
+                Console.WriteLine($"Request to KinoCheck API failed: {e.Message}");
+                return "No trailer available";
+            }
+        }
+        
+        private string? GetYoutubeIdFromElement(JsonElement root, string propertyName)
+        {
+            if (root.TryGetProperty(propertyName, out JsonElement element) &&
+                element.ValueKind == JsonValueKind.Object &&
+                element.TryGetProperty("youtube_video_id", out JsonElement youtubeIdElement))
+            {
+                return youtubeIdElement.GetString();
+            }
+            return null;
+        }
+        
+        private string? GetYoutubeIdFromArray(JsonElement root, string propertyName)
+        {
+            return root.TryGetProperty(propertyName, out JsonElement arrayElement) && arrayElement.ValueKind == JsonValueKind.Array
+                ? arrayElement.EnumerateArray()
+                    .Select(item => item.TryGetProperty("youtube_video_id", out var youtubeIdElement) 
+                        ? youtubeIdElement.GetString() : null)
+                    .FirstOrDefault(id => !string.IsNullOrEmpty(id))
+                : null;
+        }
+        
+        
         public async Task<Movie?> GetMovieById(string id)
         {
             var url = $"{_baseApiUrl}?i={id}&apikey={_apiKey}";
@@ -36,11 +83,12 @@ namespace Project.Services
             }
 
             Movie movie = MappJsonToMovie(content);
-            
+
             if (movie.Type != "movie" && movie.Type != "series")
             {
                 return null;
             }
+
             return movie;
         }
 
@@ -63,7 +111,7 @@ namespace Project.Services
             }
 
             Movie movie = MappJsonToMovie(content);
-            
+
             return movie;
         }
 
@@ -71,10 +119,10 @@ namespace Project.Services
         {
             using JsonDocument doc = JsonDocument.Parse(jsonString);
             JsonElement root = doc.RootElement;
-            
+
             Movie movie = new Movie
             {
-                Id = root.GetProperty("imdbID").GetString(), 
+                Id = root.GetProperty("imdbID").GetString(),
                 Title = root.GetProperty("Title").GetString(),
                 Year = root.GetProperty("Year").GetString(),
                 Runtime = root.GetProperty("Runtime").GetString(),
@@ -100,7 +148,8 @@ namespace Project.Services
             using JsonDocument doc = JsonDocument.Parse(jsonString);
             JsonElement root = doc.RootElement;
 
-            if (root.TryGetProperty("Response", out JsonElement responseElement) && responseElement.GetString() == "False")
+            if (root.TryGetProperty("Response", out JsonElement responseElement) &&
+                responseElement.GetString() == "False")
             {
                 errorMessage = root.GetProperty("Error").GetString();
                 return true;
@@ -111,3 +160,4 @@ namespace Project.Services
         }
     }
 }
+
