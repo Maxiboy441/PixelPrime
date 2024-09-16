@@ -135,6 +135,7 @@ namespace Project.Controllers
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("CurrentUser")))
             {
                 HttpContext.Session.Clear();
+                TempData["SuccessMessage"] = " You’ve logged out. See you soon!";
                 return RedirectToAction("Index", "Home");
 
             }
