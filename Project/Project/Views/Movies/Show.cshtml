@@ -167,14 +167,14 @@
                             </div>
                         </div>
 
-                        <div id="review-view-@reviewWithRating.Review.Id" class="review-view d-flex flex-column flex-md-row  align-items-end gap-1 gap-md-0">
-                            <div class="d-flex w-75">
-                                <p class="mb-0">@reviewWithRating.Review.Text</p>
+                        <div id="review-view-@reviewWithRating.Review.Id" class="review-view d-flex flex-column flex-md-row align-items-end gap-1 gap-md-0">
+                            <div class="d-flex col-12 col-md-9">
+                                <p class="mb-1 mb-md-0 review-content">@reviewWithRating.Review.Text</p>
                             </div>
 
                             @if (Model.CurrentUserId == reviewWithRating.Review.User_id)
                             {
-                                <div class="d-flex gap-3 ms-auto justify-content-start justify-content-md-end">
+                                <div class="d-flex gap-3 ms-auto justify-content-start justify-content-md-end col-12 col-md-3">
                                     @await Html.PartialAsync("_EditReviewPopUpForm", Tuple.Create(
                                         Model.Movie.Id,
                                         Model.Movie.Title,
