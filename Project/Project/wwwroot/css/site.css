@@ -201,6 +201,11 @@ html .swiper-button-next, html .swiper-button-prev {
     width: 50%;
 }
 
+.review-content {
+    word-break: break-word; 
+    overflow-wrap: break-word;
+}
+
 /*Profile Page styles*/
 .profile_image {
     width: 10rem;

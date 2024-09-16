@@ -213,6 +213,21 @@ namespace Project.Controllers
                 .Include(review => review.User)
                 .ToListAsync();
             
+            var ratings = await _context.Ratings
+                .Where(rating => rating.Movie_id == id)
+                .Include(rating => rating.User)
+                .ToListAsync();
+            
+            var reviewsWithRatings = reviews
+                .Select(review => new ReviewWithRatings
+                {
+                    Review = review,
+                    Rating = ratings.FirstOrDefault(rating => rating.User_id == review.User_id)?.Rating_value != null
+                        ? (int?)Convert.ToInt32(ratings.FirstOrDefault(rating => rating.User_id == review.User_id)?.Rating_value)
+                        : null
+                })
+                .ToList();
+            
             var userJson = HttpContext.Session.GetString("CurrentUser");
             int userId = 0;
             bool isFavorite = false;
@@ -238,7 +253,6 @@ namespace Project.Controllers
             var viewModel = new MovieDetailsViewModel
             {
                 Movie = movie,
-                Reviews = reviews,
                 AverageRating = averageRating.HasValue ? averageRating.Value.ToString("0.0") : "",
                 IsFavorite = isFavorite,
                 IsWatchlist = isWatchlist,
@@ -248,6 +262,7 @@ namespace Project.Controllers
                 CurrentUserRating = currentUserRating == 0.0 ? string.Empty : currentUserRating.ToString("0.0"),
                 CurrentUserId = userId,
                 UserHasReview = userHasReview,
+                ReviewWithRatings = reviewsWithRatings,
                 MovieTrailer = await _movieApiService.GetTrailerByImdb(movie.Id),
             };
 
