@@ -155,8 +155,8 @@
                             </div>
 
                             <div class="d-flex flex-column gap-2">
-                                <div class="d-flex flex-row gap-2 align-items-center">
-                                    <h3 class="fw-bold mb-0">@reviewWithRating.Review.Title</h3>
+                                <h3 class="fw-bold mb-0">@reviewWithRating.Review.Title</h3>
+                                <div class="d-flex flex-row align-items-center">
                                     @if (reviewWithRating.Rating.HasValue) {
                                         for (int i = 0; i < reviewWithRating.Rating.Value; i++) {
                                             <i class="fa-solid fa-star" style="color: #FFD43B;"></i> 
