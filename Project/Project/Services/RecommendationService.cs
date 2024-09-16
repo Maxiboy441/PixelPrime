@@ -79,8 +79,12 @@ namespace Project.Services
                 
                         bool isInRatings = await _context.Ratings
                             .AnyAsync(r => r.User_id == userId && r.Movie_id == movie.Id);
+                        
+                        bool isInRecommendations = await _context.Recommendations
+                            .AnyAsync(r => r.User_id == userId && r.Movie_id == movie.Id);
 
-                        if (!isInFavorites && !isInRatings)
+
+                        if (!isInFavorites && !isInRatings && !isInRecommendations)
                         { 
                             _context.Recommendations.Add(recommendation);
                             await _context.SaveChangesAsync();    
