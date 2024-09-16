@@ -82,8 +82,7 @@ namespace Project.Services
                         
                         bool isInRecommendations = await _context.Recommendations
                             .AnyAsync(r => r.User_id == userId && r.Movie_id == movie.Id);
-
-
+                        
                         if (!isInFavorites && !isInRatings && !isInRecommendations)
                         { 
                             _context.Recommendations.Add(recommendation);
