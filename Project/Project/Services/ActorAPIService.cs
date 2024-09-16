@@ -2,6 +2,7 @@ using System.Globalization;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Project.Data;
+using Project.Enums.Occupation;
 using Project.Models;
 
 namespace Project.Services;
@@ -20,7 +21,7 @@ public class ActorAPIService
         _httpClient.DefaultRequestHeaders.Add("X-Api-Key", _apiKey);
     }
 
-    public async Task<Actor> GetAndSaveActorAsync(string actorName)
+    public async Task<Actor?> GetAndSaveActorAsync(string actorName)
     {
         var response =
             await _httpClient.GetAsync(
@@ -35,18 +36,7 @@ public class ActorAPIService
 
         if (celebrities == null || !celebrities.Any())
         {
-            return new Actor
-            {
-                Name = actorName,
-                NetWorth = 0,
-                Gender = "Not found",
-                Nationality = "Not found",
-                Height = 0,
-                Birthday = new DateTime(1001, 1, 1),
-                IsAlive = false,
-                Occupations = "Not found",
-                Image = imageUrl
-            };
+            return null;
         }
 
         var celebrity = celebrities.FirstOrDefault(c => string.Equals(c.name, actorName, StringComparison.OrdinalIgnoreCase));
@@ -54,6 +44,22 @@ public class ActorAPIService
         if (celebrity == null)
         {
             celebrity = celebrities.First();
+        }
+        
+        bool isOccupationInEnum = false;
+
+        foreach (var occupation in celebrity.occupation)
+        {
+            if (OccupationEnumExtensions.GetOccupation(occupation) != null)
+            {
+                isOccupationInEnum = true;
+                break;
+            }
+        }
+
+        if (!isOccupationInEnum)
+        {
+            return null;
         }
 
         var newActor = new Actor
@@ -78,7 +84,6 @@ public class ActorAPIService
 
         return newActor;
     }
-
 
     private DateTime ParseBirthday(string birthday)
     {
