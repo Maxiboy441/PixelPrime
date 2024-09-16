@@ -73,8 +73,18 @@ namespace Project.Services
                             Created_at = DateTime.Now,
                             Updated_at = DateTime.Now
                         };
-                        _context.Recommendations.Add(recommendation);
-                        await _context.SaveChangesAsync();
+                        
+                        bool isInFavorites = await _context.Favorites
+                            .AnyAsync(f => f.User_id == userId && f.Movie_id == movie.Id);
+                
+                        bool isInRatings = await _context.Ratings
+                            .AnyAsync(r => r.User_id == userId && r.Movie_id == movie.Id);
+
+                        if (!isInFavorites && !isInRatings)
+                        { 
+                            _context.Recommendations.Add(recommendation);
+                            await _context.SaveChangesAsync();    
+                        }
                     }
                 }
             });
