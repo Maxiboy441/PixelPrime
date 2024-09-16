@@ -3,6 +3,7 @@ namespace Project.Enums.Occupation
     public enum Occupation
     {
         Actor,
+        Animator,
         Editor,
         Cinematographer,
         FilmDirector,
@@ -23,6 +24,7 @@ namespace Project.Enums.Occupation
             return actorEnum switch
             {
                 "actor" => Occupation.Actor,
+                "animator" => Occupation.Animator,
                 "cinematographer" => Occupation.Cinematographer,
                 "editor" => Occupation.Editor,
                 "film director" => Occupation.FilmDirector,
