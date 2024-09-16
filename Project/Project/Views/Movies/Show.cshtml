@@ -146,7 +146,7 @@
             }
             else
             {
-                foreach (var review in Model.Reviews)
+                @foreach (var reviewWithRating in Model.ReviewWithRatings)
                 {
                     <div class="bg-secondary-color w-100 vh-20 mb-3 p-3 rounded-3">
                         <div class="d-flex flex-row gap-3 mb-3">
@@ -155,23 +155,30 @@
                             </div>
 
                             <div class="d-flex flex-column gap-2">
-                                <h3 class="fw-bold mb-0">@review.Title</h3>
-                                <p class="mb-0">Written by: @review.User.Name on @review.Updated_at.ToString("MMMM dd, yyyy")</p>
+                                <div class="d-flex flex-row gap-2 align-items-center">
+                                    <h3 class="fw-bold mb-0">@reviewWithRating.Review.Title</h3>
+                                    @if (reviewWithRating.Rating.HasValue) {
+                                        for (int i = 0; i < reviewWithRating.Rating.Value; i++) {
+                                            <i class="fa-solid fa-star" style="color: #FFD43B;"></i> 
+                                        } 
+                                    }
+                                </div>
+                                <p class="mb-0">Written by: @reviewWithRating.Review.User.Name on @reviewWithRating.Review.Updated_at.ToString("MMMM dd, yyyy")</p>
                             </div>
 
-                            @if (Model.CurrentUserId == review.User_id)
+                            @if (Model.CurrentUserId == reviewWithRating.Review.User_id)
                             {
                                 <div class="d-flex align-items-start gap-3 ms-auto">
                                     @await Html.PartialAsync("_EditReviewPopUpForm", Tuple.Create(
-                                       Model.Movie.Id,
-                                       Model.Movie.Title,
-                                       Model.Movie.Poster,
-                                       review.Title,
-                                       review.Text,
-                                       $"/content/{Model.Movie.Id}/update-review"))
+                                        Model.Movie.Id,
+                                        Model.Movie.Title,
+                                        Model.Movie.Poster,
+                                        reviewWithRating.Review.Title,
+                                        reviewWithRating.Review.Text,
+                                        $"/content/{Model.Movie.Id}/update-review"))
 
                                     @await Html.PartialAsync("_DeleteConfirmationModal", Tuple.Create(
-                                        @Model.Movie.Id,
+                                        Model.Movie.Id,
                                         "/content/@Model.Movie.Id/delete-review",
                                         "Are you sure you want to delete your review?",
                                         "Delete"))
@@ -179,8 +186,8 @@
                             }
                         </div>
 
-                        <div id="review-view-@review.Id" class="review-view p-3">
-                            <p>@review.Text</p>
+                        <div id="review-view-@reviewWithRating.Review.Id" class="review-view p-3">
+                            <p>@reviewWithRating.Review.Text</p>
                         </div>
                     </div>
                 }
