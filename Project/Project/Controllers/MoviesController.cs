@@ -13,12 +13,14 @@ namespace Project.Controllers
         private readonly DataContext _context;
         private readonly ILogger<MoviesController> _logger;
         private readonly CacheService _cache;
+        private readonly MovieApiService _movieApiService;
 
-        public MoviesController(CacheService cache, ILogger<MoviesController> logger, DataContext context)
+        public MoviesController(CacheService cache, ILogger<MoviesController> logger, DataContext context, MovieApiService movieApiService)
         {
             _cache = cache;
             _logger = logger;
             _context = context;
+            _movieApiService = movieApiService;
         }
 
         [HttpPost]
@@ -210,7 +212,7 @@ namespace Project.Controllers
                 .Where(review => review.Movie_id == id)
                 .Include(review => review.User)
                 .ToListAsync();
-
+            
             var userJson = HttpContext.Session.GetString("CurrentUser");
             int userId = 0;
             bool isFavorite = false;
@@ -245,7 +247,8 @@ namespace Project.Controllers
                 UserHasRating = currentUserRating != 0.0,
                 CurrentUserRating = currentUserRating == 0.0 ? string.Empty : currentUserRating.ToString("0.0"),
                 CurrentUserId = userId,
-                UserHasReview = userHasReview
+                UserHasReview = userHasReview,
+                MovieTrailer = await _movieApiService.GetTrailerByImdb(movie.Id),
             };
 
             return View(viewModel);
@@ -280,8 +283,6 @@ namespace Project.Controllers
                 .Where(r => r.Movie_id == movieId)
                 .AverageAsync(r => (double?)r.Rating_value);
         }
-
-        
         
         [HttpPost]
         public async Task<IActionResult> AddRating(string movieId, string poster, string title, int ratingValue)
