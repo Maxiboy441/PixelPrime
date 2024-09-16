@@ -439,6 +439,10 @@ html .swiper-button-next, html .swiper-button-prev {
     text-decoration: underline;
 }
 
+.search {
+    width: 50%;
+}
+
 @media (max-width: 576px) {
     html {
         font-size: .8rem;
@@ -487,6 +491,10 @@ html .swiper-button-next, html .swiper-button-prev {
     .movie-title-container {
         width: 100%;
     }
+
+    .search {
+        width: 80%;
+    }
 }
 
 @media (min-width: 580px) {
@@ -526,6 +534,12 @@ html .swiper-button-next, html .swiper-button-prev {
     }
 }
 
+@media (max-width: 768px) {
+    .movie-trailer-container {
+        height: 300px;
+    }
+}
+
 @media (min-width: 768px) {
     #advert-carousel {
         width: 100vw;
@@ -543,4 +557,47 @@ html .swiper-button-next, html .swiper-button-prev {
     .overview-container {
         width: 50%;
     }
+}
+
+@media (min-width: 600px) and (max-width: 768px) {
+    .search {
+        width: 46%;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1200px) {
+    .search {
+        width: 40%;
+    }
+}
+
+.dropdownMenu {
+    display: none; /* Initially hidden */
+    position: absolute;
+    z-index: 98;
+    background-color: #212529;
+    padding: 15px;
+    width: 200px;
+    border-radius: 5px;
+    right: 0;
+}
+
+.dropdownMenu.show {
+    display: flex;
+    flex-direction: column;
+}
+
+.dropdown-image {
+    width: 3rem;
+    height: 3rem;
+    background-color: var(--secondary-color);
+    transition: 0.3s ease-in-out;
+}
+
+.dropdown-image:hover {
+    border: 2px solid var(--purple-color);
+}
+
+.nav-item {
+    position: relative;
 }

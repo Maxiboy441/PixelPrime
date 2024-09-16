@@ -13,12 +13,14 @@ namespace Project.Controllers
         private readonly DataContext _context;
         private readonly ILogger<MoviesController> _logger;
         private readonly CacheService _cache;
+        private readonly MovieApiService _movieApiService;
 
-        public MoviesController(CacheService cache, ILogger<MoviesController> logger, DataContext context)
+        public MoviesController(CacheService cache, ILogger<MoviesController> logger, DataContext context, MovieApiService movieApiService)
         {
             _cache = cache;
             _logger = logger;
             _context = context;
+            _movieApiService = movieApiService;
         }
 
         [HttpPost]
@@ -251,7 +253,6 @@ namespace Project.Controllers
             var viewModel = new MovieDetailsViewModel
             {
                 Movie = movie,
-                Reviews = reviews,
                 AverageRating = averageRating.HasValue ? averageRating.Value.ToString("0.0") : "",
                 IsFavorite = isFavorite,
                 IsWatchlist = isWatchlist,
@@ -261,7 +262,8 @@ namespace Project.Controllers
                 CurrentUserRating = currentUserRating == 0.0 ? string.Empty : currentUserRating.ToString("0.0"),
                 CurrentUserId = userId,
                 UserHasReview = userHasReview,
-                ReviewWithRatings = reviewsWithRatings
+                ReviewWithRatings = reviewsWithRatings,
+                MovieTrailer = await _movieApiService.GetTrailerByImdb(movie.Id),
             };
 
             return View(viewModel);
@@ -296,8 +298,6 @@ namespace Project.Controllers
                 .Where(r => r.Movie_id == movieId)
                 .AverageAsync(r => (double?)r.Rating_value);
         }
-
-        
         
         [HttpPost]
         public async Task<IActionResult> AddRating(string movieId, string poster, string title, int ratingValue)
