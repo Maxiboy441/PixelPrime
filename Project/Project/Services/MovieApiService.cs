@@ -20,19 +20,19 @@ namespace Project.Services
         public async Task<string> GetTrailerByImdb(string id)
         {
             var url = $"https://api.kinocheck.de/movies?imdb_id={id}&language=de&categories=Trailer";
-
+        
             try
             {
                 var response = await _httpClient.GetAsync(url);
                 response.EnsureSuccessStatusCode();
-
+        
                 var content = await response.Content.ReadAsStringAsync();
                 using var doc = JsonDocument.Parse(content);
                 var root = doc.RootElement;
                 
                 var youtubeId = GetYoutubeIdFromElement(root, "trailer") 
                                 ?? GetYoutubeIdFromArray(root, "videos");
-
+        
                 return !string.IsNullOrEmpty(youtubeId) ? youtubeId : "No trailer available";
             }
             catch (HttpRequestException e)
@@ -55,23 +55,14 @@ namespace Project.Services
         
         private string? GetYoutubeIdFromArray(JsonElement root, string propertyName)
         {
-            if (root.TryGetProperty(propertyName, out JsonElement arrayElement) &&
-                arrayElement.ValueKind == JsonValueKind.Array)
-            {
-                foreach (var item in arrayElement.EnumerateArray())
-                {
-                    if (item.TryGetProperty("youtube_video_id", out JsonElement youtubeIdElement))
-                    {
-                        var youtubeId = youtubeIdElement.GetString();
-                        if (!string.IsNullOrEmpty(youtubeId))
-                        {
-                            return youtubeId;
-                        }
-                    }
-                }
-            }
-            return null;
+            return root.TryGetProperty(propertyName, out JsonElement arrayElement) && arrayElement.ValueKind == JsonValueKind.Array
+                ? arrayElement.EnumerateArray()
+                    .Select(item => item.TryGetProperty("youtube_video_id", out var youtubeIdElement) 
+                        ? youtubeIdElement.GetString() : null)
+                    .FirstOrDefault(id => !string.IsNullOrEmpty(id))
+                : null;
         }
+        
         
         public async Task<Movie?> GetMovieById(string id)
         {
