@@ -31,7 +31,7 @@ namespace Project.Services
 
             var requestBody = new
             {
-                model = "movie-critic:latest",
+                model = "mistral:latest",
                 prompt = prompt,
                 stream = false
             };
