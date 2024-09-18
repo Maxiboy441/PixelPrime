@@ -49,7 +49,7 @@ namespace Project.Services
                 string prompt1 = GenerateRatingsString(liked);
                 string prompt2 = GenerateFavoritesString(favorites);
 
-                string finalPrompt = $"{prompt1}\n{prompt2}. Give me only json, no notes etc!";
+                string finalPrompt = $"{prompt1}\n{prompt2}. Give me a json of the movie names, nothing more!";
 
                 List<string> response = await _aiApiService.GenerateResponse(finalPrompt);
 

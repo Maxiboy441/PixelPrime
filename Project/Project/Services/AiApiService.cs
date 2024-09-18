@@ -1,3 +1,4 @@
+using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
@@ -14,12 +15,14 @@ namespace Project.Services
         private readonly HttpClient _client;
         private readonly string _apiUrl;
         private readonly ILogger<AiApiService> _logger;
+        private readonly string _aiToken;
 
         public AiApiService(HttpClient client, IConfiguration config, ILogger<AiApiService> logger)
         {
             _client = client;
             _apiUrl = config.GetValue<string>("Api:AiURL") ?? throw new ArgumentNullException(nameof(_apiUrl));
             _logger = logger;
+            _aiToken = config.GetValue<string>("Api:AiToken") ?? throw new ArgumentNullException(nameof(_aiToken));
         }
 
         public async Task<List<string>> GenerateResponse(string prompt)
@@ -37,6 +40,8 @@ namespace Project.Services
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
             _logger.LogInformation("Sending POST request to {ApiUrl}", _apiUrl);
+            
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _aiToken);
 
             var response = await _client.PostAsync(_apiUrl, content);
 
