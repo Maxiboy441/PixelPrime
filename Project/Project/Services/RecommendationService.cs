@@ -46,7 +46,7 @@ namespace Project.Services
         string prompt1 = GenerateRatingsString(liked);
         string prompt2 = GenerateFavoritesString(favorites);
 
-        string finalPrompt = $"{prompt1}\n{prompt2}. Give me a json of the movie names, nothing more!";
+        string finalPrompt = $"Recommend me new movies.\n{prompt2}\n{prompt1}\n. Give me a json of the movie names, nothing more!";
 
         _logger.LogInformation("Generated Prompt: {finalPrompt}", finalPrompt);
 
