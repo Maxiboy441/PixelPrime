@@ -31,6 +31,7 @@
                     <div class="dropdownMenu gap-3" aria-labelledby="navbarDropMenu">
                         <a class="nav-link text-light" asp-controller="Profile" asp-action="Index">My Space</a>
                         <a class="nav-link text-light" href="/user/account">Account Settings</a>
+                        <a class="nav-link text-light" href="/how-to-use">How to Use</a>
                         @await Html.PartialAsync("_PrimaryButton", Tuple.Create("Logout", "style-1", "", "href=/Auth/Logout", "a"))
                     </div>
                     }

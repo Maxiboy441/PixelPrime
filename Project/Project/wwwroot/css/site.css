@@ -139,6 +139,14 @@ html .swiper-button-next, html .swiper-button-prev {
     color: #fff !important;
 }
 
+.how-to-use {
+    color: white;
+}
+
+.how-to-use:hover {
+    color: var(--purple-color);
+}
+
 /*Movie Page styles*/
 
 .overview-container {
@@ -494,6 +502,14 @@ html .swiper-button-next, html .swiper-button-prev {
 
     .search {
         width: 80%;
+    }
+
+    .carousel-caption h1 {
+        font-size: 1.25rem !important;
+    }
+    
+    .carousel-caption h5 {
+        font-size: 1rem !important;
     }
 }
 
