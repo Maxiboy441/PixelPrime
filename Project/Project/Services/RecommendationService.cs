@@ -69,7 +69,7 @@ public class RecommendationService
 
                     var movie = await _movieApiService.GetMovieByName(title);
 
-                    if (movie.Title != "error")
+                    if (movie != null && movie.Title != "error")
                     {
                         _logger.LogInformation("Movie found: {movieTitle}, {movieId}", movie.Title, movie.Id);
 
