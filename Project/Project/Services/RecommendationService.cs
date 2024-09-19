@@ -46,10 +46,8 @@ namespace Project.Services
         string prompt1 = GenerateRatingsString(liked);
         string prompt2 = GenerateFavoritesString(favorites);
 
-        string finalPrompt = $"Recommend me new movies.\n{prompt2}\n{prompt1}\n. Give me a json of the movie names, nothing more!";
-
-        _logger.LogInformation("Generated Prompt: {finalPrompt}", finalPrompt);
-
+        string finalPrompt = $"Recommend me new movies.\n{prompt2}\n{prompt1}\nGive me a json of the movie names, nothing more!";
+        
         List<string> response = await _aiApiService.GenerateResponse(finalPrompt);
         _logger.LogInformation("AI API Response: {response}", string.Join(", ", response));
 
