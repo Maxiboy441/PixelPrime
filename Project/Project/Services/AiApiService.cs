@@ -1,12 +1,7 @@
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
-using System.Text.RegularExpressions;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using JsonException = System.Text.Json.JsonException;
-using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace Project.Services
 {
@@ -58,8 +53,8 @@ namespace Project.Services
                 }
                 catch (JsonException ex)
                 {
-                    _logger.LogError(ex, "Couldnt make : {responseContent} a Movie list", responseContent);
-                    throw new Exception("Couldnt make a Movie list");
+                    _logger.LogError(ex, "Couldn't make : {responseContent} a Movie list", responseContent);
+                    throw new Exception("Couldn't make a Movie list");
                 }
             }
             else
@@ -73,38 +68,20 @@ namespace Project.Services
         {
             try
             {
-                // Parse the JSON string into a JsonDocument
                 using (JsonDocument doc = JsonDocument.Parse(jsonResponse))
                 {
-                    // Access the "response" field which contains the list of movie names
                     var responseElement = doc.RootElement.GetProperty("response").GetString();
-
-                    // Clean the response string by removing unwanted characters
-                    responseElement = responseElement.Replace("[", "")
-                        .Replace("]", "")
-                        .Replace("\"", "")
-                        .Trim();
-
-                    // Split the cleaned response into individual movie names, ensuring no empty or whitespace entries
-                    var movieNames = responseElement.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-
-                    // Create a list of trimmed movie names and avoid leading/trailing spaces
-                    List<string> movieList = new List<string>();
-                    foreach (var movie in movieNames)
-                    {
-                        string trimmedMovie = movie.Trim();
-                        if (!string.IsNullOrWhiteSpace(trimmedMovie)) // Ensure no empty strings
-                        {
-                            movieList.Add(trimmedMovie);
-                        }
-                    }
-
-                    return movieList;
+                    var movieArray = JsonDocument.Parse(responseElement).RootElement;
+                    
+                    return movieArray.EnumerateArray()
+                        .Select(movie => movie.GetString())
+                        .Where(title => !string.IsNullOrWhiteSpace(title))
+                        .ToList();
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                throw new Exception("Error while extracting movie names");
+                throw new Exception("Error while extracting movie names: " + ex.Message);
             }
         }
     }
