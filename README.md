@@ -9,4 +9,4 @@
 - [Mehrulloh Boboev](https://github.com/mehrb98)
 
 
-## User Documentation
+## Check out our [wiki](https://github.com/Maxiboy441/PixelPrime/wiki) for more information
