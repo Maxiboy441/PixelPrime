@@ -52,41 +52,13 @@ namespace Project.Services
 
                 try
                 {
-                    var responseObject = JsonSerializer.Deserialize<JsonElement>(responseContent);
-
-                    if (responseObject.TryGetProperty("response", out var responseProperty))
-                    {
-                        var responseString = responseProperty.GetString();
-                        var jsonContent = ConvertToValidJson(ExtractJsonFromMarkdown(responseString));
-
-                        if (!string.IsNullOrEmpty(jsonContent))
-                        {
-                            try
-                            {
-                                var movieList = JsonSerializer.Deserialize<List<string>>(jsonContent);
-                                return movieList;
-                            }
-                            catch (JsonException ex)
-                            {
-                                _logger.LogError(ex, "Failed to deserialize JSON content: {JsonContent}", jsonContent);
-                                throw new Exception("Failed to deserialize JSON content", ex);
-                            }
-                        }
-                        else
-                        {
-                            _logger.LogError("No valid JSON found in the response: {ResponseString}", responseString);
-                            throw new Exception("No valid JSON found in the response");
-                        }
-                    }
-                    else
-                    {
-                        _logger.LogError("Response property not found in API response: {ResponseContent}", responseContent);
-                        throw new Exception("Response property not found in API response");
-                    }
+                    List<string> movieList = ExtractMovieNames(responseContent);
+                    _logger.LogInformation("MovieList: {movieList}", movieList);
+                    return movieList;
                 }
                 catch (JsonException ex)
                 {
-                    _logger.LogError(ex, "Failed to parse API response as JSON: {ResponseContent}", responseContent);
+                    _logger.LogError(ex, "Couldnt make : {responseContent} a Movie list", responseContent);
                     throw new Exception("Failed to parse API response as JSON", ex);
                 }
             }
@@ -96,49 +68,44 @@ namespace Project.Services
                 throw new Exception($"API request failed with status code: {response.StatusCode}");
             }
         }
-
-        private string ExtractJsonFromMarkdown(string markdown)
-        {
-            var match = Regex.Match(markdown, @"```json\s*([\s\S]*?)\s*```");
-            return match.Success ? match.Groups[1].Value.Trim() : string.Empty;
-        }
         
-        public static string ConvertToValidJson(string input)
+        public static List<string> ExtractMovieNames(string jsonResponse)
         {
-            var jsonMatch = Regex.Match(input, @"\[[\s\S]*\]");
-            if (!jsonMatch.Success)
-            {
-                throw new ArgumentException("No JSON-like structure found in the input.");
-            }
-
-            string jsonContent = jsonMatch.Value;
-
-            jsonContent = Regex.Replace(jsonContent, @"(?m)^\s*[^""\[\],\s]+.*$", "");
-
-            jsonContent = Regex.Replace(jsonContent, @"(?m)^\s*$[\r\n]*", "");
-
             try
             {
-                var jArray = JArray.Parse(jsonContent);
-        
-                var fixedArray = jArray
-                    .Where(token => token.Type == JTokenType.String)
-                    .Select(token => token.Value<string>().Trim())
-                    .Where(s => !string.IsNullOrWhiteSpace(s))
-                    .ToArray();
+                // Parse the JSON string into a JsonDocument
+                using (JsonDocument doc = JsonDocument.Parse(jsonResponse))
+                {
+                    // Access the "response" field which contains the list of movie names
+                    var responseElement = doc.RootElement.GetProperty("response").GetString();
 
-                return JsonConvert.SerializeObject(fixedArray, Formatting.Indented);
+                    // Clean the response string by removing unwanted characters
+                    responseElement = responseElement.Replace("[", "")
+                        .Replace("]", "")
+                        .Replace("\"", "")
+                        .Trim();
+
+                    // Split the cleaned response into individual movie names, ensuring no empty or whitespace entries
+                    var movieNames = responseElement.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+                    // Create a list of trimmed movie names and avoid leading/trailing spaces
+                    List<string> movieList = new List<string>();
+                    foreach (var movie in movieNames)
+                    {
+                        string trimmedMovie = movie.Trim();
+                        if (!string.IsNullOrWhiteSpace(trimmedMovie)) // Ensure no empty strings
+                        {
+                            movieList.Add(trimmedMovie);
+                        }
+                    }
+
+                    return movieList;
+                }
             }
-            catch (JsonException)
+            catch (Exception ex)
             {
-                var matches = Regex.Matches(jsonContent, @"""([^""\\]*(?:\\.[^""\\]*)*)""");
-                var fixedArray = matches
-                    .Cast<Match>()
-                    .Select(m => m.Groups[1].Value.Trim())
-                    .Where(s => !string.IsNullOrWhiteSpace(s))
-                    .ToArray();
-
-                return JsonConvert.SerializeObject(fixedArray, Formatting.Indented);
+                Console.WriteLine("Error while extracting movie names: " + ex.Message);
+                return new List<string>(); // Return an empty list in case of an error
             }
         }
     }
