@@ -1,4 +1,4 @@
-# PixelPrime
+# <img src="./Project/Project/wwwroot/images/pixel_prime_logo.png" alt="PixelPrime Logo" width="30" height="30"> PixelPrime
 
 ## Maintainers
 
