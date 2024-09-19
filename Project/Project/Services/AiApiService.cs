@@ -59,7 +59,7 @@ namespace Project.Services
                 catch (JsonException ex)
                 {
                     _logger.LogError(ex, "Couldnt make : {responseContent} a Movie list", responseContent);
-                    throw new Exception("Failed to parse API response as JSON", ex);
+                    throw new Exception("Couldnt make a Movie list");
                 }
             }
             else
@@ -102,10 +102,9 @@ namespace Project.Services
                     return movieList;
                 }
             }
-            catch (Exception ex)
+            catch
             {
-                Console.WriteLine("Error while extracting movie names: " + ex.Message);
-                return new List<string>(); // Return an empty list in case of an error
+                throw new Exception("Error while extracting movie names");
             }
         }
     }
