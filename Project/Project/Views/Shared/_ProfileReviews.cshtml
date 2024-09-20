@@ -1,0 +1,48 @@
+﻿@model List<Review>
+
+<div class="d-flex flex-wrap gap-3 justify-content-center">
+
+    @foreach (var review in Model)
+    {
+        <div class="card mb-3 bg-purple" style="max-width: 540px;">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    <a href="/content/@review.Movie_id">
+                        @if (!string.IsNullOrEmpty(review.Movie_poster) && review.Movie_poster != "N/A")
+                        {
+                        <img class="card-img-top" src="@review.Movie_poster" alt="@review.Movie_title">
+                        }
+                        else
+                        {
+                        <img class="card-img-top" src="@Url.Content("~/images/poster_not_found.png")" alt="Poster not found">
+                        }
+                    </a>
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">@review.Movie_title</h5>
+                        <p class="card-text"></p>
+                        <p class="card-text text-truncate">Title: @review.Title</p>
+                        <p class="card-text text-truncate">Review: @review.Title</p>
+
+                        <div class="d-flex gap-3 ms-auto col-12 col-md-3">
+                            @await Html.PartialAsync("_EditReviewPopUpForm", Tuple.Create(
+                            review.Movie_id,
+                            review.Movie_title,
+                            review.Movie_poster,
+                            review.Title,
+                            review.Text,
+                            $"/content/{review.Movie_id}/update-review"))
+
+                            @await Html.PartialAsync("_DeleteConfirmationModal", Tuple.Create(
+                            review.Movie_id,
+                            "/content/@Model.Movie.Id/delete-review",
+                            "Are you sure you want to delete your review?",
+                            "Delete"))
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

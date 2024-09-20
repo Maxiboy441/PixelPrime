@@ -19,7 +19,7 @@ namespace Project.Services
         
         public async Task<string> GetTrailerByImdb(string id)
         {
-            var url = $"https://api.kinocheck.de/movies?imdb_id={id}&language=de&categories=Trailer";
+            var url = $"https://api.kinocheck.de/movies?imdb_id={id}&language=en&categories=Trailer";
         
             try
             {
