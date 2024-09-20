@@ -139,6 +139,25 @@ html .swiper-button-next, html .swiper-button-prev {
     color: #fff !important;
 }
 
+.how-to-use {
+    color: white;
+}
+
+.how-to-use:hover {
+    color: var(--purple-color);
+}
+
+.how-to-use-link {
+    text-decoration: underline;
+    text-decoration-color: var(--text-color);
+    transition: all 0.3s ease-in-out;
+}
+
+.how-to-use-link:hover {
+    color: var(--primary-color);
+    text-decoration-color: var(--primary-color);
+}
+
 /*Movie Page styles*/
 
 .overview-container {
@@ -494,6 +513,14 @@ html .swiper-button-next, html .swiper-button-prev {
 
     .search {
         width: 80%;
+    }
+
+    .carousel-caption h1 {
+        font-size: 1.25rem !important;
+    }
+    
+    .carousel-caption h5 {
+        font-size: 1rem !important;
     }
 }
 

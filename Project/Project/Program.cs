@@ -157,4 +157,9 @@ app.MapControllerRoute(
     pattern: "content/{movieId?}/delete-review",
     defaults: new { controller = "Review", action = "Delete" });
 
+app.MapControllerRoute(
+    name: "how-to-use",
+    pattern: "how-to-use/",
+    defaults: new { controller = "HowToUse", action = "Index" });
+
 app.Run();
