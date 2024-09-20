@@ -1,11 +1,7 @@
+using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
-using System.Text.RegularExpressions;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using JsonException = System.Text.Json.JsonException;
-using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace Project.Services
 {
@@ -20,6 +16,16 @@ namespace Project.Services
             _client = client;
             _apiUrl = config.GetValue<string>("Api:AiURL") ?? throw new ArgumentNullException(nameof(_apiUrl));
             _logger = logger;
+
+            var aiToken = config.GetValue<string>("Api:AiToken");
+
+            if (string.IsNullOrEmpty(aiToken))
+            {
+                throw new ArgumentNullException(nameof(aiToken));
+            }
+
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", aiToken);
+
         }
 
         public async Task<List<string>> GenerateResponse(string prompt)
@@ -28,7 +34,7 @@ namespace Project.Services
 
             var requestBody = new
             {
-                model = "movie-critic:latest",
+                model = "mistral:latest",
                 prompt = prompt,
                 stream = false
             };
@@ -47,93 +53,41 @@ namespace Project.Services
 
                 try
                 {
-                    var responseObject = JsonSerializer.Deserialize<JsonElement>(responseContent);
-
-                    if (responseObject.TryGetProperty("response", out var responseProperty))
-                    {
-                        var responseString = responseProperty.GetString();
-                        var jsonContent = ConvertToValidJson(ExtractJsonFromMarkdown(responseString));
-
-                        if (!string.IsNullOrEmpty(jsonContent))
-                        {
-                            try
-                            {
-                                var movieList = JsonSerializer.Deserialize<List<string>>(jsonContent);
-                                return movieList;
-                            }
-                            catch (JsonException ex)
-                            {
-                                _logger.LogError(ex, "Failed to deserialize JSON content: {JsonContent}", jsonContent);
-                                throw new Exception("Failed to deserialize JSON content", ex);
-                            }
-                        }
-                        else
-                        {
-                            _logger.LogError("No valid JSON found in the response: {ResponseString}", responseString);
-                            throw new Exception("No valid JSON found in the response");
-                        }
-                    }
-                    else
-                    {
-                        _logger.LogError("Response property not found in API response: {ResponseContent}", responseContent);
-                        throw new Exception("Response property not found in API response");
-                    }
+                    List<string> movieList = ExtractMovieNames(responseContent);
+                    _logger.LogInformation("MovieList: {movieList}", movieList);
+                    return movieList;
                 }
                 catch (JsonException ex)
                 {
-                    _logger.LogError(ex, "Failed to parse API response as JSON: {ResponseContent}", responseContent);
-                    throw new Exception("Failed to parse API response as JSON", ex);
+                    _logger.LogError(ex, "Couldn't convert response to movie list: {ResponseContent}", responseContent);
+                    throw new InvalidOperationException("Couldn't convert response to a movie list", ex);
                 }
             }
             else
             {
                 _logger.LogError("API request failed with status code: {StatusCode}", response.StatusCode);
-                throw new Exception($"API request failed with status code: {response.StatusCode}");
+                throw new HttpRequestException($"API request failed with status code: {response.StatusCode}");
             }
         }
 
-        private string ExtractJsonFromMarkdown(string markdown)
+        public static List<string> ExtractMovieNames(string jsonResponse)
         {
-            var match = Regex.Match(markdown, @"```json\s*([\s\S]*?)\s*```");
-            return match.Success ? match.Groups[1].Value.Trim() : string.Empty;
-        }
-        
-        public static string ConvertToValidJson(string input)
-        {
-            var jsonMatch = Regex.Match(input, @"\[[\s\S]*\]");
-            if (!jsonMatch.Success)
-            {
-                throw new ArgumentException("No JSON-like structure found in the input.");
-            }
-
-            string jsonContent = jsonMatch.Value;
-
-            jsonContent = Regex.Replace(jsonContent, @"(?m)^\s*[^""\[\],\s]+.*$", "");
-
-            jsonContent = Regex.Replace(jsonContent, @"(?m)^\s*$[\r\n]*", "");
-
             try
             {
-                var jArray = JArray.Parse(jsonContent);
-        
-                var fixedArray = jArray
-                    .Where(token => token.Type == JTokenType.String)
-                    .Select(token => token.Value<string>().Trim())
-                    .Where(s => !string.IsNullOrWhiteSpace(s))
-                    .ToArray();
+                using (JsonDocument doc = JsonDocument.Parse(jsonResponse))
+                {
+                    var responseElement = doc.RootElement.GetProperty("response").GetString();
+                    var movieArray = JsonDocument.Parse(responseElement).RootElement;
 
-                return JsonConvert.SerializeObject(fixedArray, Formatting.Indented);
+                    return movieArray.EnumerateArray()
+                        .Select(movie => movie.GetString())
+                        .Where(title => !string.IsNullOrWhiteSpace(title))
+                        .ToList();
+                }
             }
-            catch (JsonException)
+            catch (Exception ex)
             {
-                var matches = Regex.Matches(jsonContent, @"""([^""\\]*(?:\\.[^""\\]*)*)""");
-                var fixedArray = matches
-                    .Cast<Match>()
-                    .Select(m => m.Groups[1].Value.Trim())
-                    .Where(s => !string.IsNullOrWhiteSpace(s))
-                    .ToArray();
-
-                return JsonConvert.SerializeObject(fixedArray, Formatting.Indented);
+                throw new InvalidOperationException("Error while extracting movie names", ex);
             }
         }
     }
