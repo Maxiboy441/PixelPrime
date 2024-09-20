@@ -6,10 +6,11 @@ using Project.HostedServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Register HttpClient services
 builder.Services.AddHttpClient<AiApiService>();
-builder.Services.AddScoped<AiApiService>();
 builder.Services.AddHttpClient<MovieApiService>();
-builder.Services.AddScoped<MovieApiService>();
+
+// Register other services
 builder.Services.AddScoped<RecommendationService>();
 builder.Services.AddScoped<BackgroundRecommendationService>();
 builder.Services.AddHostedService<BackgroundRecommendationService>();
