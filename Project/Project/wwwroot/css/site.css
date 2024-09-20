@@ -147,6 +147,17 @@ html .swiper-button-next, html .swiper-button-prev {
     color: var(--purple-color);
 }
 
+.how-to-use-link {
+    text-decoration: underline;
+    text-decoration-color: var(--text-color);
+    transition: all 0.3s ease-in-out;
+}
+
+.how-to-use-link:hover {
+    color: var(--primary-color);
+    text-decoration-color: var(--primary-color);
+}
+
 /*Movie Page styles*/
 
 .overview-container {
