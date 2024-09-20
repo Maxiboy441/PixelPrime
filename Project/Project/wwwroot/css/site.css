@@ -210,6 +210,7 @@ html .swiper-button-next, html .swiper-button-prev {
 .profile_image {
     width: 10rem;
     height: 10rem;
+    object-fit: cover;
     background-color: var(--secondary-color);
 }
 
@@ -473,7 +474,8 @@ html .swiper-button-next, html .swiper-button-prev {
     }
 
     .profile-movie-container {
-        margin-inline-start: 100px;
+        width: fit-content;
+        margin: 0 auto;
     }
 
     .profile-movie-container__row {
