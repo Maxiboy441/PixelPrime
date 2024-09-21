@@ -558,6 +558,11 @@ html .swiper-button-next, html .swiper-button-prev {
     }
 
     /* General styles for nav tabs */
+    
+    #myTab {
+        padding-left: .75rem;
+        margin-bottom: 1rem;
+    }
 
     #watchlist-tab {
         background-color: var(--purple-color);
