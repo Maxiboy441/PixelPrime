@@ -133,8 +133,9 @@ namespace Reviews.Controllers
                 {
                     TempData["SuccessMessage"] = "Review has been successfully deleted.";
                     var refererUrl = Request.Headers["Referer"].ToString();
+                    var allowedUrls = new List<string> { "/home", "/profile", "/reviews" }; // Add your allowed URLs here
                     var uri = new Uri(refererUrl, UriKind.RelativeOrAbsolute);
-                    if (!uri.IsAbsoluteUri || uri.Host == "yourdomain.com")
+                    if (!uri.IsAbsoluteUri && allowedUrls.Contains(uri.LocalPath))
                     {
                         return Redirect(refererUrl);
                     }
@@ -152,8 +153,9 @@ namespace Reviews.Controllers
                 } else
                 {
                     var refererUrl = Request.Headers["Referer"].ToString();
+                    var allowedUrls = new List<string> { "/home", "/profile", "/reviews" }; // Add your allowed URLs here
                     var uri = new Uri(refererUrl, UriKind.RelativeOrAbsolute);
-                    var returnUrl = (!uri.IsAbsoluteUri || uri.Host == "yourdomain.com") ? refererUrl : Url.Action("Index", "Home");
+                    var returnUrl = (!uri.IsAbsoluteUri && allowedUrls.Contains(uri.LocalPath)) ? refererUrl : Url.Action("Index", "Home");
                     return RedirectToAction("Login", "Auth", new { returnUrl = returnUrl });
                 }
             }
