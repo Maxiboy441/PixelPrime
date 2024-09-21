@@ -132,7 +132,16 @@ namespace Reviews.Controllers
                 } else
                 {
                     TempData["SuccessMessage"] = "Review has been successfully deleted.";
-                    return Redirect(Request.Headers["Referer"].ToString());
+                    var refererUrl = Request.Headers["Referer"].ToString();
+                    var uri = new Uri(refererUrl, UriKind.RelativeOrAbsolute);
+                    if (!uri.IsAbsoluteUri || uri.Host == "yourdomain.com")
+                    {
+                        return Redirect(refererUrl);
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
                 }
             }
             else
@@ -142,8 +151,10 @@ namespace Reviews.Controllers
                     return Json(new { success = false, redirectToLogin = true, message = "User not logged in." });
                 } else
                 {
-                    var originalUrl = Request.Headers["Referer"].ToString();
-                    return RedirectToAction("Login", "Auth", new { returnUrl = originalUrl });
+                    var refererUrl = Request.Headers["Referer"].ToString();
+                    var uri = new Uri(refererUrl, UriKind.RelativeOrAbsolute);
+                    var returnUrl = (!uri.IsAbsoluteUri || uri.Host == "yourdomain.com") ? refererUrl : Url.Action("Index", "Home");
+                    return RedirectToAction("Login", "Auth", new { returnUrl = returnUrl });
                 }
             }
         }
