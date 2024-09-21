@@ -556,6 +556,56 @@ html .swiper-button-next, html .swiper-button-prev {
     .carousel-caption h5 {
         font-size: 1rem !important;
     }
+
+    /* General styles for nav tabs */
+
+    #watchlist-tab {
+        background-color: var(--purple-color);
+        border-radius: 5px;
+    }
+
+    #watchlist-tab.active {
+        background-color: #4B1EB3;
+        color: white !important;
+        border-radius: 5px;
+    }
+    
+    #favorites-tab {
+        background-color: var(--purple-color);
+        border-radius: 5px;
+    }
+
+    #favorites-tab.active {
+        background-color: #4B1EB3;
+        color: white !important;
+        border-radius: 5px;
+    }
+
+    #recommendations-tab {
+        background-color: var(--purple-color);
+        border-radius: 5px;
+    }
+
+    #recommendations-tab.active {
+        background-color: #4B1EB3;
+        color: white !important;
+        border-radius: 5px;
+    }
+    
+    #reviews-tab {
+        background-color: var(--purple-color);
+        border-radius: 5px;
+    }
+
+    #reviews-tab.active {
+        background-color: #4B1EB3;
+        color: white !important;
+        border-radius: 5px;
+    }
+
+    .nav-tabs {
+        gap: 10px;
+    }
 }
 
 @media (min-width: 580px) {
