@@ -1,14 +1,15 @@
-@model Tuple<string, string, string, string>
+@model Tuple<string, string, string, string, string>
 
 @{
     var movieId = Model.Item1;
     var formAction = Model.Item2;
     var deleteMessage = Model.Item3;
     var btnText = Model.Item4;
+    var customClass = Model.Item5;
 }
 
 @await Html.PartialAsync("_PrimaryButton", Tuple.Create(
-    Model.Item4,
+    btnText,
     "",
     "btn btn-red btn-sm",
     "type=button data-toggle=modal data-target=#deleteConfirmationModal",
@@ -36,7 +37,7 @@
                             Tuple.Create(
                                 "Delete",
                                 "",
-                                "btn btn-red",
+                                $"btn btn-red {customClass}",
                                 "type=submit",
                                 "button")
                             )

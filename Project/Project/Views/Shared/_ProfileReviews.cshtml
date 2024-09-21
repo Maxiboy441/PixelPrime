@@ -4,7 +4,7 @@
     <div class="row overflow-hidden">
         @foreach (var review in Model)
         {
-            <div class="d-flex flex-column flex-md-row position-relative w-50 mb-3">
+            <div class="d-flex flex-column flex-md-row position-relative w-50 mb-3 review-container">
                 <div class="card review-card mb-3 col-12 col-md-6 p-0 w-100 h-100 d-flex flex-column" style="max-width: 540px;">
                     <div class="row g-0 h-100 bg-purple">
                         <div class="col-md-4">
@@ -41,9 +41,10 @@
                                 <div class="review-profile-btn__delete" style="max-width: 540px;">
                                     @await Html.PartialAsync("_DeleteConfirmationModal", Tuple.Create(
                                     review.Movie_id,
-                                    "/content/@Model.Movie.Id/delete-review",
+                                    "/content/@Model.Movie.Id/delete-review-from-profile",
                                     "Are you sure you want to delete your review?",
-                                    "Delete"))
+                                    "Delete",
+                                    "delete-confirmation-btn"))
                                 </div>
                             </div>
                         </div>
