@@ -5,11 +5,11 @@
 }
 
 <section class="profile-session">
-    <div class="container mb-5 d-flex flex-column flex-md-row justify-content-between profile-container">
+    <div class="container mb-5 d-flex flex-column flex-md-row justify-content-between profile-container content-wrapper">
         <div class="d-flex flex-column flex-md-row gap-3">
             <img src="@Url.Content("~/images/user_profile.png")" class="profile_image rounded-circle overflow-hidden" />
 
-            <h1 class="align-self-end" id="user-name">@Model.User.Name</h1>
+            <h1 class="align-self-md-end" id="user-name">@Model.User.Name</h1>
         </div>
 
         <div class="align-self-md-end account-btn mt-3 mt-md-0">
@@ -19,9 +19,11 @@
     <a id="top"></a>
 
     @await Html.PartialAsync("_ProfileTabButton",
-        Tuple.Create("Watchlist", "Favorites", "Recommendations",
-        await Html.PartialAsync("_ProfileMovieListComponent", Tuple.Create(Model.Watchlist, true, "/Movies/DestroyWatchlistMovieFromProfile")),
-        await Html.PartialAsync("_ProfileMovieListComponent", Tuple.Create(Model.Favorites, true, "/Movies/DestroyFavoriteMovieFromProfile")),
-        await Html.PartialAsync("_ProfileMovieListComponent", Tuple.Create(Model.Recommendations, false, ""))
+        Tuple.Create(
+            Tuple.Create("Watchlist", "Favorites", "Recommendations", "Reviews"),
+            await Html.PartialAsync("_ProfileMovieListComponent", Tuple.Create(Model.Watchlist, true, "/Movies/DestroyWatchlistMovieFromProfile")),
+            await Html.PartialAsync("_ProfileMovieListComponent", Tuple.Create(Model.Favorites, true, "/Movies/DestroyFavoriteMovieFromProfile")),
+            await Html.PartialAsync("_ProfileMovieListComponent", Tuple.Create(Model.Recommendations, false, "")),
+            await Html.PartialAsync("_ProfileReviews", Model.Reviews)
         ))
 </section>

@@ -5,6 +5,7 @@
     --purple-color: #7432F9;
     --text-color: #fff;
     --green-color: #008F4A;
+    --red-color: #dc3545;
 }
 
 html {
@@ -36,6 +37,17 @@ body {
     background-color: #00BF63;
     color: var(--text-color);
     transition: all 0.3s ease-in-out;
+}
+
+.btn-red {
+    background-color: var(--red-color);
+    color: var(--text-color);
+    transition: all 0.3s ease-in-out;
+}
+
+.btn-red:hover {
+    background-color: #BB2D3A;
+    color: var(--text-color);
 }
 
 .btn-green:hover {
@@ -225,6 +237,18 @@ html .swiper-button-next, html .swiper-button-prev {
     overflow-wrap: break-word;
 }
 
+.review-profile-btn__edit {
+    position: absolute;
+    right: 80px;
+    bottom: 10px;
+}
+
+.review-profile-btn__delete {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+}
+
 /*Profile Page styles*/
 .profile_image {
     width: 10rem;
@@ -265,6 +289,10 @@ html .swiper-button-next, html .swiper-button-prev {
 
 .profile-session {
     position: relative;
+}
+
+.review-card {
+    margin: 10px;
 }
 
 .custom-alert {
@@ -501,6 +529,10 @@ html .swiper-button-next, html .swiper-button-prev {
         justify-content: space-between;
     }
 
+    .review-card {
+        margin: 0 auto;
+    }
+
     .side-card {
         width: 250px;
     }
@@ -523,6 +555,61 @@ html .swiper-button-next, html .swiper-button-prev {
     
     .carousel-caption h5 {
         font-size: 1rem !important;
+    }
+
+    /* General styles for nav tabs */
+    
+    #myTab {
+        padding-left: .75rem;
+        margin-bottom: 1rem;
+    }
+
+    #watchlist-tab {
+        background-color: var(--purple-color);
+        border-radius: 5px;
+    }
+
+    #watchlist-tab.active {
+        background-color: #4B1EB3;
+        color: white !important;
+        border-radius: 5px;
+    }
+    
+    #favorites-tab {
+        background-color: var(--purple-color);
+        border-radius: 5px;
+    }
+
+    #favorites-tab.active {
+        background-color: #4B1EB3;
+        color: white !important;
+        border-radius: 5px;
+    }
+
+    #recommendations-tab {
+        background-color: var(--purple-color);
+        border-radius: 5px;
+    }
+
+    #recommendations-tab.active {
+        background-color: #4B1EB3;
+        color: white !important;
+        border-radius: 5px;
+    }
+    
+    #reviews-tab {
+        background-color: var(--purple-color);
+        border-radius: 5px;
+    }
+
+    #reviews-tab.active {
+        background-color: #4B1EB3;
+        color: white !important;
+        border-radius: 5px;
+    }
+
+    .nav-tabs {
+        gap: 10px;
     }
 }
 
@@ -603,7 +690,7 @@ html .swiper-button-next, html .swiper-button-prev {
 .dropdownMenu {
     display: none; /* Initially hidden */
     position: absolute;
-    z-index: 98;
+    z-index: 100;
     background-color: #212529;
     padding: 15px;
     width: 200px;

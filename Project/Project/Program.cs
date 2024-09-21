@@ -153,9 +153,14 @@ app.MapControllerRoute(
     defaults: new { controller = "Review", action = "Update" });
 
 app.MapControllerRoute(
-    name: "delete_review",
-    pattern: "content/{movieId?}/delete-review",
-    defaults: new { controller = "Review", action = "Delete" });
+    name: "delete_review_from_profile",
+    pattern: "content/{movieId?}/delete-review-from-profile",
+    defaults: new { controller = "Review", action = "DestroyReviewFromProfile" });
+
+app.MapControllerRoute(
+    name: "delete_review_from_movie_page",
+    pattern: "content/{movieId?}/delete-review-from-movie-page",
+    defaults: new { controller = "Review", action = "DestroyReviewFromMoviePage" });
 
 app.MapControllerRoute(
     name: "how-to-use",

@@ -90,8 +90,20 @@ namespace Reviews.Controllers
                 return RedirectToAction("Login", "Auth", new { returnUrl = originalUrl });
             }
         }
+        
+        [HttpPost]
+        public async Task<IActionResult> DestroyReviewFromMoviePage(string movieId)
+        {
+            return await Delete(movieId, "movie_page");
+        }
 
-        public async Task<IActionResult> Delete(string movieId)
+        [HttpPost]
+        public async Task<IActionResult> DestroyReviewFromProfile(string movieId)
+        {
+            return await Delete(movieId, "profile");
+        }
+
+        public async Task<IActionResult> Delete(string movieId,  string route)
         {
             var userJson = HttpContext.Session.GetString("CurrentUser");
 
@@ -113,21 +125,27 @@ namespace Reviews.Controllers
 
                 _context.Reviews.Remove(review);
                 await _context.SaveChangesAsync();
-
-                TempData["SuccessMessage"] = "Review successfully deleted!";
-                return Redirect(Request.Headers["Referer"].ToString());
+                
+                if(route == "profile")
+                {
+                    return Json(new { success = true, message = "Review has been successfully deleted" });
+                } else
+                {
+                    TempData["SuccessMessage"] = "Review has been successfully deleted.";
+                    return Redirect(Request.Headers["Referer"].ToString());
+                }
             }
             else
             {
-                var originalUrl = Request.Headers["Referer"].ToString();
-                return RedirectToAction("Login", "Auth", new { returnUrl = originalUrl });
+                if(route == "profile")
+                {
+                    return Json(new { success = false, redirectToLogin = true, message = "User not logged in." });
+                } else
+                {
+                    var originalUrl = Request.Headers["Referer"].ToString();
+                    return RedirectToAction("Login", "Auth", new { returnUrl = originalUrl });
+                }
             }
         }
     }
 }
-
-
-
-
-
-

@@ -5,7 +5,7 @@
 }
 
 <div class="container">
-    <div class="d-flex flex-column">
+    <div class="d-flex flex-column content-wrapper">
         <div class="d-flex flex-column flex-md-row justify-content-md-between align-items-md-start">
             <h1 class="movie-title-container mb-3 mb-md-0">@Model.Movie.Title</h1>
             <div class="d-flex justify-content-between gap-3">
@@ -200,9 +200,9 @@
 
                                     @await Html.PartialAsync("_DeleteConfirmationModal", Tuple.Create(
                                         Model.Movie.Id,
-                                        "/content/@Model.Movie.Id/delete-review",
+                                        "/content/@Model.Movie.Id/delete-review-from-movie-page",
                                         "Are you sure you want to delete your review?",
-                                        "Delete"))
+                                        "Delete", ""))
                                 </div>
                             }
                         </div>
