@@ -167,4 +167,14 @@ app.MapControllerRoute(
     pattern: "how-to-use/",
     defaults: new { controller = "HowToUse", action = "Index" });
 
+app.MapControllerRoute(
+    name: "update_rating",
+    pattern: "content/{id?}/update-rating",
+    defaults: new { controller = "Movies", action = "AddRating" });
+
+app.MapControllerRoute(
+    name: "delete_rating",
+    pattern: "content/{id?}/delete-rating",
+    defaults: new { controller = "Movies", action = "DeleteRating" });
+
 app.Run();

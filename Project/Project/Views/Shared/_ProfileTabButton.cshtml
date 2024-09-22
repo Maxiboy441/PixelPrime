@@ -11,7 +11,8 @@ await Html.PartialAsync("_OtherPartial", Tuple.Create(...))
 
 <div>
     @model Tuple<
-        Tuple<string, string, string, string>, 
+        Tuple<string, string, string, string, string>, 
+        Microsoft.AspNetCore.Html.IHtmlContent, 
         Microsoft.AspNetCore.Html.IHtmlContent, 
         Microsoft.AspNetCore.Html.IHtmlContent, 
         Microsoft.AspNetCore.Html.IHtmlContent, 
@@ -29,7 +30,10 @@ await Html.PartialAsync("_OtherPartial", Tuple.Create(...))
             <button class="nav-link" id="recommendations-tab" data-bs-toggle="tab" data-bs-target="#recommendations" type="button" role="tab" aria-controls="contact" aria-selected="false">@Model.Item1.Item3</button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews" type="button" role="tab" aria-controls="contact" aria-selected="false">@Model.Item1.Item4</button>
+            <button class="nav-link" id="ratings-tab" data-bs-toggle="tab" data-bs-target="#ratings" type="button" role="tab" aria-controls="contact" aria-selected="false">@Model.Item1.Item4</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews" type="button" role="tab" aria-controls="contact" aria-selected="false">@Model.Item1.Item5</button>
         </li>
     </ul>
     <div class="bg-secondary-color">
@@ -37,7 +41,8 @@ await Html.PartialAsync("_OtherPartial", Tuple.Create(...))
             <div class="tab-pane fade show active" id="watchlist" role="tabpanel" aria-labelledby="watchlist-tab">@Model.Item2</div>
             <div class="tab-pane fade" id="favorites" role="tabpanel" aria-labelledby="favorites-tab">@Model.Item3</div>
             <div class="tab-pane fade" id="recommendations" role="tabpanel" aria-labelledby="recommendations-tab">@Model.Item4</div>
-            <div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">@Model.Item5</div>
+            <div class="tab-pane fade" id="ratings" role="tabpanel" aria-labelledby="ratings-tab">@Model.Item5</div>
+            <div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">@Model.Item6</div>
         </div>
     </div>
 </div>

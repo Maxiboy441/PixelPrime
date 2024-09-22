@@ -312,33 +312,39 @@ namespace Project.Controllers
 
                 if (existingRating != null)
                 {
-                    UpdateExistingRating(existingRating, ratingValue);
+                    UpdateRating(existingRating, ratingValue);
                 }
                 else
                 {
-                    await AddNewRating(movieId, poster, title, ratingValue, currentUser.Id);
+                    await StoreRating(movieId, poster, title, ratingValue, currentUser.Id);
                 }
 
                 await _context.SaveChangesAsync();
-
-                TempData["SuccessMessage"] = $"You've successfully rated {title}!";
-                return Redirect(Request.Headers["Referer"].ToString());
+                
+                return Json(new 
+                { 
+                    success = true, 
+                    ratingValue, 
+                    message = $"You've successfully rated {title}!", 
+                });
             }
             else
             {
-                var originalUrl = Request.Headers["Referer"].ToString();
-                return RedirectToAction("Login", "Auth", new { returnUrl = originalUrl });
-
+                return Json(new 
+                { 
+                    success = false, 
+                    message = "You must be logged in to rate a movie.", 
+                });
             }
         }
 
-        private void UpdateExistingRating(Rating existingRating, int ratingValue)
+        private void UpdateRating(Rating existingRating, int ratingValue)
         {
             existingRating.Rating_value = ratingValue;
             existingRating.Updated_at = DateTime.Now;
         }
 
-        private async Task AddNewRating(string movieId, string poster, string title, int ratingValue, int userId)
+        private async Task StoreRating(string movieId, string poster, string title, int ratingValue, int userId)
         {
             var rating = new Rating
             {
@@ -352,6 +358,37 @@ namespace Project.Controllers
             };
 
             await _context.Ratings.AddAsync(rating);
+        }
+        
+        public async Task<IActionResult> DeleteRating(string movieId)
+        {
+            var userJson = HttpContext.Session.GetString("CurrentUser");
+
+            if (userJson != null)
+            {
+                var currentUser = JsonConvert.DeserializeObject<User>(userJson);
+
+                if (movieId == null)
+                {
+                    return View("NotFound");
+                }
+
+                var rating = _context.Ratings.FirstOrDefault(rating => rating.Movie_id == movieId && rating.User_id == currentUser.Id);
+
+                if (rating == null)
+                {
+                    return View("NotFound");
+                }
+
+                _context.Ratings.Remove(rating);
+                await _context.SaveChangesAsync();
+                
+                return Json(new { success = true, message = "Rating has been successfully deleted" });
+            }
+            else
+            {
+                return Json(new { success = false, redirectToLogin = true, message = "User not logged in." });
+            }
         }
     }
 }

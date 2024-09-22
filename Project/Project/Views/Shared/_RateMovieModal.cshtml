@@ -13,13 +13,13 @@
  }
 
 <!-- Button to trigger the modal -->
-<button type="button" class="@buttonClass" data-toggle="modal" data-target="#exampleModalCenter">
+<button type="button" class="@buttonClass" data-toggle="modal" data-target="#ratingModalCenter-@movieId">
     @buttonText
-    <i class="@buttonIcon"></i >
+    <i class="@buttonIcon"></i>
 </button>
 
 <!-- Modal Structure -->
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="ratingModalCenter-@movieId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="d-flex justify-content-between flex-column">
@@ -27,48 +27,49 @@
                     <div>
                         @if (!string.IsNullOrEmpty(Context.Session.GetString("CurrentUser")))
                         {
-                            <h5 class="modal-title text-dark" id="exampleModalLongTitle">@movieTitle</h5>
+                        <h5 class="modal-title text-dark" id="exampleModalLongTitle">@movieTitle</h5>
                         }
                         else
                         {
-                            <h5 class="modal-title text-dark" id="exampleModalLongTitle">Sign in  in to leave your rating</h5>
+                        <h5 class="modal-title text-dark" id="exampleModalLongTitle">Sign in to leave your rating</h5>
                         }
                     </div>
                     <div>
                         @await Html.PartialAsync("_PrimaryButton", Tuple.Create("X", "", "btn-without pe-auto", "type=button data-dismiss=modal", "button"))
                     </div>
                 </div>
-                
+
                 <div class="modal-body">
                     @if (!string.IsNullOrEmpty(Context.Session.GetString("CurrentUser")))
                     {
-                        <div class="rating text-center" id="ratingContainer">
-                            <form asp-action="AddRating" method="post" class="d-flex align-items-center" id="ratingForm">
-                                @Html.AntiForgeryToken()
-                                <div>
-                                    <input type="hidden" name="movieId" value="@movieId" />
-                                    <input type="hidden" name="title" value="@movieTitle" />
-                                    <input type="hidden" name="poster" value="@moviePoster" />
-                                    <input type="hidden" name="ratingValue" id="ratingValue" value="0" />
-                                </div>
-                            </form>
-                        </div>
+                    <div class="rating text-center" id="ratingContainer-@movieId">
+                        <form action="/content/@movieId/update-rating" method="post" class="d-flex align-items-center" id="ratingForm-@movieId">
+                            @Html.AntiForgeryToken()
+                            <div>
+                                <input type="hidden" name="movieId" value="@movieId" />
+                                <input type="hidden" name="title" value="@movieTitle" />
+                                <input type="hidden" name="poster" value="@moviePoster" />
+                                <input type="hidden" name="ratingValue" id="ratingValue-@movieId" value="0" />
+                            </div>
+                        </form>
+                    </div>
                     }
                     else
                     {
-                        @await Html.PartialAsync("_PrimaryButton",
-                            Tuple.Create(
-                                "Close",
-                                "",
-                                "btn btn-secondary",
-                                "type=button data-dismiss=modal",
-                                "button")
-                            )
-                        @await Html.PartialAsync("_PrimaryButton", Tuple.Create("Sign in", "style-1", "", $"href={returnUrl}", "a"))
+                    @await Html.PartialAsync("_PrimaryButton",
+                    Tuple.Create(
+                    "Close",
+                    "",
+                    "btn btn-secondary",
+                    "type=button data-dismiss=modal",
+                    "button")
+                    )
+                    @await Html.PartialAsync("_PrimaryButton", Tuple.Create("Sign in", "style-1", "", $"href={returnUrl}", "a"))
                     }
                 </div>
             </div>
         </div>
     </div>
 </div>
+
     

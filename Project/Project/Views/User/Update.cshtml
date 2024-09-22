@@ -90,7 +90,9 @@
                         "",
                         Url.Action("Delete", "User"),
                         "Are you sure you want to delete your account? This action cannot be undone.",
-                        "Delete Account", ""))
+                        "Delete Account", 
+                        Tuple.Create("", ""),
+                        "update-user"))
                 </div>
             </div>
         </div>

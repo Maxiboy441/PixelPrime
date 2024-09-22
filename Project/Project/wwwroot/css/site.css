@@ -296,10 +296,11 @@ html .swiper-button-next, html .swiper-button-prev {
 }
 
 .custom-alert {
-    position: absolute;
+    position: fixed;
     width: 30%;
-    right: 0;
-    z-index: 99;
+    right: 20px;
+    z-index: 100;
+    transition: opacity 0.3s ease-in-out;
 }
 
 @keyframes slideIn {
@@ -569,6 +570,12 @@ html .swiper-button-next, html .swiper-button-prev {
         border-radius: 5px;
     }
 
+    #watchlist-tab:hover {
+        background-color: #4B1EB3;
+        color: white !important;
+        border-radius: 5px;
+    }
+
     #watchlist-tab.active {
         background-color: #4B1EB3;
         color: white !important;
@@ -577,6 +584,12 @@ html .swiper-button-next, html .swiper-button-prev {
     
     #favorites-tab {
         background-color: var(--purple-color);
+        border-radius: 5px;
+    }
+
+    #favorites-tab:hover {
+        background-color: #4B1EB3;
+        color: white !important;
         border-radius: 5px;
     }
 
@@ -591,6 +604,12 @@ html .swiper-button-next, html .swiper-button-prev {
         border-radius: 5px;
     }
 
+    #recommendations-tab:hover {
+        background-color: #4B1EB3;
+        color: white !important;
+        border-radius: 5px;
+    }
+
     #recommendations-tab.active {
         background-color: #4B1EB3;
         color: white !important;
@@ -602,7 +621,30 @@ html .swiper-button-next, html .swiper-button-prev {
         border-radius: 5px;
     }
 
+    #reviews-tab:hover {
+        background-color: #4B1EB3;
+        color: white !important;
+        border-radius: 5px;
+    }
+
     #reviews-tab.active {
+        background-color: #4B1EB3;
+        color: white !important;
+        border-radius: 5px;
+    }
+
+    #ratings-tab {
+        background-color: var(--purple-color);
+        border-radius: 5px;
+    }
+
+    #ratings-tab:hover {
+        background-color: #4B1EB3;
+        color: white !important;
+        border-radius: 5px;
+    }
+
+    #ratings-tab.active {
         background-color: #4B1EB3;
         color: white !important;
         border-radius: 5px;
@@ -690,7 +732,7 @@ html .swiper-button-next, html .swiper-button-prev {
 .dropdownMenu {
     display: none; /* Initially hidden */
     position: absolute;
-    z-index: 100;
+    z-index: 101;
     background-color: #212529;
     padding: 15px;
     width: 200px;
