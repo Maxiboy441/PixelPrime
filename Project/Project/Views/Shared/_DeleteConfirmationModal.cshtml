@@ -1,28 +1,32 @@
-@model Tuple<string, string, string, string, string>
+@model Tuple<string, string, string, string, Tuple<string, string>, string>
 
 @{
     var movieId = Model.Item1;
     var formAction = Model.Item2;
     var deleteMessage = Model.Item3;
     var btnText = Model.Item4;
-    var customClass = Model.Item5;
+    var btnDeleteClassStyle = Model.Item5.Item1;
+    var btnFormClass = Model.Item5.Item2;
+    var profileTab = Model.Item6;
 }
 
 @await Html.PartialAsync("_PrimaryButton", Tuple.Create(
     btnText,
     "",
-    "btn btn-red btn-sm",
-    "type=button data-toggle=modal data-target=#deleteConfirmationModal",
+    $"btn btn-red {btnDeleteClassStyle}",
+    $"type=button data-toggle=modal data-target=#deleteConfirmationModal-{profileTab}-{movieId}",
     "button")
 )
 
-<div class="modal" id="deleteConfirmationModal">
+<div class="modal" id="deleteConfirmationModal-@profileTab-@movieId">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-body">
                 <h6 class="text-dark">@deleteMessage</h6>
                 <form action="@formAction" method="post">
-                    <input type="hidden" name="movieId" value="@movieId" />
+                    @Html.AntiForgeryToken()
+                    
+                    <input type="hidden" name="movieId" value="@movieId"/>
                     <div class="modal-footer">
                         @await Html.PartialAsync("_PrimaryButton",
                             Tuple.Create(
@@ -31,16 +35,16 @@
                                 "btn btn-secondary",
                                 "type=button data-dismiss=modal",
                                 "button")
-                            )
+                        )
 
                         @await Html.PartialAsync("_PrimaryButton",
                             Tuple.Create(
                                 "Delete",
                                 "",
-                                $"btn btn-red {customClass}",
+                                $"btn btn-red {btnFormClass}",
                                 "type=submit",
                                 "button")
-                            )
+                        )
                     </div>
                 </form>
             </div>

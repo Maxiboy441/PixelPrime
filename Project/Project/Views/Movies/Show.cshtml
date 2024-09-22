@@ -61,11 +61,11 @@
                         <div>
                             @await Html.PartialAsync("_RateMovieModal",
                                 Tuple.Create(Model.Movie.Id, Model.Movie.Title, Model.Movie.Poster, Model.IsRated ? "Your Rating" : "Rate " + @Model.Movie.Type, Model.IsRated ? "fa-solid fa-pen-to-square" : "fas fa-plus", "btn-without text-light"))
-                            <h6 style="margin: 0">
+                            <h6 class="rating-h6" style="margin: 0">
                                 @if (Model.UserHasRating)
                                 {
                                     <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
-                                    <span class="rate">@Model.CurrentUserRating /10</span>
+                                    <span class="rate" id="rating-value-@Model.Movie.Id">@Model.CurrentUserRating /10</span>
                                 }
                             </h6>
                         </div>
@@ -202,7 +202,9 @@
                                         Model.Movie.Id,
                                         "/content/@Model.Movie.Id/delete-review-from-movie-page",
                                         "Are you sure you want to delete your review?",
-                                        "Delete", ""))
+                                        "Delete",
+                                        Tuple.Create("btn-sm", ""),
+                                        "show"))
                                 </div>
                             }
                         </div>

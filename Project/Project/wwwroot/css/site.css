@@ -569,6 +569,12 @@ html .swiper-button-next, html .swiper-button-prev {
         border-radius: 5px;
     }
 
+    #watchlist-tab:hover {
+        background-color: #4B1EB3;
+        color: white !important;
+        border-radius: 5px;
+    }
+
     #watchlist-tab.active {
         background-color: #4B1EB3;
         color: white !important;
@@ -577,6 +583,12 @@ html .swiper-button-next, html .swiper-button-prev {
     
     #favorites-tab {
         background-color: var(--purple-color);
+        border-radius: 5px;
+    }
+
+    #favorites-tab:hover {
+        background-color: #4B1EB3;
+        color: white !important;
         border-radius: 5px;
     }
 
@@ -591,6 +603,12 @@ html .swiper-button-next, html .swiper-button-prev {
         border-radius: 5px;
     }
 
+    #recommendations-tab:hover {
+        background-color: #4B1EB3;
+        color: white !important;
+        border-radius: 5px;
+    }
+
     #recommendations-tab.active {
         background-color: #4B1EB3;
         color: white !important;
@@ -602,7 +620,30 @@ html .swiper-button-next, html .swiper-button-prev {
         border-radius: 5px;
     }
 
+    #reviews-tab:hover {
+        background-color: #4B1EB3;
+        color: white !important;
+        border-radius: 5px;
+    }
+
     #reviews-tab.active {
+        background-color: #4B1EB3;
+        color: white !important;
+        border-radius: 5px;
+    }
+
+    #ratings-tab {
+        background-color: var(--purple-color);
+        border-radius: 5px;
+    }
+
+    #ratings-tab:hover {
+        background-color: #4B1EB3;
+        color: white !important;
+        border-radius: 5px;
+    }
+
+    #ratings-tab.active {
         background-color: #4B1EB3;
         color: white !important;
         border-radius: 5px;

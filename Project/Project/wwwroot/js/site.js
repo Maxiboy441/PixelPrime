@@ -172,7 +172,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
         button.addEventListener('click', function (event) {
             event.preventDefault();
 
-            const form = this.closest('form');
+            const modal = this.closest('.modal'); // Get the closest modal
+            const form = modal.querySelector('form'); // Get the form within this modal
             const url = form.action;
             const formData = new FormData(form);
 
@@ -187,9 +188,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        const reviewContainer = form.closest('.review-container');
-                        const deleteModalElement = document.getElementById('deleteConfirmationModal');
-                        const deleteModal = new bootstrap.Modal(deleteModalElement);
+                        const reviewContainer = form.closest('.tab-content');
+                        const deleteModal = new bootstrap.Modal(modal);
 
                         displayFlashMessage('alert-success', data.message);
                         reviewContainer.remove();
@@ -199,7 +199,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
                             backdrop.classList.remove('show');
                             backdrop.remove();
                         }
-
                     } else {
                         if (data.redirectToLogin) {
                             window.location.href = '/Auth/Login';
@@ -214,6 +213,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 });
         });
     });
+
 });
 
 // Movies Slider

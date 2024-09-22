@@ -1,0 +1,62 @@
+﻿@*
+    argument 1: movies list
+    argument 2: true or false (if true, it adds a close button on the card)
+    argument 3: link to be submitted
+
+    Usage:
+    @await Html.PartialAsync("_ProfileMovieListComponent", Tuple.Create(moviesList, true, link))
+*@
+
+@model Tuple<List<Project.Models.Rating>, Boolean, string>
+
+<div class="d-flex profile-movie-container">
+    <div class="d-flex flex-md-row gap-3 flex-wrap profile-movie-container__row justify-content-center">
+        @if (Model.Item1 != null && Model.Item1.Any())
+        {
+            @foreach (var rating in Model.Item1)
+            {
+                string movieDataId = $"{rating.Movie_id}_{rating.Created_at:yyyyMMddHHmmss}";
+
+                <div class="card bg-secondary-color tab-content" id="@rating.Id" style="width: 18rem;" data-movie-id="@movieDataId" data-imdb-id="@rating.Movie_id">
+                    @if (Model.Item2)
+                    {
+                        <div class="mb-2">
+                            @await Html.PartialAsync("_DeleteConfirmationModal", Tuple.Create(
+                            rating.Movie_id,
+                            "/content/@Model.Movie.Id/delete-rating",
+                            "Are you sure you want to delete your review?",
+                            "X",
+                            Tuple.Create("btn-danger", "delete-confirmation-btn"),
+                            "rating"))
+                        </div>
+                    }
+                    <div class="card-img-container">
+                        @if (!string.IsNullOrEmpty(rating.Movie_poster) && rating.Movie_poster != "N/A")
+                        {
+                            <a href="/content/@rating.Movie_id"><img class="card-img-top movie-poster" src="@rating.Movie_poster" alt="@rating.Movie_title"></a>
+                        }
+                        else
+                        {
+                            <img class="card-img-top movie-poster" src="@Url.Content("~/images/poster_not_found.png")" alt="Movie poster not found">
+                        }
+                    </div>
+                    <div class="card-body-movie d-flex flex-column">
+                        <h6 class="card-title my-2">
+                            <a href="/content/@rating.Movie_id">@rating.Movie_title</a>
+                        </h6>
+                        <div class="d-flex align-content-center">
+                            <i class="fa-solid fa-star align-self-center" style="color: #FFD43B;"></i>
+                            <span class="rate" id="rating-value-@rating.Movie_id">@rating.Rating_value,0 /10</span>
+                            @await Html.PartialAsync("_RateMovieModal",
+                            Tuple.Create(rating.Movie_id, rating.Movie_title, rating.Movie_poster, "" ,"fa-solid fa-pen-to-square", "btn-without text-light"))
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <p>No content found. Are you new here? Check out our <a href="/how-to-use" class="blue-link">How to Use</a> guide to learn how to add movies and series to your favorites, watchlist and get AI-Based recommendations.</p>
+        }
+    </div>
+</div>
