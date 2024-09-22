@@ -296,10 +296,11 @@ html .swiper-button-next, html .swiper-button-prev {
 }
 
 .custom-alert {
-    position: absolute;
+    position: fixed;
     width: 30%;
-    right: 0;
-    z-index: 99;
+    right: 20px;
+    z-index: 100;
+    transition: opacity 0.3s ease-in-out;
 }
 
 @keyframes slideIn {
@@ -731,7 +732,7 @@ html .swiper-button-next, html .swiper-button-prev {
 .dropdownMenu {
     display: none; /* Initially hidden */
     position: absolute;
-    z-index: 100;
+    z-index: 101;
     background-color: #212529;
     padding: 15px;
     width: 200px;

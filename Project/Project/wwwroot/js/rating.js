@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     // Update the displayed rating on the page
                     const ratingDisplay = document.querySelector(`#rating-value-${movieId}`);
                     if (ratingDisplay) {
-                        ratingDisplay.textContent = `${result.ratingValue},0 / 10`;
+                        ratingDisplay.textContent = `${parseFloat(result.ratingValue).toFixed(1).replace('.', ',')} / 10`;
                     } else {
                         const ratingBlock = document.querySelector('.rating-h6');
                         const newRatingDisplay = document.createElement('div'); // Create a div to hold the icon and text
@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         const ratingValueSpan = document.createElement('span');
                         ratingValueSpan.className = 'rate';
                         ratingValueSpan.id = `rating-value-${movieId}`;
-                        ratingValueSpan.textContent = `${ratingValue},0 / 10`;
+                        ratingValueSpan.textContent = `${parseFloat(ratingValue).toFixed(1).replace('.', ',')} / 10`;
 
                         // Append the icon and span to the newRatingDisplay
                         newRatingDisplay.appendChild(starIcon);
