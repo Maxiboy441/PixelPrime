@@ -46,9 +46,11 @@
                         </h6>
                         <div class="d-flex align-content-center">
                             <i class="fa-solid fa-star align-self-center" style="color: #FFD43B;"></i>
-                            <span class="rate" id="rating-value-@rating.Movie_id">@rating.Rating_value,0 /10</span>
-                            @await Html.PartialAsync("_RateMovieModal",
-                            Tuple.Create(rating.Movie_id, rating.Movie_title, rating.Movie_poster, "" ,"fa-solid fa-pen-to-square", "btn-without text-light"))
+                            <div class="d-flex gap-2">
+                                <span class="rate" id="rating-value-@rating.Movie_id">@rating.Rating_value,0 /10</span>
+                                @await Html.PartialAsync("_RateMovieModal",
+                                Tuple.Create(rating.Movie_id, rating.Movie_title, rating.Movie_poster, "" ,"fa-solid fa-pen-to-square", "btn-without text-light"))
+                            </div>
                         </div>
                     </div>
                 </div>
