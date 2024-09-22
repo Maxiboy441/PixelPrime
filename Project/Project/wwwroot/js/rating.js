@@ -87,22 +87,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         ratingBlock.appendChild(newRatingDisplay);
                     }
 
-                    // Close the modal after successful submission
-                    const ratingModalElement = document.getElementById(`ratingModalCenter-${movieId}`);
-
-                    if (ratingModalElement) {
-                        // ratingModalElement.remove();
-                        const modal = new bootstrap.Modal(ratingModalElement);
-                        modal.hide();
-                    }
-
-                    // Remove any modal backdrop
-                    const backdrop = document.querySelector('.modal-backdrop');
-                    if (backdrop) {
-                        backdrop.classList.remove('show');
-                        backdrop.remove();
-                    }
-
                     // Display the flash message
                     flashMessage('alert-success', result.message);
                 } else {
