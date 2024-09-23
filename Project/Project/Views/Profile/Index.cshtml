@@ -24,7 +24,7 @@
             await Html.PartialAsync("_ProfileMovieListComponent", Tuple.Create(Model.Watchlist, true, "/Movies/DestroyWatchlistMovieFromProfile")),
             await Html.PartialAsync("_ProfileMovieListComponent", Tuple.Create(Model.Favorites, true, "/Movies/DestroyFavoriteMovieFromProfile")),
             await Html.PartialAsync("_ProfileMovieListComponent", Tuple.Create(Model.Recommendations, false, "")),
-            await Html.PartialAsync("_RatingListComponent", Tuple.Create(Model.Ratings, true, "")),
+            await Html.PartialAsync("_ProfileRatings", Tuple.Create(Model.Ratings, true, "")),
             await Html.PartialAsync("_ProfileReviews", Model.Reviews)
         ))
 </section>

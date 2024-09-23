@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const starsContainer = document.getElementById(`ratingContainer-${movieId}`);
         const form = document.getElementById(`ratingForm-${movieId}`);
         const ratingValueInput = document.getElementById(`ratingValue-${movieId}`);
+        const pageName = form.getAttribute('data-page-name');
 
         // Create stars dynamically
         for (let i = 1; i <= 10; i++) {
@@ -63,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     // Update the displayed rating on the page
                     const ratingDisplay = document.querySelector(`#rating-value-${movieId}`);
                     if (ratingDisplay) {
-                        ratingDisplay.textContent = `${parseFloat(result.ratingValue).toFixed(1).replace('.', ',')} / 10`;
+                        ratingDisplay.textContent = `${parseFloat(result.ratingValue).toFixed(1)} / 10`;
                     } else {
                         const ratingBlock = document.querySelector('.rating-h6');
                         const newRatingDisplay = document.createElement('div'); // Create a div to hold the icon and text
@@ -77,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         const ratingValueSpan = document.createElement('span');
                         ratingValueSpan.className = 'rate';
                         ratingValueSpan.id = `rating-value-${movieId}`;
-                        ratingValueSpan.textContent = `${parseFloat(ratingValue).toFixed(1).replace('.', ',')} / 10`;
+                        ratingValueSpan.textContent = `${parseFloat(ratingValue).toFixed(1)} / 10`;
 
                         // Append the icon and span to the newRatingDisplay
                         newRatingDisplay.appendChild(starIcon);
@@ -86,7 +87,11 @@ document.addEventListener('DOMContentLoaded', () => {
                         // Append the newRatingDisplay to the rating block
                         ratingBlock.appendChild(newRatingDisplay);
                     }
-
+                    
+                    if (pageName === "movie_page") {
+                        window.location.reload();
+                    }
+                    
                     // Display the flash message
                     flashMessage('alert-success', result.message);
                 } else {
