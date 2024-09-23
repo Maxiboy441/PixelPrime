@@ -22,18 +22,20 @@
                     {
                         <div class="mb-2">
                             @await Html.PartialAsync("_DeleteConfirmationModal", Tuple.Create(
-                            rating.Movie_id,
-                            "/content/@Model.Movie.Id/delete-rating",
-                            "Are you sure you want to delete your rating?",
-                            "X",
-                            Tuple.Create("btn-danger", "delete-confirmation-btn"),
-                            "rating"))
+                                rating.Movie_id,
+                                "/content/@Model.Movie.Id/delete-rating",
+                                "Are you sure you want to delete your rating?",
+                                "X",
+                                Tuple.Create("btn-danger", "delete-confirmation-btn"),
+                                "rating"))
                         </div>
                     }
                     <div class="card-img-container">
                         @if (!string.IsNullOrEmpty(rating.Movie_poster) && rating.Movie_poster != "N/A")
                         {
-                            <a href="/content/@rating.Movie_id"><img class="card-img-top movie-poster" src="@rating.Movie_poster" alt="@rating.Movie_title"></a>
+                            <a href="/content/@rating.Movie_id">
+                                <img class="card-img-top movie-poster" src="@rating.Movie_poster" alt="@rating.Movie_title">
+                            </a>
                         }
                         else
                         {
@@ -49,7 +51,14 @@
                             <div class="d-flex gap-2">
                                 <span class="rate" id="rating-value-@rating.Movie_id">@rating.Rating_value,0 /10</span>
                                 @await Html.PartialAsync("_RateMovieModal",
-                                Tuple.Create(rating.Movie_id, rating.Movie_title, rating.Movie_poster, "" ,"fa-solid fa-pen-to-square", "btn-without text-light"))
+                                    Tuple.Create(
+                                        rating.Movie_id, 
+                                        rating.Movie_title, 
+                                        rating.Movie_poster, 
+                                        "", 
+                                        "fa-solid fa-pen-to-square", 
+                                        "btn-without text-light",
+                                        "profile"))
                             </div>
                         </div>
                     </div>

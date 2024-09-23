@@ -1,6 +1,6 @@
 <!-- Tuple<MovieId, MovieTitle, MoviePoster, ButtonText, ButtonIcon, ButtonClass> -->
 
-@model Tuple<string, string, string, string, string, string> 
+@model Tuple<string, string, string, string, string, string, string> 
 
 @{
     var movieId = Model.Item1;
@@ -9,6 +9,7 @@
     var buttonText = Model.Item4;
     var buttonIcon = Model.Item5;
     var buttonClass = Model.Item6;
+    var pageName = Model.Item7;
     var returnUrl = Url.Action("Login", "Auth", new { returnUrl = Context.Request.Path });
  }
 
@@ -43,7 +44,7 @@
                     @if (!string.IsNullOrEmpty(Context.Session.GetString("CurrentUser")))
                     {
                     <div class="rating text-center" id="ratingContainer-@movieId">
-                        <form action="/content/@movieId/update-rating" method="post" class="d-flex align-items-center" id="ratingForm-@movieId">
+                        <form action="/content/{@movieId}/update-rating" method="post" class="d-flex align-items-center" id="ratingForm-@movieId" data-page-name="@pageName">
                             @Html.AntiForgeryToken()
                             <div>
                                 <input type="hidden" name="movieId" value="@movieId" />

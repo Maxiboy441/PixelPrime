@@ -60,7 +60,13 @@
                     <div class="d-flex flex-column">
                         <div>
                             @await Html.PartialAsync("_RateMovieModal",
-                                Tuple.Create(Model.Movie.Id, Model.Movie.Title, Model.Movie.Poster, Model.IsRated ? "Your Rating" : "Rate " + @Model.Movie.Type, Model.IsRated ? "fa-solid fa-pen-to-square" : "fas fa-plus", "btn-without text-light"))
+                                Tuple.Create(
+                                    Model.Movie.Id, 
+                                    Model.Movie.Title, 
+                                    Model.Movie.Poster, 
+                                    Model.IsRated ? "Your Rating" : "Rate " + @Model.Movie.Type, Model.IsRated ? "fa-solid fa-pen-to-square" : "fas fa-plus", 
+                                    "btn-without text-light",
+                                    "movie_page"))
                             <h6 class="rating-h6" style="margin: 0">
                                 @if (Model.UserHasRating)
                                 {
