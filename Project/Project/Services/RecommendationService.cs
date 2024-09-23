@@ -92,7 +92,7 @@ public class RecommendationService
                         var isInRecommendations = await _context.Recommendations
                             .AnyAsync(r => r.User_id == userId && r.Movie_id == movie.Id);
 
-                        if (!isInFavorites && !isInRatings && !isInRecommendations)
+                        if (!isInFavorites && !isInRatings && !isInRecommendations && !string.IsNullOrEmpty(movie.Plot))
                         {
                             _logger.LogInformation("Adding recommendation: {movieTitle}", movie.Title);
 
