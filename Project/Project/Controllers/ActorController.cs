@@ -61,8 +61,7 @@ public class ActorController : Controller
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"An error occurred: {ex.Message}");
-                return false; // Return false if there's an error
+                return false;
             }
         }
     }
