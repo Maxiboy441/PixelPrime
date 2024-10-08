@@ -5,6 +5,7 @@
     --purple-color: #7432F9;
     --text-color: #fff;
     --green-color: #008F4A;
+    --red-color: #dc3545;
 }
 
 html {
@@ -36,6 +37,17 @@ body {
     background-color: #00BF63;
     color: var(--text-color);
     transition: all 0.3s ease-in-out;
+}
+
+.btn-red {
+    background-color: var(--red-color);
+    color: var(--text-color);
+    transition: all 0.3s ease-in-out;
+}
+
+.btn-red:hover {
+    background-color: #BB2D3A;
+    color: var(--text-color);
 }
 
 .btn-green:hover {
@@ -139,6 +151,25 @@ html .swiper-button-next, html .swiper-button-prev {
     color: #fff !important;
 }
 
+.how-to-use {
+    color: white;
+}
+
+.how-to-use:hover {
+    color: var(--purple-color);
+}
+
+.how-to-use-link {
+    text-decoration: underline;
+    text-decoration-color: var(--text-color);
+    transition: all 0.3s ease-in-out;
+}
+
+.how-to-use-link:hover {
+    color: var(--primary-color);
+    text-decoration-color: var(--primary-color);
+}
+
 /*Movie Page styles*/
 
 .overview-container {
@@ -201,10 +232,28 @@ html .swiper-button-next, html .swiper-button-prev {
     width: 50%;
 }
 
+.review-content {
+    word-break: break-word; 
+    overflow-wrap: break-word;
+}
+
+.review-profile-btn__edit {
+    position: absolute;
+    right: 80px;
+    bottom: 10px;
+}
+
+.review-profile-btn__delete {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+}
+
 /*Profile Page styles*/
 .profile_image {
     width: 10rem;
     height: 10rem;
+    object-fit: cover;
     background-color: var(--secondary-color);
 }
 
@@ -242,10 +291,16 @@ html .swiper-button-next, html .swiper-button-prev {
     position: relative;
 }
 
+.review-card {
+    margin: 10px;
+}
+
 .custom-alert {
-    position: absolute;
+    position: fixed;
     width: 30%;
-    right: 0;
+    right: 20px;
+    z-index: 100;
+    transition: opacity 0.3s ease-in-out;
 }
 
 @keyframes slideIn {
@@ -420,6 +475,23 @@ html .swiper-button-next, html .swiper-button-prev {
     object-fit: cover;
 }
 
+/*Sign Up Page*/
+
+.blue-link {
+    color: #007BFF;
+    transition: 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+.blue-link:hover {
+    color: #007BFF;
+    text-decoration: underline;
+}
+
+.search {
+    width: 50%;
+}
+
 @media (max-width: 576px) {
     html {
         font-size: .8rem;
@@ -450,11 +522,16 @@ html .swiper-button-next, html .swiper-button-prev {
     }
 
     .profile-movie-container {
-        margin-inline-start: 100px;
+        width: fit-content;
+        margin: 0 auto;
     }
 
     .profile-movie-container__row {
         justify-content: space-between;
+    }
+
+    .review-card {
+        margin: 0 auto;
     }
 
     .side-card {
@@ -467,6 +544,114 @@ html .swiper-button-next, html .swiper-button-prev {
 
     .movie-title-container {
         width: 100%;
+    }
+
+    .search {
+        width: 80%;
+    }
+
+    .carousel-caption h1 {
+        font-size: 1.25rem !important;
+    }
+    
+    .carousel-caption h5 {
+        font-size: 1rem !important;
+    }
+
+    /* General styles for nav tabs */
+    
+    #myTab {
+        padding-left: .75rem;
+        margin-bottom: 1rem;
+    }
+
+    #watchlist-tab {
+        background-color: var(--purple-color);
+        border-radius: 5px;
+    }
+
+    #watchlist-tab:hover {
+        background-color: #4B1EB3;
+        color: white !important;
+        border-radius: 5px;
+    }
+
+    #watchlist-tab.active {
+        background-color: #4B1EB3;
+        color: white !important;
+        border-radius: 5px;
+    }
+    
+    #favorites-tab {
+        background-color: var(--purple-color);
+        border-radius: 5px;
+    }
+
+    #favorites-tab:hover {
+        background-color: #4B1EB3;
+        color: white !important;
+        border-radius: 5px;
+    }
+
+    #favorites-tab.active {
+        background-color: #4B1EB3;
+        color: white !important;
+        border-radius: 5px;
+    }
+
+    #recommendations-tab {
+        background-color: var(--purple-color);
+        border-radius: 5px;
+    }
+
+    #recommendations-tab:hover {
+        background-color: #4B1EB3;
+        color: white !important;
+        border-radius: 5px;
+    }
+
+    #recommendations-tab.active {
+        background-color: #4B1EB3;
+        color: white !important;
+        border-radius: 5px;
+    }
+    
+    #reviews-tab {
+        background-color: var(--purple-color);
+        border-radius: 5px;
+    }
+
+    #reviews-tab:hover {
+        background-color: #4B1EB3;
+        color: white !important;
+        border-radius: 5px;
+    }
+
+    #reviews-tab.active {
+        background-color: #4B1EB3;
+        color: white !important;
+        border-radius: 5px;
+    }
+
+    #ratings-tab {
+        background-color: var(--purple-color);
+        border-radius: 5px;
+    }
+
+    #ratings-tab:hover {
+        background-color: #4B1EB3;
+        color: white !important;
+        border-radius: 5px;
+    }
+
+    #ratings-tab.active {
+        background-color: #4B1EB3;
+        color: white !important;
+        border-radius: 5px;
+    }
+
+    .nav-tabs {
+        gap: 10px;
     }
 }
 
@@ -507,6 +692,12 @@ html .swiper-button-next, html .swiper-button-prev {
     }
 }
 
+@media (max-width: 768px) {
+    .movie-trailer-container {
+        height: 300px;
+    }
+}
+
 @media (min-width: 768px) {
     #advert-carousel {
         width: 100vw;
@@ -524,4 +715,47 @@ html .swiper-button-next, html .swiper-button-prev {
     .overview-container {
         width: 50%;
     }
+}
+
+@media (min-width: 600px) and (max-width: 768px) {
+    .search {
+        width: 46%;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1200px) {
+    .search {
+        width: 40%;
+    }
+}
+
+.dropdownMenu {
+    display: none; /* Initially hidden */
+    position: absolute;
+    z-index: 101;
+    background-color: #212529;
+    padding: 15px;
+    width: 200px;
+    border-radius: 5px;
+    right: 0;
+}
+
+.dropdownMenu.show {
+    display: flex;
+    flex-direction: column;
+}
+
+.dropdown-image {
+    width: 3rem;
+    height: 3rem;
+    background-color: var(--secondary-color);
+    transition: 0.3s ease-in-out;
+}
+
+.dropdown-image:hover {
+    border: 2px solid var(--purple-color);
+}
+
+.nav-item {
+    position: relative;
 }

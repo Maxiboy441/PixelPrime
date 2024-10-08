@@ -9,7 +9,7 @@
 
 @model Tuple<List<Project.Models.IMovieItem>, Boolean, string>
 
-<div class="d-flex flex-md-row gap-3 flex-wrap profile-movie-container__row">
+<div class="d-flex flex-md-row gap-3 flex-wrap profile-movie-container__row justify-content-center">
     @if (Model.Item1 != null && Model.Item1.Any())
     {
         @foreach (var movie in Model.Item1)
@@ -44,6 +44,6 @@
     }
     else
     {
-        <p>No content found.</p>
+        <p>No content found. Are you new here? Check out our <a href="/how-to-use" class="blue-link">How to Use</a> guide to learn how to add movies and series to your favorites, watchlist and get AI-Based recommendations.</p>
     }
 </div>

@@ -34,6 +34,12 @@ namespace Project.Controllers
                 var recommendation = await _context.Recommendations
                   .Where(movie => movie.User_id == currentUser.Id)
                   .ToListAsync();
+                var reviews = await _context.Reviews
+                    .Where(movie => movie.User_id == currentUser.Id)
+                    .ToListAsync();
+                var ratings = await _context.Ratings
+                    .Where(movie => movie.User_id == currentUser.Id)
+                    .ToListAsync();
 
                 var combinedItems = new List<IMovieItem>();
                 combinedItems.AddRange(favorites);
@@ -43,7 +49,9 @@ namespace Project.Controllers
                     User = user,
                     Favorites = favorites.Cast<IMovieItem>().ToList(),
                     Watchlist = watchlist.Cast<IMovieItem>().ToList(),
-                    Recommendations = recommendation.Cast<IMovieItem>().ToList()
+                    Recommendations = recommendation.Cast<IMovieItem>().ToList(),
+                    Reviews = reviews,
+                    Ratings = ratings,
                 };
 
                 return View(viewModel);

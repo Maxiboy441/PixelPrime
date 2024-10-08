@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         flashMessageContainer.role = 'alert';
         flashMessageContainer.innerHTML = `${message}<button type="button" class="btn btn-close" data-dismiss="alert" aria-label="Close" />`;
 
-        const container = document.querySelector('.profile-container');
+        const container = document.querySelector('.content-wrapper');
         container.appendChild(flashMessageContainer);
 
         setTimeout(() => {
@@ -150,6 +150,70 @@ document.addEventListener('DOMContentLoaded', (event) => {
             flashContainer.classList.add('fade');
         }, 3500);
     }
+
+
+    const dropdownToggle = document.getElementById('navbarDropMenu');
+    const dropdownMenu = dropdownToggle.nextElementSibling;
+
+    dropdownToggle.addEventListener('click', function(event) {
+        event.preventDefault();
+        dropdownMenu.classList.toggle('show');
+    });
+
+    document.addEventListener('click', function(event) {
+        const isClickInside = dropdownToggle.contains(event.target) || dropdownMenu.contains(event.target);
+
+        if (!isClickInside) {
+            dropdownMenu.classList.remove('show');
+        }
+    });
+
+    document.querySelectorAll('.delete-confirmation-btn').forEach(button => {
+        button.addEventListener('click', function (event) {
+            event.preventDefault();
+
+            const modal = this.closest('.modal'); // Get the closest modal
+            const form = modal.querySelector('form'); // Get the form within this modal
+            const url = form.action;
+            const formData = new FormData(form);
+
+            fetch(url, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const reviewContainer = form.closest('.tab-content');
+                        const deleteModal = new bootstrap.Modal(modal);
+
+                        displayFlashMessage('alert-success', data.message);
+                        reviewContainer.remove();
+                        deleteModal.hide();
+                        const backdrop = document.querySelector('.modal-backdrop');
+                        if (backdrop) {
+                            backdrop.classList.remove('show');
+                            backdrop.remove();
+                        }
+                    } else {
+                        if (data.redirectToLogin) {
+                            window.location.href = '/Auth/Login';
+                        } else {
+                            displayFlashMessage('alert-danger', data.message);
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    displayFlashMessage('alert-danger', 'Error deleting movie.');
+                });
+        });
+    });
+
 });
 
 // Movies Slider

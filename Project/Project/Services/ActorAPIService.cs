@@ -1,6 +1,8 @@
 using System.Globalization;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Project.Data;
+using Project.Enums.Occupation;
 using Project.Models;
 
 namespace Project.Services;
@@ -19,7 +21,7 @@ public class ActorAPIService
         _httpClient.DefaultRequestHeaders.Add("X-Api-Key", _apiKey);
     }
 
-    public async Task<Actor> GetAndSaveActorAsync(string actorName)
+    public async Task<Actor?> GetAndSaveActorAsync(string actorName)
     {
         var response =
             await _httpClient.GetAsync(
@@ -28,34 +30,44 @@ public class ActorAPIService
 
         var content = await response.Content.ReadAsStringAsync();
         var celebrities = JsonConvert.DeserializeObject<List<CelebrityResponse>>(content);
-        
+    
         var service = new WikipediaMediaAPIService();
         var imageUrl = await service.GetFirstImageUrlAsync(actorName);
 
         if (celebrities == null || !celebrities.Any())
         {
-            return new Actor
+            return null;
+        }
+        
+        var celebrity = celebrities.FirstOrDefault(c => string.Equals(c.name, actorName, StringComparison.OrdinalIgnoreCase));
+
+        if (celebrity == null)
+        {
+            celebrity = celebrities.First();
+        }
+        
+        bool isOccupationInEnum = false;
+
+        foreach (var occupation in celebrity.occupation)
+        {
+            if (OccupationEnumExtensions.GetOccupation(occupation) != null)
             {
-                Name = actorName,
-                NetWorth = 0,
-                Gender = "Not found",
-                Nationality = "Not found",
-                Height = 0,
-                Birthday = new DateTime(1001, 1, 1),
-                IsAlive = false,
-                Occupations = "Not found",
-                Image = imageUrl
-            };
+                isOccupationInEnum = true;
+                break;
+            }
         }
 
-        var celebrity = celebrities.FirstOrDefault(c => c.occupation.Contains("actor")) ?? celebrities.First();
+        if (!isOccupationInEnum)
+        {
+            return null;
+        }
 
         var newActor = new Actor
         {
             Name = ToTitleCase(celebrity.name),
             NetWorth = celebrity.net_worth,
             Gender = CapitalizeFirstLetter(celebrity.gender),
-            Nationality = celebrity.nationality.ToUpper(),
+            Nationality = string.IsNullOrEmpty(celebrity.nationality) ? "NoN" : celebrity.nationality.ToUpper(),
             Height = (decimal)celebrity.height,
             Birthday = ParseBirthday(celebrity.birthday),
             IsAlive = celebrity.is_alive,
@@ -64,7 +76,11 @@ public class ActorAPIService
         };
 
         _context.Actors.Add(newActor);
-        await _context.SaveChangesAsync();
+
+        if((await _context.Actors.FirstOrDefaultAsync(a => a.Name == newActor.Name)) == null)
+        {
+            await _context.SaveChangesAsync();
+        }
 
         return newActor;
     }

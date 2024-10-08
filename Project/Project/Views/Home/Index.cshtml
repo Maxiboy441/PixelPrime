@@ -15,11 +15,18 @@
                     <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
                     <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
                 </ol>
-                <div class="carousel-inner">
+                <div class="carousel-inner" id="carousel-text">
                     <div class="carousel-item active">
                         <img class="d-block" src="~/images/ai-advert.png" alt="First slide">
                         <div class="carousel-caption d-none d-md-block">
-                            <h1>AI Recommendations</h1>
+                            <h1 id="ai-h1">AI Recommendations</h1>
+                            <h5>Get personalized movie suggestions every week based on your taste!</h5>
+                            <p>
+                                <a href="/how-to-use" class="how-to-use text-decoration-underline mb-3 mr-3">
+                                    Learn how to use our platform
+                                    <i class="fa-solid fa-arrow-right"></i>
+                                </a>
+                            </p>
                             @if (string.IsNullOrEmpty(Context.Session.GetString("CurrentUser")))
                             {
                                 @await Html.PartialAsync("_PrimaryButton",
@@ -36,7 +43,7 @@
                         <img class="d-block" src="~/images/rate-movie-advert.jpeg" alt="Second slide">
                         <div class="carousel-caption d-none d-md-block">
                             <h1>Rate movies</h1>
-                            <h5>Tell others you opinion about watched movies</h5>
+                            <h5>Share your thoughts and help others find great films. Sign up to start rating movies.</h5>
                         </div>
                     </div>
                     <div class="carousel-item">
@@ -44,7 +51,7 @@
                         <div class="carousel-caption d-none d-md-block">
                             <!--TODO: Replace image and text with something else-->
                             <h1>Remember what you want to watch</h1>
-                            <h5>Put movies on your watchlist or save them as favorites</h5>
+                            <h5>Add movies to your watchlist or save them as favorites.</h5>
                         </div>
                     </div>
                 </div>

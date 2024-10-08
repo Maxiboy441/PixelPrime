@@ -17,3 +17,5 @@ packages/
 # Ignore build output
 *.dll
 *.exe
+appsettings.Development.json
+appsettings.json

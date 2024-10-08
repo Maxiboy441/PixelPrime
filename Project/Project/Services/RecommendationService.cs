@@ -4,67 +4,76 @@ using Polly;
 using Project.Data;
 using Project.Models;
 
-namespace Project.Services
+namespace Project.Services;
+
+public class RecommendationService
 {
-    public class RecommendationService
+    private readonly AiApiService _aiApiService;
+    private readonly DataContext _context;
+    private readonly ILogger<RecommendationService> _logger;
+    private readonly MovieApiService _movieApiService;
+
+    public RecommendationService(DataContext context, AiApiService aiApiService, MovieApiService movieApiService,
+        ILogger<RecommendationService> logger)
     {
-        private readonly DataContext _context;
-        private readonly AiApiService _aiApiService;
-        private readonly MovieApiService _movieApiService;
-        private readonly ILogger<RecommendationService> _logger;
+        _context = context;
+        _aiApiService = aiApiService;
+        _movieApiService = movieApiService;
+        _logger = logger;
+    }
 
-        public RecommendationService(DataContext context, AiApiService aiApiService, MovieApiService movieApiService, ILogger<RecommendationService> logger)
+    public async Task GetRecommendations(int userId)
+    {
+        var retryPolicy = Policy
+            .Handle<Exception>(ex =>
+                ex.Message.Contains("Error while extracting movie names") ||
+                ex.Message.Contains("API request failed with status code") ||
+                ex.Message.Contains("Couldn't make a Movie list")
+            )
+            .WaitAndRetryAsync(
+                3,
+                retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)),
+                (exception, timeSpan, retryCount, context) =>
+                {
+                    _logger.LogWarning(
+                        $"Retry {retryCount} for GetRecommendations due to: {exception.Message}. Waiting {timeSpan.TotalSeconds} seconds before next retry.");
+                }
+            );
+
+        await retryPolicy.ExecuteAsync(async () =>
         {
-            _context = context;
-            _aiApiService = aiApiService;
-            _movieApiService = movieApiService;
-            _logger = logger;
-        }
+            var liked = await GetLikedMovies(userId);
+            var favorites = await GetFavorites(userId);
 
-        public async Task GetRecommendations(int userId)
-        {
-            var retryPolicy = Policy
-                .Handle<Exception>(ex => 
-                    ex.Message.Contains("No valid JSON found in the response") ||
-                    ex.Message.Contains("Response property not found in API response") ||
-                    ex.Message.Contains("API request failed with status code") ||
-                    ex.Message.Contains("Failed to parse API response as JSON") ||
-                    ex.Message.Contains("Failed to deserialize JSON content") ||
-                    ex.Message.Contains("No JSON-like structure found in the input.")
-                    ) 
-                .WaitAndRetryAsync(
-                    3, 
-                    retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)),
-                    (exception, timeSpan, retryCount, context) =>
-                    {
-                        _logger.LogWarning($"Retry {retryCount} for GetRecommendations due to: {exception.Message}. Waiting {timeSpan.TotalSeconds} seconds before next retry.");
-                    }
-                );
+            var prompt1 = GenerateRatingsString(liked);
+            var prompt2 = GenerateFavoritesString(favorites);
 
-            await retryPolicy.ExecuteAsync(async () =>
+            var finalPrompt =
+                $"Based on the following information about my movie preferences, recommend me NEW movies that I haven't seen before. Do not include any movies I've already mentioned.\n\n{prompt2}\n{prompt1}\n\nGive me a json array of ONLY the new recommended movie names, nothing more. Format: [\"Movie 1\", \"Movie 2\", \"Movie 3\"]";
+
+            var response = await _aiApiService.GenerateResponse(finalPrompt);
+            _logger.LogInformation("AI API Response: {response}", string.Join(", ", response));
+
+            var fourDaysAgo = DateTime.Now.AddDays(-8);
+            await _context.Recommendations
+                .Where(r => r.User_id == userId && r.Created_at < fourDaysAgo)
+                .ExecuteDeleteAsync();
+
+            _logger.LogInformation("Starting to process {count} movies", response.Count);
+
+            try
             {
-                List<Rating> liked = await GetLikedMovies(userId);
-                List<Favorite> favorites = await GetFavorites(userId);
-
-                string prompt1 = GenerateRatingsString(liked);
-                string prompt2 = GenerateFavoritesString(favorites);
-
-                string finalPrompt = $"{prompt1}\n{prompt2}. Give me only json, no notes etc!";
-
-                List<string> response = await _aiApiService.GenerateResponse(finalPrompt);
-
-                DateTime fourDaysAgo = DateTime.Now.AddDays(-8);
-                await _context.Recommendations
-                    .Where(r => r.User_id == userId && r.Created_at < fourDaysAgo)
-                    .ExecuteDeleteAsync();
-
                 foreach (var title in response)
                 {
-                    Movie movie = await _movieApiService.GetMovieByName(title);
+                    _logger.LogInformation("Starting to process movie: {title}", title);
 
-                    if (movie.Title != "error")
+                    var movie = await _movieApiService.GetMovieByName(title);
+
+                    if (movie != null && movie.Title != "error")
                     {
-                        Recommendation recommendation = new Recommendation
+                        _logger.LogInformation("Movie found: {movieTitle}, {movieId}", movie.Title, movie.Id);
+
+                        var recommendation = new Recommendation
                         {
                             Movie_id = movie.Id,
                             User_id = userId,
@@ -73,62 +82,91 @@ namespace Project.Services
                             Created_at = DateTime.Now,
                             Updated_at = DateTime.Now
                         };
-                        _context.Recommendations.Add(recommendation);
-                        await _context.SaveChangesAsync();
+
+                        var isInFavorites = await _context.Favorites
+                            .AnyAsync(f => f.User_id == userId && f.Movie_id == movie.Id);
+
+                        var isInRatings = await _context.Ratings
+                            .AnyAsync(r => r.User_id == userId && r.Movie_id == movie.Id);
+
+                        var isInRecommendations = await _context.Recommendations
+                            .AnyAsync(r => r.User_id == userId && r.Movie_id == movie.Id);
+
+                        if (!isInFavorites && !isInRatings && !isInRecommendations && !string.IsNullOrEmpty(movie.Plot))
+                        {
+                            _logger.LogInformation("Adding recommendation: {movieTitle}", movie.Title);
+
+                            _context.Recommendations.Add(recommendation);
+                            await _context.SaveChangesAsync();
+
+                            _logger.LogInformation("Recommendation saved: {movieTitle}", movie.Title);
+                        }
+                        else
+                        {
+                            _logger.LogInformation(
+                                "Movie already exists in favorites, ratings, or recommendations: {movieTitle}",
+                                movie.Title);
+                        }
                     }
+                    else
+                    {
+                        _logger.LogWarning("Movie not found or error returned: {title}", title);
+                    }
+
+                    _logger.LogInformation("Finished processing movie: {title}", title);
                 }
-            });
-        }
-
-        public async Task<List<Rating>> GetLikedMovies(int userId)
-        {
-            return await _context.Ratings
-                .Where(r => r.User_id == userId && r.Rating_value > 7.5)
-                .OrderByDescending(r => r.Created_at)
-                .Take(10)
-                .ToListAsync();
-        }
- 
-        public async Task<List<Favorite>> GetFavorites(int userId)
-        {
-            return await _context.Favorites
-                .Where(r => r.User_id == userId)
-                .ToListAsync();
-        }
- 
-        private string GenerateRatingsString(List<Rating> ratings)
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.AppendLine("I rated following movies as such:");
-
-            foreach (var rating in ratings)
+            }
+            catch (Exception ex)
             {
-                sb.AppendLine($"{rating.Movie_title}, {rating.Rating_value}");
+                _logger.LogError(ex, "Error occurred while processing movies");
             }
 
-            return sb.ToString();
-        }
- 
-        private string GenerateFavoritesString(List<Favorite> ratings)
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.AppendLine("My favorite movies of all times are");
+            _logger.LogInformation("Finished processing all movies");
+        });
+    }
 
-            foreach (var rating in ratings)
-            {
-                sb.AppendLine($"{rating.Movie_title}");
-            }
+    public async Task<List<Rating>> GetLikedMovies(int userId)
+    {
+        return await _context.Ratings
+            .Where(r => r.User_id == userId && r.Rating_value > 7.5)
+            .OrderByDescending(r => r.Created_at)
+            .Take(10)
+            .ToListAsync();
+    }
 
-            return sb.ToString();
-        }
+    public async Task<List<Favorite>> GetFavorites(int userId)
+    {
+        return await _context.Favorites
+            .Where(r => r.User_id == userId)
+            .ToListAsync();
+    }
 
-        public async Task<DateTime?> GetNewestRecommendationDate(int userId)
-        {
-            return await _context.Recommendations
-                .Where(r => r.User_id == userId)
-                .OrderByDescending(r => r.Created_at)
-                .Select(r => r.Created_at)
-                .FirstOrDefaultAsync();
-        }
+    private string GenerateRatingsString(List<Rating> ratings)
+    {
+        var sb = new StringBuilder();
+        sb.AppendLine("I rated the following movies:");
+
+        foreach (var rating in ratings) sb.AppendLine($"- {rating.Movie_title}: {rating.Rating_value}");
+
+        return sb.ToString();
+    }
+
+    private string GenerateFavoritesString(List<Favorite> favorites)
+    {
+        var sb = new StringBuilder();
+        sb.AppendLine("My favorite movies are:");
+
+        foreach (var favorite in favorites) sb.AppendLine($"- {favorite.Movie_title}");
+
+        return sb.ToString();
+    }
+
+    public async Task<DateTime?> GetNewestRecommendationDate(int userId)
+    {
+        return await _context.Recommendations
+            .Where(r => r.User_id == userId)
+            .OrderByDescending(r => r.Created_at)
+            .Select(r => r.Created_at)
+            .FirstOrDefaultAsync();
     }
 }

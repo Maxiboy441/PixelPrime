@@ -26,17 +26,44 @@ public class ActorController : Controller
     {
         var actor = await _context.Actors.FirstOrDefaultAsync(a => a.Name == name);
 
+        if (actor != null)
+        {
+            bool accessible = await IsUrlAccessibleAsync(actor.Image);
+            if (!accessible)
+            {
+                var service = new WikipediaMediaAPIService();
+                var imageUrl = await service.GetFirstImageUrlAsync(actor.Name);
+                actor.Image = imageUrl;
+                await _context.SaveChangesAsync();
+            }
+        }
+
         if (actor == null)
         {
             actor = await _actorApiService.GetAndSaveActorAsync(name);
         }
 
-        if (actor is { Gender: "Not found", Image: "Error: Response status code does not indicate success: 404 (Not Found)." or "No image found" })        {
+        if (actor is null)        {
             return View("NotFound");
         }
 
         return View(actor);
     }
     
+    public static async Task<bool> IsUrlAccessibleAsync(string url)
+    {
+        using (HttpClient client = new HttpClient())
+        {
+            try
+            {
+                HttpResponseMessage response = await client.GetAsync(url);
+                return response.StatusCode == System.Net.HttpStatusCode.OK;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+    }
 }
 

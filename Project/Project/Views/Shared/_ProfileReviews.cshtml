@@ -1,0 +1,62 @@
+﻿@model List<Review>
+
+<div class="row overflow-hidden">
+    @if (Model != null &&  Model.Any())
+    {
+        @foreach (var review in Model)
+        {
+            <div class="d-flex flex-column flex-md-row position-relative w-50 mb-3 tab-content">
+                <div class="card review-card mb-3 col-12 col-md-6 p-0 w-100 h-100 d-flex flex-column" style="max-width: 540px;">
+                    <div class="row g-0 h-100 bg-purple">
+                        <div class="col-md-4">
+                            <a href="/content/@review.Movie_id">
+                                @if (!string.IsNullOrEmpty(review.Movie_poster) && review.Movie_poster != "N/A")
+                                {
+                                    <img class="card-img-top h-100" style="object-fit: cover; min-height:240px;" src="@review.Movie_poster" alt="@review.Movie_title">
+                                }
+                                else
+                                {
+                                    <img class="card-img-top h-100" style="object-fit: cover; min-height:240px; max-height: 240px;" src="@Url.Content("~/images/poster_not_found.png")" alt="Poster not found">
+                                }
+                            </a>
+                        </div>
+                        <div class="col-md-8 d-flex flex-column">
+                            <div class="card-body flex-grow-1">
+                                <div style="height: 30px;">
+                                    <h6 class="card-title">@review.Movie_title</h6>
+                                </div>
+                                <hr/>
+                                <p class="card-text text-truncate">Title: @review.Title</p>
+                                <p class="card-text text-truncate">Review: @review.Text</p>
+                            </div>
+                            <div class="d-flex justify-content-end gap-5 mt-auto p-2">
+                                <div class="review-profile-btn__edit" style="max-width: 540px;">
+                                    @await Html.PartialAsync("_EditReviewPopUpForm", Tuple.Create(
+                                        review.Movie_id,
+                                        review.Movie_title,
+                                        review.Movie_poster,
+                                        review.Title,
+                                        review.Text,
+                                        $"/content/{review.Movie_id}/update-review"))
+                                </div>
+                                <div class="review-profile-btn__delete" style="max-width: 540px;">
+                                    @await Html.PartialAsync("_DeleteConfirmationModal", Tuple.Create(
+                                        review.Movie_id,
+                                        "/content/@Model.Movie.Id/delete-review-from-profile",
+                                        "Are you sure you want to delete your review?",
+                                        "Delete",
+                                        Tuple.Create("btn-sm", "delete-confirmation-btn"),
+                                        "review"))
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <p>No content found. Are you new here? Check out our <a href="/how-to-use" class="blue-link">How to Use</a> guide to learn how to add movies and series to your favorites, watchlist and get AI-Based recommendations.</p>
+    }
+</div>

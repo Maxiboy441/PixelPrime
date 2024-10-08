@@ -63,9 +63,10 @@ namespace Project.Controllers
             var newestRecommendationDate = await _recommendationService.GetNewestRecommendationDate(userId);
             var favorites = await _recommendationService.GetFavorites(userId);
             var ratings = await _recommendationService.GetLikedMovies(userId);
+            var recommendationCount = await _context.Recommendations.CountAsync(r => r.User_id == userId);
             
             if ((favorites.Any() || ratings.Any()) &&
-                (newestRecommendationDate == null || newestRecommendationDate < DateTime.Now.AddDays(-7)))
+                ((newestRecommendationDate == null || newestRecommendationDate < DateTime.Now.AddDays(-7)) || recommendationCount < 5 ))
             {
                 var backgroundService = HttpContext.RequestServices.GetRequiredService<BackgroundRecommendationService>();
                 _ = backgroundService.RunRecommendationTask(userId);
@@ -135,6 +136,7 @@ namespace Project.Controllers
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("CurrentUser")))
             {
                 HttpContext.Session.Clear();
+                TempData["SuccessMessage"] = " You’ve logged out. See you soon!";
                 return RedirectToAction("Index", "Home");
 
             }

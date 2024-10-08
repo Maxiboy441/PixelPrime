@@ -33,7 +33,7 @@ public class ConvertModelService
                 Id = rating.Movie_id,
                 Title = rating.Movie_title,
                 Poster = rating.Movie_poster,
-                PixelRating = rating.Rating_value.ToString(CultureInfo.CurrentCulture)
+                PixelRating = rating.Rating_value != 0 ? rating.Rating_value.ToString("0.0", CultureInfo.CurrentCulture) : ""
             };
         }
         else if (item is Recommendation recommendation)

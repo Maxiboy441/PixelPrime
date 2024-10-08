@@ -6,10 +6,11 @@ using Project.HostedServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Register HttpClient services
 builder.Services.AddHttpClient<AiApiService>();
-builder.Services.AddScoped<AiApiService>();
 builder.Services.AddHttpClient<MovieApiService>();
-builder.Services.AddScoped<MovieApiService>();
+
+// Register other services
 builder.Services.AddScoped<RecommendationService>();
 builder.Services.AddScoped<BackgroundRecommendationService>();
 builder.Services.AddHostedService<BackgroundRecommendationService>();
@@ -152,8 +153,28 @@ app.MapControllerRoute(
     defaults: new { controller = "Review", action = "Update" });
 
 app.MapControllerRoute(
-    name: "delete_review",
-    pattern: "content/{movieId?}/delete-review",
-    defaults: new { controller = "Review", action = "Delete" });
+    name: "delete_review_from_profile",
+    pattern: "content/{movieId?}/delete-review-from-profile",
+    defaults: new { controller = "Review", action = "DestroyReviewFromProfile" });
+
+app.MapControllerRoute(
+    name: "delete_review_from_movie_page",
+    pattern: "content/{movieId?}/delete-review-from-movie-page",
+    defaults: new { controller = "Review", action = "DestroyReviewFromMoviePage" });
+
+app.MapControllerRoute(
+    name: "how-to-use",
+    pattern: "how-to-use/",
+    defaults: new { controller = "HowToUse", action = "Index" });
+
+app.MapControllerRoute(
+    name: "update_rating",
+    pattern: "content/{id?}/update-rating",
+    defaults: new { controller = "Movies", action = "AddRating" });
+
+app.MapControllerRoute(
+    name: "delete_rating",
+    pattern: "content/{id?}/delete-rating",
+    defaults: new { controller = "Movies", action = "DeleteRating" });
 
 app.Run();

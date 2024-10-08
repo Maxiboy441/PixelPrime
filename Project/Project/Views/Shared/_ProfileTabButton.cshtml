@@ -1,32 +1,48 @@
 ﻿<!--
 Usage:
- *at* await Html.PartialAsync("_ProfileTabButton",
-    Tuple.Create("Watchlist", "Profile", "Recommendations",
-        await Html.PartialAsync("_OtherPartial", Tuple.Create(...)),
-        await Html.PartialAsync("_OtherPartial", Tuple.Create(...)),
-        await Html.PartialAsync("_OtherPartial", Tuple.Create(...))
-    ))
-    -->
+*at* await Html.PartialAsync("_ProfileTabButton",
+Tuple.Create("Watchlist", "Profile", "Recommendations",
+await Html.PartialAsync("_OtherPartial", Tuple.Create(...)),
+await Html.PartialAsync("_OtherPartial", Tuple.Create(...)),
+await Html.PartialAsync("_OtherPartial", Tuple.Create(...)),
+await Html.PartialAsync("_OtherPartial", Tuple.Create(...))
+))
+-->
 
 <div>
-    @model Tuple<string, string, string, Microsoft.AspNetCore.Html.IHtmlContent, Microsoft.AspNetCore.Html.IHtmlContent, Microsoft.AspNetCore.Html.IHtmlContent>
+    @model Tuple<
+        Tuple<string, string, string, string, string>, 
+        Microsoft.AspNetCore.Html.IHtmlContent, 
+        Microsoft.AspNetCore.Html.IHtmlContent, 
+        Microsoft.AspNetCore.Html.IHtmlContent, 
+        Microsoft.AspNetCore.Html.IHtmlContent, 
+        Microsoft.AspNetCore.Html.IHtmlContent
+    >
 
     <ul class="nav nav-tabs border-0 container" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="watchlist-tab" data-bs-toggle="tab" data-bs-target="#watchlist" type="button" role="tab" aria-controls="home" aria-selected="true">@Model.Item1</button>
+            <button class="nav-link active" id="watchlist-tab" data-bs-toggle="tab" data-bs-target="#watchlist" type="button" role="tab" aria-controls="home" aria-selected="true">@Model.Item1.Item1</button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link" id="favorites-tab" data-bs-toggle="tab" data-bs-target="#favorites" type="button" role="tab" aria-controls="profile" aria-selected="false">@Model.Item2</button>
+            <button class="nav-link" id="favorites-tab" data-bs-toggle="tab" data-bs-target="#favorites" type="button" role="tab" aria-controls="profile" aria-selected="false">@Model.Item1.Item2</button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link" id="recommendations-tab" data-bs-toggle="tab" data-bs-target="#recommendations" type="button" role="tab" aria-controls="contact" aria-selected="false">@Model.Item3</button>
+            <button class="nav-link" id="recommendations-tab" data-bs-toggle="tab" data-bs-target="#recommendations" type="button" role="tab" aria-controls="contact" aria-selected="false">@Model.Item1.Item3</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="ratings-tab" data-bs-toggle="tab" data-bs-target="#ratings" type="button" role="tab" aria-controls="contact" aria-selected="false">@Model.Item1.Item4</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews" type="button" role="tab" aria-controls="contact" aria-selected="false">@Model.Item1.Item5</button>
         </li>
     </ul>
     <div class="bg-secondary-color">
         <div class="tab-content pt-5 pb-5 container" id="myTabContent">
-            <div class="tab-pane fade show active" id="watchlist" role="tabpanel" aria-labelledby="watchlist-tab">@Model.Item4</div>
-            <div class="tab-pane fade" id="favorites" role="tabpanel" aria-labelledby="favorites-tab">@Model.Item5</div>
-            <div class="tab-pane fade" id="recommendations" role="tabpanel" aria-labelledby="recommendations-tab">@Model.Item6</div>
+            <div class="tab-pane fade show active" id="watchlist" role="tabpanel" aria-labelledby="watchlist-tab">@Model.Item2</div>
+            <div class="tab-pane fade" id="favorites" role="tabpanel" aria-labelledby="favorites-tab">@Model.Item3</div>
+            <div class="tab-pane fade" id="recommendations" role="tabpanel" aria-labelledby="recommendations-tab">@Model.Item4</div>
+            <div class="tab-pane fade" id="ratings" role="tabpanel" aria-labelledby="ratings-tab">@Model.Item5</div>
+            <div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">@Model.Item6</div>
         </div>
     </div>
 </div>

@@ -7,6 +7,9 @@ from diagrams.programming.language import Csharp
 from diagrams.onprem.client import User
 from diagrams.onprem.dns import Coredns as DNS
 from diagrams.generic.database import SQL
+from diagrams.onprem.compute import Server
+
+
 
 port_router = "80"
 port_pixelprime = "6677"
@@ -22,6 +25,21 @@ with Diagram("Infrastructure Diagram", show=False):
 
     with Cluster("GoDaddy"):
         dns2 = DNS("DNS")
+
+    with Cluster("External api's"):
+
+        with Cluster("omdbapi"):
+            omdbapi = Server("MovieDBApi")
+        
+        with Cluster("wikipedia"):
+            wikipediaapi = Server("ActorImageApi")
+
+        with Cluster("ninjaApi"):
+            ninjaapi = Server("ActorInfoApi")
+
+        with Cluster("kinocheck"):
+            kinocheck = Server("TrailerApi")
+    
     
     with Cluster("Max Home Network"):
         router = Router(f"Router\n(port forward {port_router})")
@@ -50,3 +68,9 @@ with Diagram("Infrastructure Diagram", show=False):
     user >> Edge(label="pixelprime.maxih.de") >> dns2
 
     dns >> Edge(label="Public IP:80") >> router
+
+    pixelprime >> omdbapi
+    pixelprime >> wikipediaapi
+    pixelprime >> ninjaapi
+    pixelprime >> kinocheck
+

@@ -13,12 +13,14 @@ namespace Project.Controllers
         private readonly DataContext _context;
         private readonly ILogger<MoviesController> _logger;
         private readonly CacheService _cache;
+        private readonly MovieApiService _movieApiService;
 
-        public MoviesController(CacheService cache, ILogger<MoviesController> logger, DataContext context)
+        public MoviesController(CacheService cache, ILogger<MoviesController> logger, DataContext context, MovieApiService movieApiService)
         {
             _cache = cache;
             _logger = logger;
             _context = context;
+            _movieApiService = movieApiService;
         }
 
         [HttpPost]
@@ -210,7 +212,22 @@ namespace Project.Controllers
                 .Where(review => review.Movie_id == id)
                 .Include(review => review.User)
                 .ToListAsync();
-
+            
+            var ratings = await _context.Ratings
+                .Where(rating => rating.Movie_id == id)
+                .Include(rating => rating.User)
+                .ToListAsync();
+            
+            var reviewsWithRatings = reviews
+                .Select(review => new ReviewWithRatings
+                {
+                    Review = review,
+                    Rating = ratings.FirstOrDefault(rating => rating.User_id == review.User_id)?.Rating_value != null
+                        ? (int?)Convert.ToInt32(ratings.FirstOrDefault(rating => rating.User_id == review.User_id)?.Rating_value)
+                        : null
+                })
+                .ToList();
+            
             var userJson = HttpContext.Session.GetString("CurrentUser");
             int userId = 0;
             bool isFavorite = false;
@@ -236,7 +253,6 @@ namespace Project.Controllers
             var viewModel = new MovieDetailsViewModel
             {
                 Movie = movie,
-                Reviews = reviews,
                 AverageRating = averageRating.HasValue ? averageRating.Value.ToString("0.0") : "",
                 IsFavorite = isFavorite,
                 IsWatchlist = isWatchlist,
@@ -245,7 +261,9 @@ namespace Project.Controllers
                 UserHasRating = currentUserRating != 0.0,
                 CurrentUserRating = currentUserRating == 0.0 ? string.Empty : currentUserRating.ToString("0.0"),
                 CurrentUserId = userId,
-                UserHasReview = userHasReview
+                UserHasReview = userHasReview,
+                ReviewWithRatings = reviewsWithRatings,
+                MovieTrailer = await _movieApiService.GetTrailerByImdb(movie.Id),
             };
 
             return View(viewModel);
@@ -280,8 +298,6 @@ namespace Project.Controllers
                 .Where(r => r.Movie_id == movieId)
                 .AverageAsync(r => (double?)r.Rating_value);
         }
-
-        
         
         [HttpPost]
         public async Task<IActionResult> AddRating(string movieId, string poster, string title, int ratingValue)
@@ -296,33 +312,39 @@ namespace Project.Controllers
 
                 if (existingRating != null)
                 {
-                    UpdateExistingRating(existingRating, ratingValue);
+                    UpdateRating(existingRating, ratingValue);
                 }
                 else
                 {
-                    await AddNewRating(movieId, poster, title, ratingValue, currentUser.Id);
+                    await StoreRating(movieId, poster, title, ratingValue, currentUser.Id);
                 }
 
                 await _context.SaveChangesAsync();
-
-                TempData["SuccessMessage"] = $"You've successfully rated {title}!";
-                return Redirect(Request.Headers["Referer"].ToString());
+                
+                return Json(new 
+                { 
+                    success = true, 
+                    ratingValue, 
+                    message = $"You've successfully rated {title}!", 
+                });
             }
             else
             {
-                var originalUrl = Request.Headers["Referer"].ToString();
-                return RedirectToAction("Login", "Auth", new { returnUrl = originalUrl });
-
+                return Json(new 
+                { 
+                    success = false, 
+                    message = "You must be logged in to rate a movie.", 
+                });
             }
         }
 
-        private void UpdateExistingRating(Rating existingRating, int ratingValue)
+        private void UpdateRating(Rating existingRating, int ratingValue)
         {
             existingRating.Rating_value = ratingValue;
             existingRating.Updated_at = DateTime.Now;
         }
 
-        private async Task AddNewRating(string movieId, string poster, string title, int ratingValue, int userId)
+        private async Task StoreRating(string movieId, string poster, string title, int ratingValue, int userId)
         {
             var rating = new Rating
             {
@@ -336,6 +358,37 @@ namespace Project.Controllers
             };
 
             await _context.Ratings.AddAsync(rating);
+        }
+        
+        public async Task<IActionResult> DeleteRating(string movieId)
+        {
+            var userJson = HttpContext.Session.GetString("CurrentUser");
+
+            if (userJson != null)
+            {
+                var currentUser = JsonConvert.DeserializeObject<User>(userJson);
+
+                if (movieId == null)
+                {
+                    return View("NotFound");
+                }
+
+                var rating = _context.Ratings.FirstOrDefault(rating => rating.Movie_id == movieId && rating.User_id == currentUser.Id);
+
+                if (rating == null)
+                {
+                    return View("NotFound");
+                }
+
+                _context.Ratings.Remove(rating);
+                await _context.SaveChangesAsync();
+                
+                return Json(new { success = true, message = "Rating has been successfully deleted" });
+            }
+            else
+            {
+                return Json(new { success = false, redirectToLogin = true, message = "User not logged in." });
+            }
         }
     }
 }
